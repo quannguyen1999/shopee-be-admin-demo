@@ -17,8 +17,8 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<AccountResponseDto>> getListAccounts(){
-        return new ResponseEntity(accountService.getAccounts(), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
     }
 }
