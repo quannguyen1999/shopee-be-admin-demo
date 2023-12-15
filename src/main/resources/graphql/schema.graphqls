@@ -1,0 +1,8 @@
+type Query {
+    listAccount: [AccountResponseDto]
+}
+
+type AccountResponseDto {
+    id: String
+    username: String
+}
