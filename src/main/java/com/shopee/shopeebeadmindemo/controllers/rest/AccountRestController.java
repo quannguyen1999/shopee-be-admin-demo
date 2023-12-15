@@ -7,7 +7,6 @@ import com.shopee.shopeebeadmindemo.services.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class AccountRestController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
+    public ResponseEntity<?> createAccount(AccountRequestDto accountRequestDto) {
         accountService.createAccount(accountRequestDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }

@@ -9,4 +9,6 @@ public interface AccountService {
     void createAccount(AccountRequestDto account);
 
     List<AccountResponseDto> getAccounts();
+
+    AccountResponseDto findByUserName(String userName);
 }
