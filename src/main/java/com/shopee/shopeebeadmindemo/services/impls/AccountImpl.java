@@ -1,6 +1,7 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
 import com.shopee.shopeebeadmindemo.entities.Account;
+import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.repositories.AccountRepository;
 import com.shopee.shopeebeadmindemo.services.AccountService;
@@ -17,8 +18,11 @@ public class AccountImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public void createAccount(Account account) {
-
+    public void createAccount(AccountRequestDto account) {
+        accountRepository.save(Account.builder()
+                .username(account.getUsername())
+                .password("password")
+                .build());
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Account extends CommonBaseEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

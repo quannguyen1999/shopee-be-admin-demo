@@ -1,4 +1,4 @@
-package com.shopee.shopeebeadmindemo.controllers;
+package com.shopee.shopeebeadmindemo.controllers.rest;
 
 import com.shopee.shopeebeadmindemo.constants.PathApi;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = PathApi.ACCOUNT)
 @AllArgsConstructor
-public class AccountController {
+public class AccountRestController {
     private final AccountService accountService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -27,7 +27,7 @@ public class AccountController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Boolean> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
-        // TODO implement later
+        accountService.createAccount(accountRequestDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
