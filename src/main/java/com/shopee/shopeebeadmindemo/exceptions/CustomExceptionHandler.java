@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
@@ -22,21 +21,21 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     //nếu quăng lỗi exception thì trả về kiểu Json này
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
         return commonHandlerException(ex.getLocalizedMessage(), "Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //nếu quăng lỗi exception thì trả về kiểu Json này
     @ExceptionHandler(BadRequestException.class)
     @ResponseBody
-    public final ResponseEntity<Object> handleBadRequest(Exception ex, WebRequest request) {
+    public final ResponseEntity<Object> handleBadRequest(Exception ex) {
         return commonHandlerException(ex.getLocalizedMessage(), "Bad Request", HttpStatus.BAD_REQUEST);
     }
 
     //nếu quăng lỗi NotFoundException thì trả về kiểu Json này
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
-    public final ResponseEntity<Object> handleUserNotFoundException(NotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleUserNotFoundException(NotFoundException ex) {
         return commonHandlerException(ex.getLocalizedMessage(), "Not Found", HttpStatus.NOT_FOUND);
     }
 

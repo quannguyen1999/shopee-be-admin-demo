@@ -15,6 +15,7 @@ public class AccountValidator {
     private final AccountRepository accountRepository;
 
     public void validateCreateAccount(AccountRequestDto accountRequestDto) {
+        
         if (!StringUtils.hasLength(accountRequestDto.getUsername())) {
             throw new BadRequestException("User Name is not valid");
         }
