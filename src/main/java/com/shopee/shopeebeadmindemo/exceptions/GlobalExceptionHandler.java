@@ -16,7 +16,7 @@ import java.util.List;
 //dùng để trả về lỗi view cho người dùng
 @SuppressWarnings({"unchecked", "rawtypes"})
 @ControllerAdvice(basePackageClasses = {AccountRestController.class})
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     //nếu quăng lỗi exception thì trả về kiểu Json này
     @ExceptionHandler(Exception.class)
