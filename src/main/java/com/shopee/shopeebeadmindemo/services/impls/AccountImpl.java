@@ -1,12 +1,14 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
 import com.shopee.shopeebeadmindemo.entities.Account;
+import com.shopee.shopeebeadmindemo.mappers.AccountMapper;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.repositories.AccountRepository;
 import com.shopee.shopeebeadmindemo.services.AccountService;
 import com.shopee.shopeebeadmindemo.validators.AccountValidator;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -14,12 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl implements AccountService {
+    protected final AccountRepository accountRepository;
 
-    private final AccountRepository accountRepository;
-
-    private final AccountValidator accountValidator;
+    protected final AccountValidator accountValidator;
 
     @Override
     public void createAccount(AccountRequestDto account) {
@@ -34,9 +35,7 @@ public class AccountImpl implements AccountService {
     public List<AccountResponseDto> getAccounts() {
         return accountRepository
                 .findAll()
-                .stream().map(value ->
-                        AccountResponseDto.builder()
-                                .username(value.getUsername()).build())
+                .stream().map(AccountMapper.MAPPER::accountToAccountResponseDto)
                 .collect(Collectors.toList());
     }
 
