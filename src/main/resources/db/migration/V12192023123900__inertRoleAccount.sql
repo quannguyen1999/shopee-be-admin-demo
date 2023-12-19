@@ -1,14 +1,18 @@
 insert into account(id, username, password, birthday, gender)
-values (gen_random_uuid(), 'admin', 'admin', current_date, true);
+values (gen_random_uuid(), 'admin', 'admin', current_date, true) ON CONFLICT (username)
+                                                                 DO NOTHING;
 
 insert into account(id, username, password, birthday, gender)
-values (gen_random_uuid(), 'employee_sam', 'employee_sam', current_date, true);
+values (gen_random_uuid(), 'employee_sam', 'employee_sam', current_date, true) ON CONFLICT (username)
+                                                                               DO NOTHING;
 
 insert into account(id, username, password, birthday, gender)
-values (gen_random_uuid(), 'client_a', 'client_a', current_date, true);
+values (gen_random_uuid(), 'client_a', 'client_a', current_date, true) ON CONFLICT (username)
+                                                                       DO NOTHING;
 
 insert into account(id, username, password, birthday, gender)
-values (gen_random_uuid(), 'client_b', 'client_b', current_date, true);
+values (gen_random_uuid(), 'client_b', 'client_b', current_date, true) ON CONFLICT (username)
+                                                                       DO NOTHING;
 
 insert into accountRoles(account_id, role_id)
 values ((select id from account where username = 'admin'), (select code from RoleAccount where code = 'ADMIN'));

@@ -20,7 +20,6 @@ public class RoleAccount extends CommonBaseEntities {
 
     private String name;
 
-    // This is the foreign key column in the Child table
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

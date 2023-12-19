@@ -6,7 +6,7 @@ BEGIN
         FROM pg_constraint
         WHERE conname = 'username'
     ) THEN
-        ALTER TABLE username ADD CONSTRAINT username UNIQUE (username);
+        ALTER TABLE Account ADD CONSTRAINT username UNIQUE (username);
     END IF;
 END $$;
 
