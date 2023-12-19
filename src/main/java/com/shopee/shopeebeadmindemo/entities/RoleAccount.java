@@ -1,7 +1,11 @@
 package com.shopee.shopeebeadmindemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "RoleAccount")
@@ -17,7 +21,12 @@ public class RoleAccount extends CommonBaseEntities {
     private String name;
 
     // This is the foreign key column in the Child table
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "roleAccountList")
+    @JsonIgnore
+    private Set<Account> account = new HashSet<>();
 }
