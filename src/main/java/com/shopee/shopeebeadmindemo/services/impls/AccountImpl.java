@@ -22,6 +22,8 @@ public class AccountImpl implements AccountService {
 
     protected final AccountValidator accountValidator;
 
+//    private final AccountBatisService accountBatisService;
+
     @Override
     public void createAccount(AccountRequestDto account) {
         accountValidator.validateCreateAccount(account);
@@ -33,6 +35,7 @@ public class AccountImpl implements AccountService {
 
     @Override
     public List<AccountResponseDto> getAccounts() {
+//        accountBatisService.getListAccount();
         return accountRepository
                 .findAll()
                 .stream().map(AccountMapper.MAPPER::accountToAccountResponseDto)
