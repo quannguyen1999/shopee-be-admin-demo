@@ -1,13 +1,9 @@
 package com.shopee.shopeebeadmindemo.models.responses;
 
-import com.shopee.shopeebeadmindemo.entities.RoleAccount;
 import com.shopee.shopeebeadmindemo.models.CommonBaseModel;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -20,7 +16,7 @@ public class AccountResponseDto extends CommonBaseModel {
 
     private String password;
 
-    private Date birthday;
+//    private Date birthday;
 
     private Boolean gender;
 
@@ -28,6 +24,6 @@ public class AccountResponseDto extends CommonBaseModel {
 
     private String avatar;
 
-    private Set<RoleAccount> roleAccountList = new HashSet<>();
+//    private Set<RoleAccount> roleAccountList;
 
 }

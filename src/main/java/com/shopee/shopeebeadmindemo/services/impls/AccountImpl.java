@@ -4,6 +4,7 @@ import com.shopee.shopeebeadmindemo.entities.Account;
 import com.shopee.shopeebeadmindemo.mappers.AccountMapper;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
+import com.shopee.shopeebeadmindemo.mybatis.AccountBatisService;
 import com.shopee.shopeebeadmindemo.repositories.AccountRepository;
 import com.shopee.shopeebeadmindemo.services.AccountService;
 import com.shopee.shopeebeadmindemo.validators.AccountValidator;
@@ -13,16 +14,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl implements AccountService {
+
+    protected final AccountBatisService accountBatisService;
     protected final AccountRepository accountRepository;
-
     protected final AccountValidator accountValidator;
-
-//    private final AccountBatisService accountBatisService;
 
     @Override
     public void createAccount(AccountRequestDto account) {
@@ -35,11 +36,8 @@ public class AccountImpl implements AccountService {
 
     @Override
     public List<AccountResponseDto> getAccounts() {
-//        accountBatisService.getListAccount();
-        return accountRepository
-                .findAll()
-                .stream().map(AccountMapper.MAPPER::accountToAccountResponseDto)
-                .collect(Collectors.toList());
+        List<Map<String, Object>> result = accountBatisService.getListAccount();
+        return result.stream().map(AccountMapper.MAPPER::mapToAccountResponseDto).collect(Collectors.toList());
     }
 
     @Override
