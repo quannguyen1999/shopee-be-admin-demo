@@ -46,7 +46,13 @@ public class AccountImpl implements AccountService {
     }
 
     private List<String> getAllListAccountDefault() {
-        return Arrays.asList(AccountMapper.ID, AccountMapper.EMAIL, AccountMapper.GENDER, AccountMapper.BIRTHDAY, AccountMapper.USER_NAME, AccountMapper.AVATAR);
+        return Arrays.asList(
+                AccountMapper.ID,
+                AccountMapper.EMAIL,
+                AccountMapper.GENDER,
+                AccountMapper.BIRTHDAY,
+                AccountMapper.USER_NAME,
+                AccountMapper.AVATAR);
     }
 
     @Override
