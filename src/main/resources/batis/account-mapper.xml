@@ -5,11 +5,23 @@
     <select id="getListAccount" resultType="java.util.Map">
         select
         <foreach item="field" collection="fields" separator=",">
+            <if test="field == 'id'">
+                a.id
+            </if>
             <if test="field == 'username'">
                 a.username
             </if>
-            <if test="field == 'id'">
-                a.id
+            <if test="field == 'birthday'">
+                a.birthday
+            </if>
+            <if test="field == 'gender'">
+                a.gender
+            </if>
+            <if test="field == 'email'">
+                a.email
+            </if>
+            <if test="field == 'avatar'">
+                a.avatar
             </if>
         </foreach>
         from account a

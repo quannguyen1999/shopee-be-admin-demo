@@ -11,8 +11,10 @@ import com.shopee.shopeebeadmindemo.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +39,14 @@ public class AccountImpl implements AccountService {
     @Override
     public List<AccountResponseDto> getAccounts(List<String> listFields) {
         return accountBatisService
-                .getListAccount(listFields)
+                .getListAccount(CollectionUtils.isEmpty(listFields) ? getAllListAccountDefault() : listFields)
                 .stream()
                 .map(AccountMapper.MAPPER::mapToAccountResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    private List<String> getAllListAccountDefault() {
+        return Arrays.asList(AccountMapper.ID, AccountMapper.EMAIL, AccountMapper.GENDER, AccountMapper.BIRTHDAY, AccountMapper.USER_NAME, AccountMapper.AVATAR);
     }
 
     @Override

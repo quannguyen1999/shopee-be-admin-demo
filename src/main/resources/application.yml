@@ -1,21 +1,6 @@
 spring:
-  # PostgreSQL
-  datasource:
-    hikari:
-      connectionTimeout: 20000
-      maximum-pool-size: 5
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=qa_shopee
-    username: postgres
-    password: postgres
-  # Flyway
-  flyway:
-    url: jdbc:postgresql://localhost:5432/postgres
-    schemas: qa_shopee
-    password: postgres
-    user: postgres
-    enabled: true
-    validate-migration-naming: true
-  # GraphQL
+  profiles:
+    active: dev
   graphql:
     graphiql:
       enabled: true
@@ -24,14 +9,4 @@ spring:
 mybatis:
   mapper-locations: classpath:batis/*.xml
   type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#  config-location: classpath:batis/mybatis-config.xml
-#  mybatis.config-location=classpath:mybatis/mybatis-config.xml
-#  mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
-#  mybatis.type-aliases-package=com.example.demo.model
-
-#logging:
-#  level:
-#    root: debug
 

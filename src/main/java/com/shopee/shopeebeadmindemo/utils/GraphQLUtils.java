@@ -1,4 +1,4 @@
-package com.shopee.shopeebeadmindemo.uitls;
+package com.shopee.shopeebeadmindemo.utils;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.SelectedField;
