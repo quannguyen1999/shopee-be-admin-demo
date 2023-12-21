@@ -1,8 +1,10 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
 import com.shopee.shopeebeadmindemo.entities.Account;
+import com.shopee.shopeebeadmindemo.events.publishers.AccountPublisher;
 import com.shopee.shopeebeadmindemo.mappers.AccountMapper;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
+import com.shopee.shopeebeadmindemo.models.requests.EmailDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.mybatis.AccountBatisService;
 import com.shopee.shopeebeadmindemo.repositories.AccountRepository;
@@ -10,6 +12,7 @@ import com.shopee.shopeebeadmindemo.services.AccountService;
 import com.shopee.shopeebeadmindemo.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -18,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl implements AccountService {
@@ -26,14 +30,23 @@ public class AccountImpl implements AccountService {
     protected final AccountRepository accountRepository;
     protected final AccountValidator accountValidator;
 
+    protected final AccountPublisher accountPublisher;
+
     @Override
     public void createAccount(AccountRequestDto account) {
+
         accountValidator.validateCreateAccount(account);
+
         //TODO implement later
         accountRepository.save(Account.builder()
                 .username(account.getUsername())
                 .password("password")
                 .build());
+
+        log.info("send mail Async-Start");
+        accountPublisher.publishEvent(EmailDto.builder().build());
+        log.info("send mail Async-Continue Processing");
+        
     }
 
     @Override
