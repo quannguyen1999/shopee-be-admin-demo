@@ -1,6 +1,7 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
 import com.shopee.shopeebeadmindemo.entities.Account;
+import com.shopee.shopeebeadmindemo.events.publishers.AccountPublisher;
 import com.shopee.shopeebeadmindemo.events.publishers.EmailPublisher;
 import com.shopee.shopeebeadmindemo.mappers.AccountMapper;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
@@ -32,6 +33,8 @@ public class AccountImpl implements AccountService {
 
     protected final EmailPublisher emailPublisher;
 
+    protected final AccountPublisher accountPublisher;
+
     @Override
     public void createAccount(AccountRequestDto account) {
 
@@ -51,9 +54,8 @@ public class AccountImpl implements AccountService {
 
     @Override
     public List<AccountResponseDto> getAccounts(List<String> listFields) {
-        
         log.info("send mail Async-Start");
-        emailPublisher.publishEvent(EmailDto.builder().build());
+        accountPublisher.publishEvent("Test");
         log.info("send mail Async-Continue Processing");
 
         return accountBatisService

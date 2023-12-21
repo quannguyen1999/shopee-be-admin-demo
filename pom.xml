@@ -38,6 +38,13 @@
         <!--            <artifactId>querydsl-apt</artifactId>-->
         <!--        </dependency>-->
 
+        <!--  Spring Retry   -->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+
         <!--  Batis   -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
