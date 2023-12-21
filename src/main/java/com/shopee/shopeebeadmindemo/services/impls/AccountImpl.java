@@ -1,5 +1,6 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
+import com.shopee.shopeebeadmindemo.constants.StringConstants;
 import com.shopee.shopeebeadmindemo.entities.Account;
 import com.shopee.shopeebeadmindemo.events.publishers.AccountPublisher;
 import com.shopee.shopeebeadmindemo.events.publishers.EmailPublisher;
@@ -14,6 +15,9 @@ import com.shopee.shopeebeadmindemo.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@ShellComponent
 public class AccountImpl implements AccountService {
 
     protected final AccountBatisService accountBatisService;
@@ -53,7 +58,10 @@ public class AccountImpl implements AccountService {
     }
 
     @Override
-    public List<AccountResponseDto> getAccounts(List<String> listFields) {
+    @ShellMethod
+    public List<AccountResponseDto> getAccounts(
+            @ShellOption(defaultValue = "") List<String> listFields
+    ) {
         log.info("send mail Async-Start");
         accountPublisher.publishEvent("Test");
         log.info("send mail Async-Continue Processing");
@@ -76,7 +84,10 @@ public class AccountImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDto findByUserName(String userName) {
+    @ShellMethod
+    public AccountResponseDto findByUserName(
+            @ShellOption(defaultValue = StringConstants.EMPTY_STRING) String userName
+    ) {
         Account account = accountRepository.findByUsername(userName);
         return ObjectUtils.isEmpty(account) ? null : AccountResponseDto.builder().username(userName).build();
     }
