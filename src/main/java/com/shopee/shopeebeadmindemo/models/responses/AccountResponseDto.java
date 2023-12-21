@@ -14,16 +14,12 @@ public class AccountResponseDto extends CommonBaseModel {
 
     public String username;
 
-    private String password;
-
-//    private Date birthday;
+    private String birthday;
 
     private Boolean gender;
 
     private String email;
 
     private String avatar;
-
-//    private Set<RoleAccount> roleAccountList;
-
+    
 }

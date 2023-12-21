@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class AccountRestController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<AccountResponseDto>> getListAccounts() {
-        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAccounts(Arrays.asList("id", "username")), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

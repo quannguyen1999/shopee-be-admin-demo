@@ -8,7 +8,7 @@ import java.util.List;
 public interface AccountService {
     void createAccount(AccountRequestDto account);
 
-    List<AccountResponseDto> getAccounts();
+    List<AccountResponseDto> getAccounts(List<String> listFields);
 
     AccountResponseDto findByUserName(String userName);
 }

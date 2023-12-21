@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +27,7 @@ public class AccountImpl implements AccountService {
     @Override
     public void createAccount(AccountRequestDto account) {
         accountValidator.validateCreateAccount(account);
+        //TODO implement later
         accountRepository.save(Account.builder()
                 .username(account.getUsername())
                 .password("password")
@@ -35,9 +35,12 @@ public class AccountImpl implements AccountService {
     }
 
     @Override
-    public List<AccountResponseDto> getAccounts() {
-        List<Map<String, Object>> result = accountBatisService.getListAccount();
-        return result.stream().map(AccountMapper.MAPPER::mapToAccountResponseDto).collect(Collectors.toList());
+    public List<AccountResponseDto> getAccounts(List<String> listFields) {
+        return accountBatisService
+                .getListAccount(listFields)
+                .stream()
+                .map(AccountMapper.MAPPER::mapToAccountResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Override

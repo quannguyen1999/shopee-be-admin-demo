@@ -4,10 +4,15 @@
 <mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
     <select id="getListAccount" resultType="java.util.Map">
         select
-        id,
-        username,
-        password
-        from account
+        <foreach item="field" collection="fields" separator=",">
+            <if test="field == 'username'">
+                a.username
+            </if>
+            <if test="field == 'id'">
+                a.id
+            </if>
+        </foreach>
+        from account a
     </select>
 </mapper>
 

@@ -8,6 +8,6 @@ import java.util.Map;
 @Mapper
 public interface AccountBatisService {
 
-    List<Map<String, Object>> getListAccount();
+    List<Map<String, Object>> getListAccount(List<String> fields);
 
 }
