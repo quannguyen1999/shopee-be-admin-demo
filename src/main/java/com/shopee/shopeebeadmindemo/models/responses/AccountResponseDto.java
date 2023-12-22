@@ -14,4 +14,12 @@ public class AccountResponseDto extends CommonBaseModel {
 
     public String username;
 
+    private String birthday;
+
+    private Boolean gender;
+
+    private String email;
+
+    private String avatar;
+    
 }

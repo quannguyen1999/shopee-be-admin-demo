@@ -1,8 +1,21 @@
+#Common
 type Query {
-    listAccount: [AccountResponseDto]
+    listAccount(page: Int, size: Int): CommonPageInfo
 }
 
+type CommonPageInfo {
+    total: Int!
+    page: Int!
+    size: Int!
+    data: [AccountResponseDto]
+}
+
+#Account
 type AccountResponseDto {
     id: String
     username: String
+    birthday: String
+    gender: Boolean
+    email: String
+    avatar: String
 }

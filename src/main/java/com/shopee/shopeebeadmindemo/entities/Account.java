@@ -3,6 +3,9 @@ package com.shopee.shopeebeadmindemo.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -11,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Account extends CommonBaseEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,4 +23,22 @@ public class Account extends CommonBaseEntities {
     private String username;
 
     private String password;
+
+    private Date birthday;
+
+    private Boolean gender;
+
+    private String email;
+
+    private String avatar;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "accountRoles",
+            joinColumns = {@JoinColumn(name = "account_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<RoleAccount> roleAccountList = new HashSet<>();
 }

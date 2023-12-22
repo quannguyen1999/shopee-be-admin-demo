@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: dev
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
+
+mybatis:
+  mapper-locations: classpath:batis/*.xml
+  type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
+
