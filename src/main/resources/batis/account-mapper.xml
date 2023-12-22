@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
-    <select id="getListAccount" resultType="java.util.Map">
+    <select id="getList" resultType="java.util.Map">
+        <if test="isCountTotalPage == true">
+            select count(*) as total_page from (
+        </if>
+
         select
         <foreach item="field" collection="fields" separator=",">
             <if test="field == 'id'">
@@ -25,6 +29,17 @@
             </if>
         </foreach>
         from account a
+        where 1 = 1
+        <choose>
+            <when test="page != null and size != null and isCountTotalPage == false">
+                LIMIT #{size} OFFSET #{page}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+
+        <if test="isCountTotalPage == true">
+            )
+        </if>
     </select>
 </mapper>
 

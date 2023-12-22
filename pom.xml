@@ -39,11 +39,11 @@
         <!--        </dependency>-->
 
         <!--  Spring Shell -->
-        <dependency>
-            <groupId>org.springframework.shell</groupId>
-            <artifactId>spring-shell-starter</artifactId>
-            <version>3.0.9</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.shell</groupId>-->
+        <!--            <artifactId>spring-shell-starter</artifactId>-->
+        <!--            <version>3.0.9</version>-->
+        <!--        </dependency>-->
 
 
         <!--  Spring Retry   -->
