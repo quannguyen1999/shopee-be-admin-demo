@@ -1,5 +1,6 @@
 package com.shopee.shopeebeadmindemo.controllers.graphql;
 
+import com.shopee.shopeebeadmindemo.configs.LogNameMethod;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.models.responses.CommonPageInfo;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 public class AccountGraphController {
     private final AccountService accountService;
 
+    @LogNameMethod
     @QueryMapping
     public CommonPageInfo<AccountResponseDto> listAccount(@Argument AccountRequestDto accountRequestDto,
                                                           DataFetchingEnvironment environment) {

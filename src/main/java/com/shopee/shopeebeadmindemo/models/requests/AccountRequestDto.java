@@ -25,4 +25,9 @@ public class AccountRequestDto extends CommonBaseModel {
 
     private Set<RoleAccount> roleAccountList = new HashSet<>();
 
+    //Search
+    public Date fromBirthday;
+
+    public Date toBirthday;
+
 }

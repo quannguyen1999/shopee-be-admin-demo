@@ -29,13 +29,28 @@
         </foreach>
         from account a
         where 1 = 1
+        <if test="request.username != null">
+            and a.username like '%' || #{request.username} || '%'
+        </if>
+        <if test="request.gender != null">
+            and a.gender = #{request.gender}
+        </if>
+        <if test="request.email != null">
+            and a.email = #{email}
+        </if>
+        <choose>
+            <when test="request.fromBirthday != null and request.toBirthday != null">
+                and a.birthday between #{request.fromBirthday} and #{request.toBirthday}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+
         <choose>
             <when test="request.page != null and request.size != null and isCountTotalPage == false">
                 LIMIT #{request.size} OFFSET #{request.page}
             </when>
             <otherwise></otherwise>
         </choose>
-
         <if test="isCountTotalPage == true">
             )
         </if>

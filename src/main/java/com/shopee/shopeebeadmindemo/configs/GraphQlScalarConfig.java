@@ -26,12 +26,10 @@ public class GraphQlScalarConfig {
                     public String serialize(Object input) {
                         return parseObjectToString(input);
                     }
-
                     @Override
                     public Date parseValue(Object input) {
                         return parseObjectToDate(input);
                     }
-
                     @Override
                     public Date parseLiteral(Object input) {
                         return parseObjectToDate(input);

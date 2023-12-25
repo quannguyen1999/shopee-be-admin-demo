@@ -6,6 +6,9 @@ input AccountRequestDto {
     avatar: String
     page: Int!
     size: Int!
+
+    fromBirthday: Date
+    toBirthday: Date
 }
 
 type AccountResponseDto {
