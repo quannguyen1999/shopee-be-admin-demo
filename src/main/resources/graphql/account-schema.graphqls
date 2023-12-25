@@ -1,0 +1,25 @@
+input AccountRequestDto {
+    username: String
+    birthday: Date
+    gender: Boolean
+    email: String
+    avatar: String
+    page: Int!
+    size: Int!
+}
+
+type AccountResponseDto {
+    id: String
+    username: String
+    birthday: String
+    gender: Boolean
+    email: String
+    avatar: String
+}
+
+type CommonPageInfo {
+    total: Int!
+    page: Int!
+    size: Int!
+    data: [AccountResponseDto]
+}

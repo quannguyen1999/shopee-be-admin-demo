@@ -1,6 +1,5 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
-import com.shopee.shopeebeadmindemo.constants.CommonFieldValue;
 import com.shopee.shopeebeadmindemo.entities.Account;
 import com.shopee.shopeebeadmindemo.events.publishers.AccountPublisher;
 import com.shopee.shopeebeadmindemo.events.publishers.EmailPublisher;
@@ -52,36 +51,35 @@ public class AccountImpl extends AdapterImpl implements AccountService {
                 .password(AccountRequestDto.Fields.avatar)
                 .build());
 
-        log.info("send mail Async-Start");
         emailPublisher.publishEvent(EmailDto.builder().build());
-        log.info("send mail Async-Continue Processing");
     }
 
     @Override
-    public CommonPageInfo getAccounts(Map<String, String> listFieldsExists, Integer page, Integer size) {
-//        log.info("send mail Async-Start");
+    public CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto) {
 //        accountPublisher.publishEvent("Test");
-//        log.info("send mail Async-Continue Processing");
-        List<String> listFieldParam = getListField(listFieldsExists, getAllListAccountDefault());
-
+        List<String> listFieldParam = getListField(listFieldRequest, getAllListAccountDefault());
         //Get Data
-        List<AccountResponseDto> data = accountBatisService
-                .getList(listFieldParam, page, size, false)
-                .stream()
-                .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList();
-
-        listFieldParam.add(CommonFieldValue.FIELD_TOTAL_PAGES);
-        return CommonPageInfo.builder()
-                .page(page)
-                .size(size)
-                .total(getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, page, size, true)))
-                .data(convertToObject(data))
+        List<AccountResponseDto> data = getListAccounts(listFieldParam, accountRequestDto);
+        return CommonPageInfo.<AccountResponseDto>builder()
+                .page(accountRequestDto.getPage())
+                .size(accountRequestDto.getSize())
+                .total(getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, accountRequestDto, true)))
+                .data(data)
                 .build();
     }
 
     @Override
     public AccountResponseDto findByUserName(String userName) {
         Account account = accountRepository.findByUsername(userName);
-        return ObjectUtils.isEmpty(account) ? null : AccountResponseDto.builder().username("admin").build();
+        return ObjectUtils.isEmpty(account) ? null : AccountMapper.MAPPER.mapToAccountResponseDto(account);
     }
+
+    private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto) {
+        return accountBatisService
+                .getList(listFieldParam, accountRequestDto, false)
+                .stream()
+                .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList();
+    }
+
+
 }

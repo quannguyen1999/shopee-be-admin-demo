@@ -15,6 +15,7 @@ public class GraphQLUtils {
                 .getFields()
                 .stream()
                 .map(SelectedField::getName)
+                //Avoid get field page, size, total, data
                 .filter(name -> !Arrays.asList(page, size, total, data)
                         .contains(name))
                 .collect(Collectors.toMap(

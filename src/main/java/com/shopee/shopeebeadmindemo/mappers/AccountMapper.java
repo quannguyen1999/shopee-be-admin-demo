@@ -1,5 +1,6 @@
 package com.shopee.shopeebeadmindemo.mappers;
 
+import com.shopee.shopeebeadmindemo.entities.Account;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,5 +25,7 @@ public interface AccountMapper extends CommonUtilMapper {
             @Mapping(source = avatar, target = avatar, qualifiedByName = CONVERT_TO_STRING)
     })
     AccountResponseDto mapToAccountResponseDto(Map<String, Object> account);
+    
+    AccountResponseDto mapToAccountResponseDto(Account account);
 
 }

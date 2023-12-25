@@ -1,5 +1,7 @@
 package com.shopee.shopeebeadmindemo.controllers.graphql;
 
+import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
+import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.models.responses.CommonPageInfo;
 import com.shopee.shopeebeadmindemo.services.AccountService;
 import com.shopee.shopeebeadmindemo.utils.GraphQLUtils;
@@ -12,11 +14,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 @AllArgsConstructor
 public class AccountGraphController {
-
     private final AccountService accountService;
 
     @QueryMapping
-    public CommonPageInfo listAccount(@Argument Integer page, @Argument Integer size, DataFetchingEnvironment environment) {
-        return accountService.getAccounts(GraphQLUtils.getNameFieldGraphQL(environment), page, size);
+    public CommonPageInfo<AccountResponseDto> listAccount(@Argument AccountRequestDto accountRequestDto,
+                                                          DataFetchingEnvironment environment) {
+        return accountService.getAccounts(GraphQLUtils.getNameFieldGraphQL(environment), accountRequestDto);
     }
 }

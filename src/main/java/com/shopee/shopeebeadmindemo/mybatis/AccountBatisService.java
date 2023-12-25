@@ -1,5 +1,6 @@
 package com.shopee.shopeebeadmindemo.mybatis;
 
+import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,8 +11,7 @@ public interface AccountBatisService {
 
     List<Map<String, Object>> getList(
             List<String> fields,
-            Integer page,
-            Integer size,
+            AccountRequestDto request,
             Boolean isCountTotalPage);
 
 }

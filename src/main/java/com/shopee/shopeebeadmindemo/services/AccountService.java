@@ -9,7 +9,7 @@ import java.util.Map;
 public interface AccountService {
     void createAccount(AccountRequestDto account);
 
-    CommonPageInfo getAccounts(Map<String, String> listFields, Integer page, Integer size);
+    CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFields, AccountRequestDto requestDto);
 
     AccountResponseDto findByUserName(String userName);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @Data
 @FieldNameConstants
-public class CommonPageInfo {
+public class CommonPageInfo<T> {
 
     public Integer page;
 
@@ -17,6 +17,6 @@ public class CommonPageInfo {
 
     public Integer total;
 
-    public List<Object> data;
+    public List<T> data;
 
 }

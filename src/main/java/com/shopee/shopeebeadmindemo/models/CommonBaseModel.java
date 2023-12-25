@@ -15,4 +15,8 @@ public class CommonBaseModel {
 
     private String userUpdated;
 
+    private Integer page;
+
+    private Integer size;
+
 }
