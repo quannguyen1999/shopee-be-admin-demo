@@ -1,20 +1,37 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
-import com.shopee.shopeebeadmindemo.constants.CommonFieldValue;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static com.shopee.shopeebeadmindemo.constants.CommonFieldValue.FIELD_TOTAL_PAGES;
 
 public class AdapterImpl {
 
-    public List<String> getList(Map<String, String> listFields, List<String> listDefaults) {
-        return CollectionUtils.isEmpty(listFields) ? listDefaults : new ArrayList<>(listFields.values());
+    static List<String> getListField(Map<String, String> listFieldsExists, List<String> listDefaults) {
+        return CollectionUtils.isEmpty(listFieldsExists) ? listDefaults : new ArrayList<>(listFieldsExists.values());
     }
 
-    Integer getCommonTotalPage(List<Map<String, Object>> values) {
-        return values.stream().map(t -> Integer.parseInt(t.get(CommonFieldValue.FIELD_TOTAL_PAGES).toString())).findFirst().orElse(0);
+    static Function<List<Map<String, Object>>, Integer> getCommonTotalPage() {
+        return maps -> maps.stream()
+                .map(t -> getDefaultValue().apply(t))
+                .findFirst()
+                .orElse(0);
     }
+
+    static <T> List<Object> convertToObject(List<T> items) {
+        return items.stream()
+                .map(item -> (Object) item)
+                .collect(Collectors.toList());
+    }
+
+    static Function<Map<String, Object>, Integer> getDefaultValue() {
+        return t -> Integer.parseInt(t.getOrDefault(FIELD_TOTAL_PAGES, "0").toString());
+    }
+
 
 }

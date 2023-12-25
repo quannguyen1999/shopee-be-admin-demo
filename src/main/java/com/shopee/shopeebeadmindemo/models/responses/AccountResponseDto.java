@@ -3,11 +3,13 @@ package com.shopee.shopeebeadmindemo.models.responses;
 import com.shopee.shopeebeadmindemo.models.CommonBaseModel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.UUID;
 
 @Data
 @Builder
+@FieldNameConstants
 public class AccountResponseDto extends CommonBaseModel {
 
     public UUID id;
@@ -21,5 +23,5 @@ public class AccountResponseDto extends CommonBaseModel {
     private String email;
 
     private String avatar;
-    
+
 }

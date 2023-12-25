@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto.Fields.*;
 
 @Slf4j
 @Service
@@ -38,26 +39,17 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     protected final AccountPublisher accountPublisher;
 
     private List<String> getAllListAccountDefault() {
-        return new ArrayList<>(
-                Arrays.asList(
-                        AccountMapper.ID,
-                        AccountMapper.EMAIL,
-                        AccountMapper.GENDER,
-                        AccountMapper.BIRTHDAY,
-                        AccountMapper.USER_NAME,
-                        AccountMapper.AVATAR)
-        );
+        return new ArrayList<>(Arrays.asList(id, email, gender, birthday, username, avatar));
     }
 
     @Override
     public void createAccount(AccountRequestDto account) {
-
         accountValidator.validateCreateAccount(account);
 
         //TODO implement later
         accountRepository.save(Account.builder()
                 .username(account.getUsername())
-                .password("password")
+                .password(AccountRequestDto.Fields.avatar)
                 .build());
 
         log.info("send mail Async-Start");
@@ -66,11 +58,11 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public CommonPageInfo getAccounts(Map<String, String> listFields, Integer page, Integer size) {
+    public CommonPageInfo getAccounts(Map<String, String> listFieldsExists, Integer page, Integer size) {
 //        log.info("send mail Async-Start");
 //        accountPublisher.publishEvent("Test");
 //        log.info("send mail Async-Continue Processing");
-        List<String> listFieldParam = getList(listFields, getAllListAccountDefault());
+        List<String> listFieldParam = getListField(listFieldsExists, getAllListAccountDefault());
 
         //Get Data
         List<AccountResponseDto> data = accountBatisService
@@ -82,14 +74,14 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         return CommonPageInfo.builder()
                 .page(page)
                 .size(size)
-                .total(getCommonTotalPage(accountBatisService.getList(listFieldParam, page, size, true)))
-                .data(data.stream().map(t -> (Object) t).collect(Collectors.toList()))
+                .total(getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, page, size, true)))
+                .data(convertToObject(data))
                 .build();
     }
 
     @Override
     public AccountResponseDto findByUserName(String userName) {
         Account account = accountRepository.findByUsername(userName);
-        return ObjectUtils.isEmpty(account) ? null : AccountResponseDto.builder().username(userName).build();
+        return ObjectUtils.isEmpty(account) ? null : AccountResponseDto.builder().username("admin").build();
     }
 }
