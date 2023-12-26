@@ -4,7 +4,7 @@
 <mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
     <select id="getList" resultType="java.util.Map">
         <if test="isCountTotalPage == true">
-            select count(*) as total_page from (
+            select count(*) as total from (
         </if>
         select
         <foreach item="field" collection="fields" separator=",">

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.shopee.shopeebeadmindemo.constants.CommonFieldValue.FIELD_TOTAL_PAGES;
+import static com.shopee.shopeebeadmindemo.models.responses.CommonPageInfo.Fields.total;
 
 public class AdapterImpl {
 
@@ -23,8 +23,7 @@ public class AdapterImpl {
     }
     
     static Function<Map<String, Object>, Integer> getDefaultValue() {
-        return t -> Integer.parseInt(t.getOrDefault(FIELD_TOTAL_PAGES, "0").toString());
+        return t -> Integer.parseInt(t.getOrDefault(total, "0").toString());
     }
-
 
 }

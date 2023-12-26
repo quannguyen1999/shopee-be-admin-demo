@@ -16,7 +16,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,12 +65,6 @@ public class AccountImpl extends AdapterImpl implements AccountService {
                 .total(getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, accountRequestDto, true)))
                 .data(data)
                 .build();
-    }
-
-    @Override
-    public AccountResponseDto findByUserName(String userName) {
-        Account account = accountRepository.findByUsername(userName);
-        return ObjectUtils.isEmpty(account) ? null : AccountMapper.MAPPER.mapToAccountResponseDto(account);
     }
 
     private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto) {

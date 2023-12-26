@@ -11,5 +11,4 @@ public interface AccountService {
 
     CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFields, AccountRequestDto requestDto);
 
-    AccountResponseDto findByUserName(String userName);
 }
