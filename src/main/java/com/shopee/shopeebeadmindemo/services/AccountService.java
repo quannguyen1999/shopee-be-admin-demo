@@ -13,6 +13,8 @@ public interface AccountService {
 
     CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFields, AccountRequestDto requestDto);
 
-    List<HashMap<String, Object>> getListAccountsWithResultMap(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto);
+    List<HashMap<String, Object>> getListAccountsWithResultMap(AccountRequestDto accountRequestDto);
+
+    List<String> getListField(AccountRequestDto accountRequestDto);
 
 }

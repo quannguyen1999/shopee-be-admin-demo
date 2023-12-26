@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -72,9 +73,17 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public List<HashMap<String, Object>> getListAccountsWithResultMap(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto) {
-        List<String> listFieldParam = getListField(listFieldRequest, getAllListAccountDefault());
-        return accountBatisService.getList(listFieldParam, accountRequestDto, false);
+    public List<HashMap<String, Object>> getListAccountsWithResultMap(AccountRequestDto accountRequestDto) {
+        return accountBatisService.getList(
+                CollectionUtils.isEmpty(accountRequestDto.getListFields()) ? getAllListAccountDefault() : accountRequestDto.getListFields(),
+                accountRequestDto,
+                false
+        );
+    }
+
+    @Override
+    public List<String> getListField(AccountRequestDto accountRequestDto) {
+        return CollectionUtils.isEmpty(accountRequestDto.getListFields()) ? AccountImpl.getAllListAccountDefault() : accountRequestDto.getListFields();
     }
 
 

@@ -5,9 +5,7 @@ import com.shopee.shopeebeadmindemo.models.CommonBaseModel;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @FieldNameConstants
@@ -26,6 +24,8 @@ public class AccountRequestDto extends CommonBaseModel {
     private Set<RoleAccount> roleAccountList = new HashSet<>();
 
     //Search
+    public List<String> listFields = new ArrayList<>();
+
     public Date fromBirthday;
 
     public Date toBirthday;
