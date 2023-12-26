@@ -5,6 +5,7 @@ import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.models.responses.CommonPageInfo;
 import com.shopee.shopeebeadmindemo.services.AccountService;
+import com.shopee.shopeebeadmindemo.services.ReportService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountRestController {
     private final AccountService accountService;
 
-    @RequestMapping(value = PathApi.ACCOUNT_LIST, method = RequestMethod.GET)
+    private final ReportService reportService;
+
+    @RequestMapping(value = PathApi.LIST, method = RequestMethod.GET)
     public ResponseEntity<CommonPageInfo<AccountResponseDto>> getListAccounts(@RequestBody AccountRequestDto accountRequestDto) {
         return new ResponseEntity<>(accountService.getAccounts(null, accountRequestDto), HttpStatus.OK);
     }
 
-    @RequestMapping(value = PathApi.ACCOUNT_CREATE, method = RequestMethod.POST)
+    @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createAccount(AccountRequestDto accountRequestDto) {
         accountService.createAccount(accountRequestDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)
+    public ResponseEntity<byte[]> exportAccount(AccountRequestDto accountRequestDto) {
+        CommonPageInfo<AccountResponseDto> listResult = accountService.getAccounts(null, accountRequestDto);
+        return new ResponseEntity<>(reportService.printReport(listResult.data), HttpStatus.OK);
     }
 
 

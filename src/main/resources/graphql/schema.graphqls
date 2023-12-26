@@ -1,5 +1,7 @@
 scalar Date
+scalar ByteArray
 
 type Query {
     listAccount(accountRequestDto: AccountRequestDto!): CommonPageInfo
+    exportAccount(accountRequestDto: AccountRequestDto!): ByteArray
 }

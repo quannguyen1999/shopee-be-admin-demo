@@ -3,6 +3,7 @@ package com.shopee.shopeebeadmindemo.configs;
 import graphql.language.StringValue;
 import graphql.schema.Coercing;
 import graphql.schema.CoercingParseLiteralException;
+import graphql.schema.CoercingSerializeException;
 import graphql.schema.GraphQLScalarType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,20 +25,45 @@ public class GraphQlScalarConfig {
                 .coercing(new Coercing<>() {
                     @Override
                     public String serialize(Object input) {
-                        return parseObjectToString(input);
+                        return parseDateObjectToString(input);
                     }
+
                     @Override
                     public Date parseValue(Object input) {
-                        return parseObjectToDate(input);
+                        return parseDateObjectToDate(input);
                     }
+
                     @Override
                     public Date parseLiteral(Object input) {
-                        return parseObjectToDate(input);
+                        return parseDateObjectToDate(input);
                     }
                 }).build();
     }
 
-    private static Date parseObjectToDate(Object input) {
+    @Bean
+    public GraphQLScalarType byteArrayScalar() {
+        return GraphQLScalarType.newScalar()
+                .name("ByteArray")
+                .description("ByteArray as scalar.")
+                .coercing(new Coercing<>() {
+                    @Override
+                    public String serialize(Object input) {
+                        return parseByArrayObjectToString(input);
+                    }
+
+                    @Override
+                    public byte[] parseValue(Object input) {
+                        return parseByteArrayObjectToByteArray(input);
+                    }
+
+                    @Override
+                    public byte[] parseLiteral(Object input) {
+                        return parseByteArrayObjectToByteArray(input);
+                    }
+                }).build();
+    }
+
+    private static Date parseDateObjectToDate(Object input) {
         try {
             return new SimpleDateFormat(DATE_FORMAT).parse(((StringValue) input).getValue());
         } catch (ParseException e) {
@@ -45,14 +71,35 @@ public class GraphQlScalarConfig {
         }
     }
 
-    private static String parseObjectToString(Object input) {
+    private static String parseDateObjectToString(Object input) {
         return new SimpleDateFormat(DATE_FORMAT).format(input);
     }
 
+    private static byte[] parseByteArrayObjectToByteArray(Object input) {
+        if (input instanceof StringValue) {
+            return ((StringValue) input).getValue().getBytes();
+        }
+        throw new CoercingParseLiteralException("Expected a StringValue.");
+    }
+
+    private static String parseByArrayObjectToString(Object input) {
+        if (!(input instanceof byte[])) {
+            throw new CoercingSerializeException("Expected a byte array.");
+        }
+        return new String((byte[]) input);
+    }
+
+
     // https://docs.spring.io/spring-graphql/docs/1.1.0-RC1/reference/html/#execution-graphqlsource-runtimewiring-configurer
     @Bean
-    RuntimeWiringConfigurer runtimeWiringConfigurer() {
+    RuntimeWiringConfigurer runtimeWiringConfigurerDate() {
         GraphQLScalarType scalarType = dateScalar();
+        return wiringBuilder -> wiringBuilder.scalar(scalarType);
+    }
+
+    @Bean
+    RuntimeWiringConfigurer runtimeWiringConfigurerByteArray() {
+        GraphQLScalarType scalarType = byteArrayScalar();
         return wiringBuilder -> wiringBuilder.scalar(scalarType);
     }
 

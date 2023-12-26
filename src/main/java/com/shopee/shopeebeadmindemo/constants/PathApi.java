@@ -1,10 +1,11 @@
 package com.shopee.shopeebeadmindemo.constants;
 
 public interface PathApi {
+
+    String LIST = "/";
     String ACCOUNT = "/accounts";
-
-    String ACCOUNT_CREATE = "/create";
-
-    String ACCOUNT_LIST = "/";
+    String CREATE = "/create";
+    
+    String EXPORT = "/export";
 
 }
