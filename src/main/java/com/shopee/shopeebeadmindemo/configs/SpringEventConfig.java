@@ -11,5 +11,5 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ComponentScan("com.shopee.shopeebeadmindemo.events.listener")
 @EnableRetry
 @EnableAsync
-public class AsyncConfig {
+public class SpringEventConfig {
 }
