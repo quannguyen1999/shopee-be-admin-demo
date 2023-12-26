@@ -3,6 +3,7 @@ package com.shopee.shopeebeadmindemo.services.impls;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -15,7 +16,7 @@ public class AdapterImpl {
         return CollectionUtils.isEmpty(listFieldRequest) ? listDefaults : new ArrayList<>(listFieldRequest.values());
     }
 
-    static Function<List<Map<String, Object>>, Integer> getCommonTotalPage() {
+    static Function<List<HashMap<String, Object>>, Integer> getCommonTotalPage() {
         return maps -> maps.stream()
                 .map(t -> getDefaultValue().apply(t))
                 .findFirst()

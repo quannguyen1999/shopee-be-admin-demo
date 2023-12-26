@@ -1,22 +1,25 @@
 package com.shopee.shopeebeadmindemo.services.impls;
 
 import com.shopee.shopeebeadmindemo.services.ReportService;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class ReportImpl implements ReportService {
 
     @Override
-    public <T> byte[] printReport(List<T> data) {
+    public byte[] printReport(List<HashMap<String, Object>> listData, List<String> listFields) {
         try (Workbook workbook = new XSSFWorkbook()) {
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -24,17 +27,10 @@ public class ReportImpl implements ReportService {
             Sheet sheet = workbook.createSheet("Sheet 1");
 
             // Creating a header row
-            Row headerRow = sheet.createRow(0);
-            Cell headerCell1 = headerRow.createCell(0);
-            headerCell1.setCellValue("Name");
-
-            Cell headerCell2 = headerRow.createCell(1);
-            headerCell2.setCellValue("Age");
+            addCells(listFields, sheet);
 
             // Adding data rows
-            addDataRow(sheet, 1, "John Doe", 25);
-            addDataRow(sheet, 2, "Jane Smith", 30);
-            addDataRow(sheet, 3, "Bob Johnson", 28);
+            addDataRows(listData, listFields, sheet);
 
             // Writing the workbook to a ByteArrayOutputStream
             workbook.write(outputStream);
@@ -42,19 +38,30 @@ public class ReportImpl implements ReportService {
             return outputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
         }
 
         return null;
     }
 
+    private static void addDataRows(List<HashMap<String, Object>> listData, List<String> listFields, Sheet sheet) throws NoSuchFieldException {
+        for (int locate = 0; locate < listData.size(); locate++) {
+            Row row = sheet.createRow(locate + 1);
+            for (int locateField = 0; locateField < listFields.size(); locateField++) {
+                Cell cell1 = row.createCell(locateField);
+                Object data = listData.get(locate).getOrDefault(listFields.get(locateField), null);
+                cell1.setCellValue(ObjectUtils.isEmpty(data) ? Strings.EMPTY : data.toString());
+            }
+        }
+    }
 
-    private static void addDataRow(Sheet sheet, int rowNum, String name, int age) {
-        Row row = sheet.createRow(rowNum);
-        Cell cell1 = row.createCell(0);
-        cell1.setCellValue(name);
-
-        Cell cell2 = row.createCell(1);
-        cell2.setCellValue(age);
+    private static void addCells(List<String> listFields, Sheet sheet) {
+        Row headerRow = sheet.createRow(0);
+        for (int i = 0; i < listFields.size(); i++) {
+            Cell headerCell1 = headerRow.createCell(i);
+            headerCell1.setCellValue(listFields.get(i));
+        }
     }
 
 }

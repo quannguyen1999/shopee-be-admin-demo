@@ -17,10 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto.Fields.*;
 
@@ -36,7 +33,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
     protected final AccountPublisher accountPublisher;
 
-    private List<String> getAllListAccountDefault() {
+    public static List<String> getAllListAccountDefault() {
         return new ArrayList<>(Arrays.asList(id, email, gender, birthday, username, avatar));
     }
 
@@ -72,6 +69,12 @@ public class AccountImpl extends AdapterImpl implements AccountService {
                 .getList(listFieldParam, accountRequestDto, false)
                 .stream()
                 .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList();
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getListAccountsWithResultMap(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto) {
+        List<String> listFieldParam = getListField(listFieldRequest, getAllListAccountDefault());
+        return accountBatisService.getList(listFieldParam, accountRequestDto, false);
     }
 
 
