@@ -1,16 +1,24 @@
 spring:
+  # Vault
+  cloud:
+    vault:
+      scheme: http
+      host: 127.0.0.1
+      port: 8200
+  config:
+    import: vault://
   # PostgreSQL
   datasource:
     hikari:
       connectionTimeout: 20000
       maximum-pool-size: 5
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=qa_shopee
-    username: postgres
-    password: postgres
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
   # Flyway
   flyway:
     url: jdbc:postgresql://localhost:5432/postgres
     schemas: qa_shopee
-    password: postgres
-    user: postgres
+    password: ${spring.datasource.password}
+    user: ${spring.datasource.username}
     enabled: true

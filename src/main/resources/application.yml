@@ -7,11 +7,11 @@ spring:
       path: /graphiql
   application:
     name: shopee_local
-    #TODO need to fix
-    #spring.cloud.vault.token=00000000-0000-0000-0000-000000000000
-    #spring.cloud.vault.scheme=http
-    #spring.cloud.vault.kv.enabled=true
-
+  cloud:
+    vault:
+      kv:
+        enabled: true
+      authentication: TOKEN
 
 mybatis:
   mapper-locations: classpath:batis/*.xml
