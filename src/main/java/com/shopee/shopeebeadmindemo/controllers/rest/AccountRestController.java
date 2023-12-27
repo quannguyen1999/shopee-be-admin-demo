@@ -1,12 +1,14 @@
 package com.shopee.shopeebeadmindemo.controllers.rest;
 
 import com.shopee.shopeebeadmindemo.constants.PathApi;
+import com.shopee.shopeebeadmindemo.models.hateoas.AccountAssembler;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.models.responses.AccountResponseDto;
 import com.shopee.shopeebeadmindemo.models.responses.CommonPageInfo;
 import com.shopee.shopeebeadmindemo.services.AccountService;
 import com.shopee.shopeebeadmindemo.services.ReportService;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +27,12 @@ public class AccountRestController {
 
     private final ReportService reportService;
 
-    @RequestMapping(value = PathApi.LIST, method = RequestMethod.GET)
-    public ResponseEntity<CommonPageInfo<AccountResponseDto>> getListAccounts(@RequestBody AccountRequestDto accountRequestDto) {
-       return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccounts(null, accountRequestDto));
+    private final AccountAssembler accountAssembler;
+
+    @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
+    public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(@RequestBody AccountRequestDto accountRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountAssembler.toModel(accountService.getAccounts(null, accountRequestDto)));
     }
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
