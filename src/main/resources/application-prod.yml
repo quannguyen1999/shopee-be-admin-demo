@@ -5,6 +5,7 @@ spring:
       scheme: http
       host: 127.0.0.1
       port: 8200
+      token: 18456350-7b89-11ed-85e9-a5830358e351
   config:
     import: vault://
   # PostgreSQL
