@@ -19,4 +19,6 @@ public class CommonPageInfo<T> {
 
     public List<T> data;
 
+    public String __typename;
+
 }
