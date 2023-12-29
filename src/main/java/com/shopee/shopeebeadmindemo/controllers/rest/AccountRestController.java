@@ -36,7 +36,7 @@ public class AccountRestController {
     }
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
-    public ResponseEntity<?> createAccount(AccountRequestDto accountRequestDto) {
+    public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
         accountService.createAccount(accountRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
