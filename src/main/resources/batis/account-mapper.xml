@@ -26,6 +26,15 @@
             <if test="field == 'avatar'">
                 a.avatar
             </if>
+            <if test="field == 'created'">
+                a.created
+            </if>
+            <if test="field == 'updated'">
+                a.updated
+            </if>
+            <if test="field == 'isActive'">
+                a.is_active
+            </if>
         </foreach>
         from account a
         where 1 = 1
@@ -44,7 +53,9 @@
             </when>
             <otherwise></otherwise>
         </choose>
-
+        <if test="request.page != null and request.page != 0 and isCountTotalPage == false">
+            order by username
+        </if>
         <choose>
             <when test="request.page != null and request.size != null and isCountTotalPage == false">
                 LIMIT #{request.size} OFFSET #{request.page}

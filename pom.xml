@@ -169,12 +169,12 @@
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
 
-        <!-- Vault Starter -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-vault-config</artifactId>
-            <version>3.0.5</version>
-        </dependency>
+        <!--TODO Vault Starter implement later -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-vault-config</artifactId>-->
+        <!--            <version>3.0.5</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
     <dependencyManagement>

@@ -22,7 +22,8 @@ public interface AccountMapper extends CommonUtilMapper {
             @Mapping(source = birthday, target = birthday, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = gender, target = gender, qualifiedByName = CONVERT_TO_BOOLEAN),
             @Mapping(source = email, target = email, qualifiedByName = CONVERT_TO_STRING),
-            @Mapping(source = avatar, target = avatar, qualifiedByName = CONVERT_TO_STRING)
+            @Mapping(source = avatar, target = avatar, qualifiedByName = CONVERT_TO_STRING),
+            @Mapping(source = isActive, target = isActive, qualifiedByName = CONVERT_TO_BOOLEAN)
     })
     AccountResponseDto mapToAccountResponseDto(Map<String, Object> account);
     

@@ -32,6 +32,8 @@ public class Account extends CommonBaseEntities {
 
     private String avatar;
 
+    private Boolean isActive;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

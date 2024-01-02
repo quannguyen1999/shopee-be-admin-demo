@@ -55,21 +55,21 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     public CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto) {
 //        accountPublisher.publishEvent("Test");
         List<String> listFieldParam = getListField(listFieldRequest, getAllListAccountDefault());
-        //Get Data
-        List<AccountResponseDto> data = getListAccounts(listFieldParam, accountRequestDto);
+        Integer totalRecord = getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, accountRequestDto, true));
         return CommonPageInfo.<AccountResponseDto>builder()
                 .page(accountRequestDto.getPage())
                 .size(accountRequestDto.getSize())
-                .total(getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, accountRequestDto, true)))
-                .data(data)
+                .total(totalRecord)
+                .data(getListAccounts(listFieldParam, accountRequestDto, totalRecord))
                 .build();
     }
 
-    private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto) {
-        return accountBatisService
-                .getList(listFieldParam, accountRequestDto, false)
-                .stream()
-                .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList();
+    private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto, Integer totalRecord) {
+        return (accountRequestDto.getPage() * accountRequestDto.getSize()) < totalRecord ?
+                accountBatisService
+                        .getList(listFieldParam, accountRequestDto, false)
+                        .stream()
+                        .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList() : new ArrayList<>();
     }
 
     @Override

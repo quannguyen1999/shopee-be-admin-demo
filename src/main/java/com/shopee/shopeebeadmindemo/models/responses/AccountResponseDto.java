@@ -24,4 +24,6 @@ public class AccountResponseDto extends CommonBaseModel {
 
     private String avatar;
 
+    private Boolean isActive;
+
 }

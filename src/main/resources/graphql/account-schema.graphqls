@@ -19,6 +19,10 @@ type AccountResponseDto {
     gender: Boolean
     email: String
     avatar: String
+    isActive: String
+
+    created: Date
+    updated: Date
 }
 
 type CommonPageInfo {

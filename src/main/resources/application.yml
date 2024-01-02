@@ -7,11 +7,11 @@ spring:
       path: /graphiql
   application:
     name: shopee_local
-  cloud:
-    vault:
-      kv:
-        enabled: true
-      authentication: TOKEN
+#  cloud:
+#    vault:
+#      kv:
+#        enabled: true
+#      authentication: TOKEN
 
 mybatis:
   mapper-locations: classpath:batis/*.xml

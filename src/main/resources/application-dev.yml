@@ -1,27 +1,27 @@
 spring:
-  # Vault
-  cloud:
-    vault:
-      scheme: http
-      host: 127.0.0.1
-      port: 8200
-      token: 18456350-7b89-11ed-85e9-a5830358e351
-  config:
-    import: vault://
+#  # Vault
+  #  cloud:
+  #    vault:
+  #      scheme: http
+  #      host: 127.0.0.1
+  #      port: 8200
+  #      token: 18456350-7b89-11ed-85e9-a5830358e351
+  #  config:
+  #    import: vault://
   # PostgreSQL
   datasource:
     hikari:
       connectionTimeout: 20000
       maximum-pool-size: 5
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=qa_shopee
-    username: ${spring.datasource.username}
-    password: ${spring.datasource.password}
+    username: postgres
+    password: postgres
   # Flyway
   flyway:
     url: jdbc:postgresql://localhost:5432/postgres
     schemas: qa_shopee
-    password: ${spring.datasource.password}
-    user: ${spring.datasource.username}
+    password: postgres
+    user: postgres
     enabled: true
     validate-migration-naming: true
 # Batis
