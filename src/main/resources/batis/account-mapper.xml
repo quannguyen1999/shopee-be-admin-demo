@@ -2,69 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
+
+    <!-- Select Query -->
     <select id="getList" resultType="java.util.HashMap">
         <if test="isCountTotalPage == true">
-            select count(*) as total from (
+            <!-- Count Query -->
+            SELECT count(*) as total FROM (
         </if>
-        select
+
+        <!-- Main Query -->
+        SELECT
         <foreach item="field" collection="fields" separator=",">
-            <if test="field == 'id'">
-                a.id
-            </if>
-            <if test="field == 'username'">
-                a.username
-            </if>
-            <if test="field == 'birthday'">
-                a.birthday
-            </if>
-            <if test="field == 'gender'">
-                a.gender
-            </if>
-            <if test="field == 'email'">
-                a.email
-            </if>
-            <if test="field == 'avatar'">
-                a.avatar
-            </if>
-            <if test="field == 'created'">
-                a.created
-            </if>
-            <if test="field == 'updated'">
-                a.updated
-            </if>
-            <if test="field == 'isActive'">
-                a.is_active
-            </if>
+            <choose>
+                <when test="field == 'id'">
+                    a.id
+                </when>
+                <when test="field == 'username'">
+                    a.username
+                </when>
+                <when test="field == 'birthday'">
+                    a.birthday
+                </when>
+                <when test="field == 'gender'">
+                    a.gender
+                </when>
+                <when test="field == 'email'">
+                    a.email
+                </when>
+                <when test="field == 'avatar'">
+                    a.avatar
+                </when>
+                <when test="field == 'created'">
+                    a.created
+                </when>
+                <when test="field == 'updated'">
+                    a.updated
+                </when>
+                <when test="field == 'isActive'">
+                    a.is_active
+                </when>
+            </choose>
         </foreach>
-        from account a
-        where 1 = 1
+
+        <!-- From Clause -->
+        FROM account a
+        WHERE 1 = 1
+
+        <!-- Conditions -->
         <if test="request.username != null">
-            and a.username like '%' || #{request.username} || '%'
+            AND a.username LIKE '%' || #{request.username} || '%'
         </if>
         <if test="request.gender != null">
-            and a.gender = #{request.gender}
+            AND a.gender = #{request.gender}
         </if>
         <if test="request.email != null">
-            and a.email = #{email}
+            AND a.email = #{email}
         </if>
+
+        <!-- Date Range Condition -->
         <choose>
             <when test="request.fromBirthday != null and request.toBirthday != null">
-                and a.birthday between #{request.fromBirthday} and #{request.toBirthday}
+                AND a.birthday BETWEEN #{request.fromBirthday} AND #{request.toBirthday}
             </when>
-            <otherwise></otherwise>
         </choose>
+
+        <!-- Order By Clause -->
         <if test="request.page != null and request.page != 0 and isCountTotalPage == false">
-            order by username
+            ORDER BY username
         </if>
+
+        <!-- Pagination -->
         <choose>
             <when test="request.page != null and request.size != null and isCountTotalPage == false">
                 LIMIT #{request.size} OFFSET #{request.page}
             </when>
-            <otherwise></otherwise>
         </choose>
+
+        <!-- Closing Count Query -->
         <if test="isCountTotalPage == true">
             )
         </if>
     </select>
 </mapper>
-
