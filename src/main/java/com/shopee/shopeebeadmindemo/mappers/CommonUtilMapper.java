@@ -26,6 +26,6 @@ public interface CommonUtilMapper {
 
     @Named(CONVERT_TO_BOOLEAN)
     default Boolean convertToBoolean(Object fieldValue) {
-        return !ObjectUtils.isEmpty(fieldValue) ? Boolean.getBoolean(fieldValue.toString()) : null;
+        return !ObjectUtils.isEmpty(fieldValue) ? Boolean.valueOf(fieldValue.toString()) : null;
     }
 }
