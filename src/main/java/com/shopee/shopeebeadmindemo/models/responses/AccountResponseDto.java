@@ -1,14 +1,14 @@
 package com.shopee.shopeebeadmindemo.models.responses;
 
 import com.shopee.shopeebeadmindemo.models.CommonBaseModel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.util.UUID;
 
-@Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldNameConstants
 public class AccountResponseDto extends CommonBaseModel {
 
@@ -16,14 +16,14 @@ public class AccountResponseDto extends CommonBaseModel {
 
     public String username;
 
-    private String birthday;
+    public String birthday;
 
-    private Boolean gender;
+    public Boolean gender;
 
-    private String email;
+    public String email;
 
-    private String avatar;
+    public String avatar;
 
-    private Boolean isActive;
+    public Boolean isActive;
 
 }

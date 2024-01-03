@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface AccountBatisService {
-
+    
     List<HashMap<String, Object>> getList(
             List<String> fields,
             AccountRequestDto request,

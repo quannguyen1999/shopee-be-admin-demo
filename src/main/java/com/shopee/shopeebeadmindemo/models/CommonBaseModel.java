@@ -1,22 +1,24 @@
 package com.shopee.shopeebeadmindemo.models;
 
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.Date;
 
 @Data
+@FieldNameConstants
 public class CommonBaseModel {
 
-    private Date created;
+    public Date created;
 
-    private Date updated;
+    public Date updated;
 
-    private String userCreated;
+    public String userCreated;
 
-    private String userUpdated;
+    public String userUpdated;
 
-    private Integer page;
+    public Integer page;
 
-    private Integer size;
+    public Integer size;
 
 }

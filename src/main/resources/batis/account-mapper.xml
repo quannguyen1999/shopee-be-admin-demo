@@ -39,7 +39,7 @@
                     a.updated
                 </when>
                 <when test="field == 'isActive'">
-                    a.is_active
+                    a.is_active as "isActive"
                 </when>
             </choose>
         </foreach>
