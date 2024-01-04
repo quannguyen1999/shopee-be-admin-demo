@@ -11,23 +11,31 @@ import java.util.*;
 @FieldNameConstants
 public class AccountRequestDto extends CommonBaseModel {
 
+    public String id;
+
     public String username;
 
-    private Date birthday;
+    public Date birthday;
 
-    private Boolean gender;
+    public Boolean gender;
 
-    private String email;
+    public String email;
 
-    private String avatar;
+    public String avatar;
+    
+    public Boolean isActive;
 
     private Set<RoleAccount> roleAccountList = new HashSet<>();
 
     //Search
     public List<String> listFields = new ArrayList<>();
 
-    public Date fromBirthday;
+    public String fromBirthday;
 
-    public Date toBirthday;
+    public String toBirthday;
+
+    public String createFromDate;
+
+    public String createToDate;
 
 }

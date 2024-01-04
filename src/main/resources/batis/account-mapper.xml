@@ -49,6 +49,9 @@
         WHERE 1 = 1
 
         <!-- Conditions -->
+        <if test="request.id != null">
+            AND a.id::text LIKE '%' || #{request.id} || '%'
+        </if>
         <if test="request.username != null">
             AND a.username LIKE '%' || #{request.username} || '%'
         </if>
@@ -62,7 +65,13 @@
         <!-- Date Range Condition -->
         <choose>
             <when test="request.fromBirthday != null and request.toBirthday != null">
-                AND a.birthday BETWEEN #{request.fromBirthday} AND #{request.toBirthday}
+                AND to_char(a.birthday, 'yyyyMMdd') BETWEEN #{request.fromBirthday} AND #{request.toBirthday}
+            </when>
+        </choose>
+
+        <choose>
+            <when test="request.createFromDate != null and request.createToDate != null">
+                AND to_char(a.created,'yyyyMMdd') BETWEEN #{request.createFromDate} AND #{request.createToDate}
             </when>
         </choose>
 

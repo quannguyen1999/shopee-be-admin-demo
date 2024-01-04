@@ -1,4 +1,5 @@
 input AccountRequestDto {
+    id: String
     username: String
     birthday: Date
     gender: Boolean
@@ -8,8 +9,11 @@ input AccountRequestDto {
     size: Int!
 
     listFields: [String]
-    fromBirthday: Date
-    toBirthday: Date
+    fromBirthday: String
+    toBirthday: String
+    createFromDate: String
+    createToDate: String
+    isActive: Boolean
 }
 
 type AccountResponseDto {
