@@ -22,7 +22,7 @@ public class AccountRequestDto extends CommonBaseModel {
     public String email;
 
     public String avatar;
-    
+
     public Boolean isActive;
 
     private Set<RoleAccount> roleAccountList = new HashSet<>();

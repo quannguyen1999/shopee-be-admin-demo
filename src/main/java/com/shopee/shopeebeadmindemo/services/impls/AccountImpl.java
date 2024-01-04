@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 
@@ -65,7 +66,8 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto, Integer totalRecord) {
-        return (accountRequestDto.getPage() * accountRequestDto.getSize()) < totalRecord ?
+        return (!ObjectUtils.isEmpty(accountRequestDto.getPage()) && !ObjectUtils.isEmpty(accountRequestDto.getSize()))
+                && (accountRequestDto.getPage() * accountRequestDto.getSize()) < totalRecord ?
                 accountBatisService
                         .getList(listFieldParam, accountRequestDto, false)
                         .stream()

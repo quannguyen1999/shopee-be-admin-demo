@@ -29,6 +29,12 @@ public class AccountRestController {
 
     private final AccountAssembler accountAssembler;
 
+    @RequestMapping(value = PathApi.INFO_PATH, method = RequestMethod.GET)
+    public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getInfoPath() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountAssembler.toModel(CommonPageInfo.<AccountResponseDto>builder().build()));
+    }
+
     @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(@RequestBody AccountRequestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
