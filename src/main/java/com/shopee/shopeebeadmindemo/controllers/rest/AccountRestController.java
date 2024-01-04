@@ -50,7 +50,8 @@ public class AccountRestController {
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)
     public ResponseEntity<byte[]> exportAccount(@RequestBody AccountRequestDto accountRequestDto) {
         List<HashMap<String, Object>> listResult = accountService.getListAccountsWithResultMap(accountRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(reportService.printReport(listResult, accountService.getListField(accountRequestDto)));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(reportService.printReport(listResult, accountService.getListField(accountRequestDto)));
     }
 
 

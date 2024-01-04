@@ -6,7 +6,7 @@ import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 //Spring Event
-//Scan component will excute event
+//Scan component will executed event
 @Configuration
 @ComponentScan("com.shopee.shopeebeadmindemo.events.listener")
 @EnableRetry
