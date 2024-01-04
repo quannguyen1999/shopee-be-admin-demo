@@ -58,8 +58,8 @@
         <if test="request.gender != null">
             AND a.gender = #{request.gender}
         </if>
-        <if test="request.email != null">
-            AND a.email = #{email}
+        <if test="request.email != null and request.email != ''">
+            AND a.email = #{request.email}
         </if>
 
         <!-- Date Range Condition -->
