@@ -76,8 +76,8 @@
         </choose>
 
         <!-- Order By Clause -->
-        <if test="request.page != null and request.page != 0 and isCountTotalPage == false">
-            ORDER BY username
+        <if test="request.page != null and request.page != null and isCountTotalPage == false">
+            ORDER BY created desc
         </if>
 
         <!-- Pagination -->
