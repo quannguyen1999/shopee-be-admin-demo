@@ -9,6 +9,7 @@ input AccountRequestDto {
     size: Int!
 
     listFields: [String]
+    listSorted: [Map]
     fromBirthday: String
     toBirthday: String
     createFromDate: String

@@ -77,7 +77,10 @@
 
         <!-- Order By Clause -->
         <if test="request.page != null and request.page != null and isCountTotalPage == false">
-            ORDER BY created desc
+            ORDER BY
+            <foreach item="field" collection="request.listSorted" separator=", ">
+                a.${field.field} ${field.value}
+            </foreach>
         </if>
 
         <!-- Pagination -->

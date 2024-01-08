@@ -1,6 +1,11 @@
 scalar Date
 scalar ByteArray
 
+input Map {
+    field: String
+    value: String
+}
+
 type Query {
     listAccount(accountRequestDto: AccountRequestDto!): CommonPageInfo
     exportAccount(accountRequestDto: AccountRequestDto!): ByteArray

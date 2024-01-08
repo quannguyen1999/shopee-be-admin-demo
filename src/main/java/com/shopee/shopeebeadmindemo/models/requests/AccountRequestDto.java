@@ -30,6 +30,8 @@ public class AccountRequestDto extends CommonBaseModel {
     //Search
     public List<String> listFields = new ArrayList<>();
 
+    public List<Map<String, String>> listSorted = new ArrayList<>();
+
     public String fromBirthday;
 
     public String toBirthday;
