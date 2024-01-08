@@ -11,42 +11,27 @@
         </if>
 
         <!-- Main Query -->
-        SELECT
-        <foreach item="field" collection="fields" separator=",">
-            <choose>
-                <when test="field == 'id'">
-                    a.id
-                </when>
-                <when test="field == 'username'">
-                    a.username
-                </when>
-                <when test="field == 'birthday'">
-                    a.birthday
-                </when>
-                <when test="field == 'gender'">
-                    a.gender
-                </when>
-                <when test="field == 'email'">
-                    a.email
-                </when>
-                <when test="field == 'avatar'">
-                    a.avatar
-                </when>
-                <when test="field == 'created'">
-                    a.created
-                </when>
-                <when test="field == 'updated'">
-                    a.updated
-                </when>
-                <when test="field == 'isActive'">
-                    a.is_active as "isActive"
-                </when>
-            </choose>
-        </foreach>
+        <trim prefix="SELECT" suffixOverrides=",">
+            <foreach item="field" collection="fields" separator=",">
+                <choose>
+                    <when test="field == 'id' or
+                                field == 'username' or
+                                field == 'birthday' or
+                                field == 'gender' or
+                                field == 'email' or
+                                field == 'avatar' or
+                                field == 'created' or
+                                field == 'updated'">
+                        a.${field} as ${field}
+                    </when>
+                    <when test="field == 'isActive'">
+                        a.${field} as 'isActive'
+                    </when>
+                </choose>
+            </foreach>
+        </trim>
 
-        <!-- From Clause -->
-        FROM account a
-        WHERE 1 = 1
+        FROM account a WHERE 1 = 1
 
         <!-- Conditions -->
         <if test="request.id != null">
