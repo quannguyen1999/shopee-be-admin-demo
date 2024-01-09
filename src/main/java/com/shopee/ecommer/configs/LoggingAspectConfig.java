@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Profile("dev")
 public class LoggingAspectConfig {
-//    @Pointcut("@annotation(LogNameMethod)")
-//    public void logPointcut() {
-//    }
 
     //    @Before("logPointcut()")
     @Before("execution(* com.shopee.ecommer.controllers..*(..))")
