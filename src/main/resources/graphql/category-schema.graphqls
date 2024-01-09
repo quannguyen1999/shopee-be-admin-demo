@@ -1,0 +1,28 @@
+input CategoryRequestDto {
+    id: String
+    name: String
+    image: String
+    page: Int!
+    size: Int!
+
+    #Search
+    listFields: [String]
+    listSorted: [Map]
+    createFromDate: String
+    createToDate: String
+}
+
+type CategoryResponseDto {
+    id: String
+    name: String
+    image: String
+    created: Date
+    updated: Date
+}
+
+type CommonPageInfoCategory {
+    total: Int!
+    page: Int!
+    size: Int!
+    data: [CategoryResponseDto]
+}

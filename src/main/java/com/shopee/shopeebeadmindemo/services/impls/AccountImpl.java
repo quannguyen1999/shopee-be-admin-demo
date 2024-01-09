@@ -16,8 +16,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 
@@ -35,7 +33,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
     protected final AccountPublisher accountPublisher;
 
-    public static List<String> getAllListAccountDefault() {
+    public static List<String> getAllListDefault() {
         return new ArrayList<>(Arrays.asList(id, email, gender, birthday, username, avatar));
     }
 
@@ -53,39 +51,37 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFieldRequest, AccountRequestDto accountRequestDto) {
+    public CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFieldRequest,
+                                                      AccountRequestDto accountRequestDto) {
 //        accountPublisher.publishEvent("Test");
-        List<String> listFieldParam = getListField(listFieldRequest, getAllListAccountDefault());
-        Integer totalRecord = getCommonTotalPage().apply(accountBatisService.getList(listFieldParam, accountRequestDto, true));
+        accountRequestDto.setListFields(convertListFieldRequest(listFieldRequest, getAllListDefault()));
+        accountRequestDto.setTotalRecord(getCommonTotalPage().apply(accountBatisService.getList(accountRequestDto, true)));
         return CommonPageInfo.<AccountResponseDto>builder()
                 .page(accountRequestDto.getPage())
                 .size(accountRequestDto.getSize())
-                .total(totalRecord)
-                .data(getListAccounts(listFieldParam, accountRequestDto, totalRecord))
+                .total(accountRequestDto.getTotalRecord())
+                .data(handlerList(accountRequestDto))
                 .build();
     }
 
-    private List<AccountResponseDto> getListAccounts(List<String> listFieldParam, AccountRequestDto accountRequestDto, Integer totalRecord) {
-        return (!ObjectUtils.isEmpty(accountRequestDto.getPage()) && !ObjectUtils.isEmpty(accountRequestDto.getSize()))
-                && (accountRequestDto.getPage() * accountRequestDto.getSize()) < totalRecord ?
-                accountBatisService
-                        .getList(listFieldParam, accountRequestDto, false)
-                        .stream()
-                        .map(AccountMapper.MAPPER::mapToAccountResponseDto).toList() : new ArrayList<>();
+    private List<AccountResponseDto> handlerList(AccountRequestDto accountRequestDto) {
+        return checkPageSize()
+                .test(CommonPageInfo.builder()
+                        .page(accountRequestDto.getPage())
+                        .size(accountRequestDto.getSize())
+                        .total(accountRequestDto.getTotalRecord())
+                        .build()) ? accountBatisService.getList(accountRequestDto, false)
+                .stream().map(AccountMapper.MAPPER::mapToAccountResponseDto).toList() : new ArrayList<>();
     }
 
     @Override
-    public List<HashMap<String, Object>> getListAccountsWithResultMap(AccountRequestDto accountRequestDto) {
-        return accountBatisService.getList(
-                CollectionUtils.isEmpty(accountRequestDto.getListFields()) ? getAllListAccountDefault() : accountRequestDto.getListFields(),
-                accountRequestDto,
-                false
-        );
+    public List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto) {
+        return accountBatisService.getList(accountRequestDto, false);
     }
 
     @Override
     public List<String> getListField(AccountRequestDto accountRequestDto) {
-        return CollectionUtils.isEmpty(accountRequestDto.getListFields()) ? AccountImpl.getAllListAccountDefault() : accountRequestDto.getListFields();
+        return checkList().apply(accountRequestDto.getListFields(), AccountImpl.getAllListDefault());
     }
 
 

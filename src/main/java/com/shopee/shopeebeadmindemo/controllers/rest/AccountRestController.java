@@ -38,7 +38,7 @@ public class AccountRestController {
     @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(@RequestBody AccountRequestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(accountAssembler.toModel(accountService.getAccounts(null, accountRequestDto)));
+                .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
     }
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
@@ -49,7 +49,7 @@ public class AccountRestController {
 
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)
     public ResponseEntity<byte[]> exportAccount(@RequestBody AccountRequestDto accountRequestDto) {
-        List<HashMap<String, Object>> listResult = accountService.getListAccountsWithResultMap(accountRequestDto);
+        List<HashMap<String, Object>> listResult = accountService.getListWithResultMap(accountRequestDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(reportService.printReport(listResult, accountService.getListField(accountRequestDto)));
     }

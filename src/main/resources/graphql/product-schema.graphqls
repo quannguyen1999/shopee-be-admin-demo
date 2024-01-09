@@ -1,10 +1,10 @@
-input AccountRequestDto {
+input ProductRequestDto {
     id: String
-    username: String
-    birthday: Date
-    gender: Boolean
-    email: String
-    avatar: String
+    name: String
+    image: Date
+    quantity: Double!
+    price: Double!
+    discount: Double!
     page: Int!
     size: Int!
 
@@ -18,21 +18,20 @@ input AccountRequestDto {
     isActive: Boolean
 }
 
-type AccountResponseDto {
+type ProductResponseDto {
     id: String
-    username: String
-    birthday: String
-    gender: Boolean
-    email: String
-    avatar: String
-    isActive: String
+    name: String
+    image: Date
+    quantity: Double!
+    price: Double!
+    discount: Double!
     created: Date
     updated: Date
 }
 
-type CommonPageInfoAccount {
+type CommonPageInfoProduct {
     total: Int!
     page: Int!
     size: Int!
-    data: [AccountResponseDto]
+    data: [ProductResponseDto]
 }

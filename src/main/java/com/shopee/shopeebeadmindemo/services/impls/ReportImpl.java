@@ -19,7 +19,8 @@ import java.util.List;
 public class ReportImpl implements ReportService {
 
     @Override
-    public byte[] printReport(List<HashMap<String, Object>> listData, List<String> listFields) {
+    public byte[] printReport(List<HashMap<String, Object>> listData,
+                              List<String> listFields) {
         try (Workbook workbook = new XSSFWorkbook()) {
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -45,7 +46,9 @@ public class ReportImpl implements ReportService {
         return null;
     }
 
-    private static void addDataRows(List<HashMap<String, Object>> listData, List<String> listFields, Sheet sheet) throws NoSuchFieldException {
+    private static void addDataRows(List<HashMap<String, Object>> listData,
+                                    List<String> listFields,
+                                    Sheet sheet) throws NoSuchFieldException {
         for (int locate = 0; locate < listData.size(); locate++) {
             Row row = sheet.createRow(locate + 1);
             for (int locateField = 0; locateField < listFields.size(); locateField++) {

@@ -24,12 +24,12 @@ public class AccountGraphController {
 
     @QueryMapping
     public CommonPageInfo<AccountResponseDto> listAccount(@Argument AccountRequestDto accountRequestDto, DataFetchingEnvironment environment) {
-        return accountService.getAccounts(GraphQLUtils.getNameFieldGraphQL(environment), accountRequestDto);
+        return accountService.getList(GraphQLUtils.getNameFieldGraphQL(environment), accountRequestDto);
     }
     
     @QueryMapping
     public byte[] exportAccount(@Argument AccountRequestDto accountRequestDto) {
-        List<HashMap<String, Object>> listResult = accountService.getListAccountsWithResultMap(accountRequestDto);
+        List<HashMap<String, Object>> listResult = accountService.getListWithResultMap(accountRequestDto);
         return reportService.printReport(listResult, accountService.getListField(accountRequestDto));
     }
 }

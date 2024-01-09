@@ -1,7 +1,7 @@
 <!-- CustomMapper.xml -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
+<mapper namespace="com.shopee.shopeebeadmindemo.mybatis.ProductBatisService">
 
     <!-- Select Query -->
     <select id="getList" resultType="java.util.HashMap">
@@ -13,48 +13,25 @@
         <!-- Main Query -->
         <trim prefix="SELECT" suffixOverrides=",">
             <foreach item="field" collection="request.listFields" separator=",">
-                <choose>
-                    <when test="field == 'isActive'">
-                        a.is_active as "isActive"
-                    </when>
-                    <otherwise>
-                        a.${field} as ${field}
-                    </otherwise>
-                </choose>
+                pro.${field} as ${field}
             </foreach>
         </trim>
 
-        FROM account a WHERE 1 = 1
+        FROM product pro WHERE 1 = 1
 
         <!-- Conditions -->
         <if test="request.id != null">
-            AND a.id::text LIKE '%' || #{request.id} || '%'
+            AND pro.id::text LIKE '%' || #{request.id} || '%'
         </if>
-        <if test="request.username != null">
-            AND a.username LIKE '%' || #{request.username} || '%'
-        </if>
-        <if test="request.gender != null">
-            AND a.gender = #{request.gender}
-        </if>
-        <if test="
-            request.email != null
-            and request.email != ''">
-            AND a.email = #{request.email}
+        <if test="request.name != null">
+            AND pro.name LIKE '%' || #{name} || '%'
         </if>
 
-        <!-- Date Range Condition -->
-        <choose>
-            <when test="
-                request.fromBirthday != null
-                and request.toBirthday != null">
-                AND to_char(a.birthday, 'yyyyMMdd') BETWEEN #{request.fromBirthday} AND #{request.toBirthday}
-            </when>
-        </choose>
-
+        <!-- Date Range -->
         <choose>
             <when test="request.createFromDate != null
                         and request.createToDate != null">
-                AND to_char(a.created,'yyyyMMdd') BETWEEN #{request.createFromDate} AND #{request.createToDate}
+                AND to_char(pro.created,'yyyyMMdd') BETWEEN #{request.createFromDate} AND #{request.createToDate}
             </when>
         </choose>
 

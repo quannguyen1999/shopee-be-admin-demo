@@ -11,6 +11,8 @@ public interface CommonUtilMapper {
     String CONVERT_TO_UUID = "convertToUUID";
     String CONVERT_TO_BOOLEAN = "convertToBoolean";
 
+    String CONVERT_TO_DOUBLE = "convertToDouble";
+
     //Format Date
     String DATE_FORMAT = "yyyy-MM-dd";
 
@@ -27,5 +29,10 @@ public interface CommonUtilMapper {
     @Named(CONVERT_TO_BOOLEAN)
     default Boolean convertToBoolean(Object fieldValue) {
         return !ObjectUtils.isEmpty(fieldValue) ? Boolean.valueOf(fieldValue.toString()) : null;
+    }
+
+    @Named(CONVERT_TO_DOUBLE)
+    default Double convertToDouble(Object fieldValue) {
+        return !ObjectUtils.isEmpty(fieldValue) ? Double.valueOf(fieldValue.toString()) : null;
     }
 }

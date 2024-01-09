@@ -1,17 +1,16 @@
 package com.shopee.shopeebeadmindemo.validators;
 
-import com.shopee.shopeebeadmindemo.constants.MessageErrors;
-import com.shopee.shopeebeadmindemo.exceptions.BadRequestException;
 import com.shopee.shopeebeadmindemo.models.requests.AccountRequestDto;
 import com.shopee.shopeebeadmindemo.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+
+import static com.shopee.shopeebeadmindemo.constants.MessageErrors.ACCOUNT_USERNAME_INVALID;
+import static com.shopee.shopeebeadmindemo.constants.MessageErrors.ACCOUNT_USERNAME_IS_EXISTS;
 
 @AllArgsConstructor
 @Component
-public class AccountValidator {
+public class AccountValidator extends CommonValidator {
 
     private final AccountRepository accountRepository;
 
@@ -21,11 +20,7 @@ public class AccountValidator {
     }
 
     private void validateCheckUserName(String username) {
-        if (!StringUtils.hasLength(username)) {
-            throw new BadRequestException(MessageErrors.USERNAME_INVALID);
-        }
-        if (!ObjectUtils.isEmpty(accountRepository.findByUsername(username))) {
-            throw new BadRequestException(MessageErrors.USERNAME_IS_EXISTS);
-        }
+        checkEmpty().accept(username, ACCOUNT_USERNAME_INVALID);
+        checkEmpty().accept(accountRepository.findByUsername(username), ACCOUNT_USERNAME_IS_EXISTS);
     }
 }

@@ -1,5 +1,6 @@
 scalar Date
 scalar ByteArray
+scalar Double
 
 input Map {
     field: String
@@ -7,6 +8,13 @@ input Map {
 }
 
 type Query {
-    listAccount(accountRequestDto: AccountRequestDto!): CommonPageInfo
+    #    Account
+    listAccount(accountRequestDto: AccountRequestDto!): CommonPageInfoAccount
     exportAccount(accountRequestDto: AccountRequestDto!): ByteArray
+
+    #    Category
+    listCategory(categoryRequestDto: CategoryRequestDto!): CommonPageInfoCategory
+
+    #    Product
+    listProduct(productRequestDto: ProductRequestDto!): CommonPageInfoProduct
 }

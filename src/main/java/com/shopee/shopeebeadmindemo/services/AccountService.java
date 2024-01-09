@@ -11,9 +11,9 @@ import java.util.Map;
 public interface AccountService {
     void createAccount(AccountRequestDto account);
 
-    CommonPageInfo<AccountResponseDto> getAccounts(Map<String, String> listFields, AccountRequestDto requestDto);
+    CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFields, AccountRequestDto requestDto);
 
-    List<HashMap<String, Object>> getListAccountsWithResultMap(AccountRequestDto accountRequestDto);
+    List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto);
 
     List<String> getListField(AccountRequestDto accountRequestDto);
 

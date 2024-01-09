@@ -8,6 +8,7 @@ import graphql.schema.GraphQLScalarType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
+import org.springframework.util.ObjectUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,29 @@ public class GraphQlScalarConfig {
                     @Override
                     public Date parseLiteral(Object input) {
                         return parseDateObjectToDate(input);
+                    }
+                }).build();
+    }
+
+    @Bean
+    public GraphQLScalarType doubleScalar() {
+        return GraphQLScalarType.newScalar()
+                .name("Double")
+                .description("Double as scalar.")
+                .coercing(new Coercing<>() {
+                    @Override
+                    public Double serialize(Object input) {
+                        return parseObjectToDouble(input);
+                    }
+
+                    @Override
+                    public Double parseValue(Object input) {
+                        return parseObjectToDouble(input);
+                    }
+
+                    @Override
+                    public Double parseLiteral(Object input) {
+                        return parseObjectToDouble(input);
                     }
                 }).build();
     }
@@ -71,6 +95,10 @@ public class GraphQlScalarConfig {
         }
     }
 
+    private static Double parseObjectToDouble(Object input) {
+        return ObjectUtils.isEmpty(input) ? 0 : Double.parseDouble(input.toString());
+    }
+
     private static String parseDateObjectToString(Object input) {
         return new SimpleDateFormat(DATE_FORMAT).format(input);
     }
@@ -100,6 +128,12 @@ public class GraphQlScalarConfig {
     @Bean
     RuntimeWiringConfigurer runtimeWiringConfigurerByteArray() {
         GraphQLScalarType scalarType = byteArrayScalar();
+        return wiringBuilder -> wiringBuilder.scalar(scalarType);
+    }
+
+    @Bean
+    RuntimeWiringConfigurer runtimeWiringConfigurerDouble() {
+        GraphQLScalarType scalarType = doubleScalar();
         return wiringBuilder -> wiringBuilder.scalar(scalarType);
     }
 

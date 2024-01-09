@@ -1,6 +1,8 @@
 package com.shopee.shopeebeadmindemo.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.util.UUID;
@@ -13,7 +15,6 @@ import java.util.UUID;
 @Setter
 @Builder
 public class Category extends CommonBaseEntities{
-
     @Id
     private UUID id;
 
