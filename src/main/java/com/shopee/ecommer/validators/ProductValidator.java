@@ -2,7 +2,6 @@ package com.shopee.ecommer.validators;
 
 import com.shopee.ecommer.models.requests.ProductRequestDto;
 import com.shopee.ecommer.repositories.CategoryRepository;
-import com.shopee.ecommer.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +12,6 @@ import static com.shopee.ecommer.constants.MessageErrors.*;
 public class ProductValidator extends CommonValidator {
 
     private final CategoryRepository categoryRepository;
-
-    private final ProductRepository productRepository;
 
     public void validateCreateProduct(ProductRequestDto productRequestDto) {
         checkEmpty().accept(productRequestDto.getName(), PRODUCT_NAME_INVALID);

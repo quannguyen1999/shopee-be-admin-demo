@@ -8,6 +8,8 @@ import java.util.UUID;
 @Data
 public class ProductRequestDto extends CommonBaseModel {
 
+    private String id;
+
     private String name;
 
     private String image;
@@ -19,5 +21,9 @@ public class ProductRequestDto extends CommonBaseModel {
     private Double discount;
 
     private UUID idCategory;
+
+    public String createFromDate;
+
+    public String createToDate;
 
 }

@@ -2,9 +2,9 @@ input ProductRequestDto {
     id: String
     name: String
     image: Date
-    quantity: Double!
-    price: Double!
-    discount: Double!
+    quantity: Double
+    price: Double
+    discount: Double
     page: Int!
     size: Int!
 
