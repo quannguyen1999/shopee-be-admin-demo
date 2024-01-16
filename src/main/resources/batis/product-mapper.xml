@@ -24,7 +24,7 @@
             AND pro.id::text LIKE '%' || #{request.id} || '%'
         </if>
         <if test="request.name != null">
-            AND pro.name LIKE '%' || #{name} || '%'
+            AND pro.name LIKE '%' || #{request.name} || '%'
         </if>
 
         <!-- Date Range -->

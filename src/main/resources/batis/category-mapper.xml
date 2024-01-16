@@ -24,7 +24,7 @@
             AND ca.id::text LIKE '%' || #{request.id} || '%'
         </if>
         <if test="request.name != null">
-            AND ca.username LIKE '%' || #{name} || '%'
+            AND ca.name LIKE '%' || #{request.name} || '%'
         </if>
 
         <!-- Range Date -->
