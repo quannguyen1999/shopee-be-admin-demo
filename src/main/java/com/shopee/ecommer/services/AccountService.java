@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AccountService {
-    void createAccount(AccountRequestDto account);
+    AccountResponseDto createAccount(AccountRequestDto account);
 
     CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFields, AccountRequestDto requestDto);
 

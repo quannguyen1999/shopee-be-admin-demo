@@ -43,8 +43,8 @@ public class AccountRestController {
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
-        accountService.createAccount(accountRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(true);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.createAccount(accountRequestDto));
     }
 
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)

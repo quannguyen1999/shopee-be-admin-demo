@@ -38,16 +38,22 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public void createAccount(AccountRequestDto account) {
-        accountValidator.validateCreateAccount(account);
-
-        //TODO implement later
-        accountRepository.save(Account.builder()
-                .username(account.getUsername())
-                .password(AccountRequestDto.Fields.avatar)
-                .build());
-
+    public AccountResponseDto createAccount(AccountRequestDto accountRequestDto) {
+        //Validator
+        accountValidator.validateCreateAccount(accountRequestDto);
+        //Save
+        Account accountSave = accountRepository.save(buildAccount(accountRequestDto));
+        //Sent Mail
         emailPublisher.publishEvent(EmailDto.builder().build());
+        //Convert To Response
+        return AccountMapper.MAPPER.accountToAccountResponseDto(accountSave);
+    }
+
+    private Account buildAccount(AccountRequestDto accountRequestDto) {
+        return Account.builder()
+                .username(accountRequestDto.getUsername())
+                .password(AccountRequestDto.Fields.avatar)
+                .build();
     }
 
     @Override
@@ -76,6 +82,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
     @Override
     public List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto) {
+        accountValidator.validateListFieldRequest(accountRequestDto);
         return accountBatisService.getList(accountRequestDto, false);
     }
 

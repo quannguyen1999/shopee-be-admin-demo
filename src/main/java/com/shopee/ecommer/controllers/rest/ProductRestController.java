@@ -42,8 +42,7 @@ public class ProductRestController {
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody ProductRequestDto ProductRequestDto) {
-        productService.createProduct(ProductRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(true);
+        return ResponseEntity.status(HttpStatus.OK).body(productService.createProduct(ProductRequestDto));
     }
 
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)

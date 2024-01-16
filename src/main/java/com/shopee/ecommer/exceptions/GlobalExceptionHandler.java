@@ -1,6 +1,5 @@
 package com.shopee.ecommer.exceptions;
 
-import com.shopee.ecommer.controllers.rest.AccountRestController;
 import com.shopee.ecommer.models.responses.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import java.util.List;
 //Return Error for user
 @Slf4j
 @SuppressWarnings({"unchecked", "rawtypes"})
-@ControllerAdvice(basePackageClasses = {AccountRestController.class})
+@ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     //Throw common Exception

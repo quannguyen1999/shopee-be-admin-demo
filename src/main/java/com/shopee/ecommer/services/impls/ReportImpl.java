@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 public class ReportImpl implements ReportService {
 
+    private static final String NAME_SHEET = "Sheet 1";
+
     @Override
     public byte[] printReport(List<HashMap<String, Object>> listData,
                               List<String> listFields) {
@@ -25,7 +27,7 @@ public class ReportImpl implements ReportService {
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            Sheet sheet = workbook.createSheet("Sheet 1");
+            Sheet sheet = workbook.createSheet(NAME_SHEET);
 
             // Creating a header row
             addCells(listFields, sheet);

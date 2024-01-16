@@ -1,6 +1,8 @@
 package com.shopee.ecommer.mappers;
 
+import com.shopee.ecommer.entities.Product;
 import com.shopee.ecommer.models.responses.ProductResponseDto;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -10,12 +12,13 @@ import java.util.Map;
 import static com.shopee.ecommer.models.CommonBaseModel.Fields.*;
 import static com.shopee.ecommer.models.responses.ProductResponseDto.Fields.*;
 
+@Mapper
 public interface ProductMapper extends CommonUtilMapper {
     ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
     //Note: Must Use Mappings to handler @FieldNameConstants
     @Mappings({
-            @Mapping(source = id, target = id, qualifiedByName = CONVERT_TO_STRING),
+            @Mapping(source = id, target = id, qualifiedByName = CONVERT_TO_UUID),
             @Mapping(source = name, target = name, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = image, target = image, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = quantity, target = quantity, qualifiedByName = CONVERT_TO_DOUBLE),
@@ -32,5 +35,7 @@ public interface ProductMapper extends CommonUtilMapper {
             @Mapping(source = size, target = size, ignore = true),
     })
     ProductResponseDto mapToProductResponseDto(Map<String, Object> data);
+
+    ProductResponseDto productToProductResponseDto(Product product);
 
 }

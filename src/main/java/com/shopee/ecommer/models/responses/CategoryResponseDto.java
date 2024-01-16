@@ -1,19 +1,21 @@
 package com.shopee.ecommer.models.responses;
 
 import com.shopee.ecommer.models.CommonBaseModel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
-@Data
-@Builder
+import java.util.UUID;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldNameConstants
 public class CategoryResponseDto extends CommonBaseModel {
 
-    private String id;
+    public UUID id;
 
-    private String name;
+    public String name;
 
-    private String image;
+    public String image;
 
 }

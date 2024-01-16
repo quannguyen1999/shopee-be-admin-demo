@@ -22,4 +22,8 @@ public class ProductValidator extends CommonValidator {
         checkEmpty().accept(categoryRepository.findById(productRequestDto.getIdCategory()).orElse(null), PRODUCT_CATEGORY_NOT_EXISTS);
     }
 
+    public void validateListFieldRequest(ProductRequestDto productRequestDto) {
+        checkList().accept(productRequestDto.getListFields(), PRODUCT_LIST_FIELD_INVALID);
+    }
+
 }

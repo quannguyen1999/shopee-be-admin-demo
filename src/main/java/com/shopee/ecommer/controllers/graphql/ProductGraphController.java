@@ -21,11 +21,5 @@ public class ProductGraphController {
                                                           DataFetchingEnvironment environment) {
         return productService.getList(GraphQLUtils.getNameFieldGraphQL(environment), productRequestDto);
     }
-
-//
-//    @QueryMapping
-//    public byte[] exportCategory(@Argument CategoryRequestDto categoryRequestDto) {
-//        List<HashMap<String, Object>> listResult = categoryService.getListWithResultMap(categoryRequestDto);
-//        return reportService.printReport(listResult, categoryService.getListField(categoryRequestDto));
-//    }
+    
 }

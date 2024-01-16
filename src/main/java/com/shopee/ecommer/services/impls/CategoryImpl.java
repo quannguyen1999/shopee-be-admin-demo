@@ -32,12 +32,20 @@ public class CategoryImpl extends AdapterImpl implements CategoryService {
     }
 
     @Override
-    public void create(CategoryRequestDto categoryRequestDto) {
+    public CategoryResponseDto create(CategoryRequestDto categoryRequestDto) {
+        //Validate
         categoryValidator.validateCreateCategory(categoryRequestDto);
+        //Save
+        Category category = categoryRepository.save(buildCategoryFromRequestDto(categoryRequestDto));
+        //Map to Response
+        return CategoryMapper.MAPPER.categoryToCategoryResponseDto(category);
+    }
 
-        categoryRepository.save(Category.builder()
+    private Category buildCategoryFromRequestDto(CategoryRequestDto categoryRequestDto) {
+        return Category.builder()
+                .id(UUID.randomUUID())
                 .name(categoryRequestDto.getName())
-                .build());
+                .build();
     }
 
     @Override
@@ -54,6 +62,7 @@ public class CategoryImpl extends AdapterImpl implements CategoryService {
 
     @Override
     public List<HashMap<String, Object>> getListWithResultMap(CategoryRequestDto categoryRequestDto) {
+        categoryValidator.validateListFieldRequest(categoryRequestDto);
         return categoryBatisService.getList(categoryRequestDto, false);
     }
 

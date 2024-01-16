@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CategoryService {
-    void create(CategoryRequestDto categoryRequestDto);
+    CategoryResponseDto create(CategoryRequestDto categoryRequestDto);
 
     CommonPageInfo<CategoryResponseDto> getList(Map<String, String> listFieldRequest, CategoryRequestDto categoryRequestDto);
 

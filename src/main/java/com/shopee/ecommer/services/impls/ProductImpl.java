@@ -31,16 +31,22 @@ public class ProductImpl extends AdapterImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(ProductRequestDto productRequestDto) {
+    public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
+        //Validate
         productValidator.validateCreateProduct(productRequestDto);
+        //Save
+        Product product = productRepository.save(buildProductFromRequestDto(productRequestDto));
+        //Map to Response
+        return ProductMapper.MAPPER.productToProductResponseDto(product);
+    }
 
-        //TODO implement later
-        productRepository.save(Product.builder()
+    private Product buildProductFromRequestDto(ProductRequestDto productRequestDto) {
+        return Product.builder().id(UUID.randomUUID())
                 .name(productRequestDto.getName())
                 .quantity(productRequestDto.getQuantity())
                 .price(productRequestDto.getPrice())
                 .discount(productRequestDto.getDiscount())
-                .build());
+                .build();
     }
 
     @Override
@@ -57,6 +63,7 @@ public class ProductImpl extends AdapterImpl implements ProductService {
 
     @Override
     public List<HashMap<String, Object>> getListWithResultMap(ProductRequestDto productRequestDto) {
+        productValidator.validateListFieldRequest(productRequestDto);
         return productBatisService.getList(productRequestDto, false);
     }
 

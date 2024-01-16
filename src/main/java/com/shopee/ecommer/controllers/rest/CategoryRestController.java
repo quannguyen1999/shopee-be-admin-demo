@@ -41,8 +41,7 @@ public class CategoryRestController {
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody CategoryRequestDto categoryRequestDto) {
-        categoryService.create(categoryRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(true);
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.create(categoryRequestDto));
     }
 
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)

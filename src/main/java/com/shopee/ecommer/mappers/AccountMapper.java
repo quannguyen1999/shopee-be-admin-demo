@@ -1,5 +1,6 @@
 package com.shopee.ecommer.mappers;
 
+import com.shopee.ecommer.entities.Account;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -35,5 +36,7 @@ public interface AccountMapper extends CommonUtilMapper {
             @Mapping(source = size, target = size, ignore = true),
     })
     AccountResponseDto mapToAccountResponseDto(Map<String, Object> data);
+
+    AccountResponseDto accountToAccountResponseDto(Account account);
 
 }

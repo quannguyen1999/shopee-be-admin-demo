@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
-    void createProduct(ProductRequestDto productRequestDto);
+    ProductResponseDto createProduct(ProductRequestDto productRequestDto);
 
     CommonPageInfo<ProductResponseDto> getList(Map<String, String> listFieldRequest, ProductRequestDto productRequestDto);
 
