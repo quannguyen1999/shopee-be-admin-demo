@@ -44,7 +44,7 @@
             and request.listSorted.size() > 0">
             ORDER BY
             <foreach item="field" collection="request.listSorted" separator=", ">
-                --TODO Fix later (isActive) Not Working
+                <!-- Fix Later -->
                 ${field.field}
                 ${field.value}
             </foreach>
