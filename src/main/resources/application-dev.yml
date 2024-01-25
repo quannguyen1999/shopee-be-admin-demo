@@ -1,3 +1,8 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
 spring:
 #  # Vault
   #  cloud:
@@ -24,10 +29,13 @@ spring:
     user: postgres
     enabled: true
     validate-migration-naming: true
+  # Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8070
 # Batis
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#logging:
-#  level:
-#    root: debug

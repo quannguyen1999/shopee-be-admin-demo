@@ -35,6 +35,6 @@ public class AccountAssembler implements RepresentationModelAssembler<CommonPage
 
     private static Link linkGetListAccount() {
         return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AccountRestController.class)
-                .getListAccounts(AccountAssembler.accountRequestDto)).withSelfRel();
+                .getListAccounts(AccountAssembler.accountRequestDto, null)).withSelfRel();
     }
 }
