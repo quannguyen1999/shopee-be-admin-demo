@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,16 +35,16 @@ public class AccountRestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountAssembler.toModel(CommonPageInfo.<AccountResponseDto>builder().build()));
     }
-    
-    @PreAuthorize("hasPermission(returnObject, 'ADMIN')")
-    @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
-    public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
-            @RequestBody AccountRequestDto accountRequestDto,
-            Authentication authentication
-    ) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
-    }
+
+//    No need more
+//    @PreAuthorize("hasPermission(returnObject, 'ADMIN')")
+@RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
+public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
+        @RequestBody AccountRequestDto accountRequestDto, Authentication authentication
+) {
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
+}
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
