@@ -11,9 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,20 +37,12 @@ public class AccountRestController {
                 .body(accountAssembler.toModel(CommonPageInfo.<AccountResponseDto>builder().build()));
     }
     
+    @PreAuthorize("hasPermission(returnObject, 'ADMIN')")
     @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
             @RequestBody AccountRequestDto accountRequestDto,
             Authentication authentication
     ) {
-        if (!ObjectUtils.isEmpty(authentication)) {
-//            System.out.println(authentication.get);
-            // Retrieve authorities from the Authentication object
-            List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
-
-            // Print the authorities to the console (or log them as needed)
-            System.out.println("User Authorities: " + authorities);
-        }
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
     }

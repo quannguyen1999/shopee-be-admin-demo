@@ -39,6 +39,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return commonHandlerException(ex.getLocalizedMessage(), "Not Found", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnauthorizedRequestException.class)
+    @ResponseBody
+    public final ResponseEntity<Object> handleUnauthorizedRequestException(UnauthorizedRequestException ex) {
+        return commonHandlerException(ex.getLocalizedMessage(), "Unauthorized Request", HttpStatus.UNAUTHORIZED);
+    }
+
     private ResponseEntity<Object> commonHandlerException(String exMessage, String message, HttpStatus httpStatus) {
         List<String> details = new ArrayList<>();
         //Save Message in Here

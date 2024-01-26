@@ -133,6 +133,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JSON-->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+
+
         <!--        Web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
