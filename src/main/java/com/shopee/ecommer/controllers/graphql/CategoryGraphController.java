@@ -18,7 +18,7 @@ public class CategoryGraphController {
     private final CategoryService categoryService;
 
     private final ReportService reportService;
-
+    
     @QueryMapping
     public CommonPageInfo<CategoryResponseDto> listCategory(@Argument CategoryRequestDto categoryRequestDto,
                                                             DataFetchingEnvironment environment) {

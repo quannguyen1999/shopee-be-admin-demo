@@ -1,5 +1,6 @@
 package com.shopee.ecommer.configs;
 
+import com.shopee.ecommer.constants.PathApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/accounts/**").hasAuthority("ADMIN")
+                        .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority("ADMIN")
+                        .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority("ADMIN", "CLIENT")
+                        .requestMatchers(PathApi.CATEGORY + "/**").hasAnyAuthority("ADMIN", "CLIENT")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(

@@ -36,15 +36,13 @@ public class AccountRestController {
                 .body(accountAssembler.toModel(CommonPageInfo.<AccountResponseDto>builder().build()));
     }
 
-//    No need more
-//    @PreAuthorize("hasPermission(returnObject, 'ADMIN')")
-@RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
-public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
-        @RequestBody AccountRequestDto accountRequestDto, Authentication authentication
-) {
-    return ResponseEntity.status(HttpStatus.OK)
-            .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
-}
+    @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
+    public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
+            @RequestBody AccountRequestDto accountRequestDto, Authentication authentication
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
+    }
 
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto accountRequestDto) {

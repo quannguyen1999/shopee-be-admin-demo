@@ -10,6 +10,7 @@ import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
@@ -22,11 +23,13 @@ public class AccountGraphController {
 
     private final ReportService reportService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @QueryMapping
     public CommonPageInfo<AccountResponseDto> listAccount(@Argument AccountRequestDto accountRequestDto, DataFetchingEnvironment environment) {
         return accountService.getList(GraphQLUtils.getNameFieldGraphQL(environment), accountRequestDto);
     }
     
+    @PreAuthorize("hasAuthority('ADMIN')")
     @QueryMapping
     public byte[] exportAccount(@Argument AccountRequestDto accountRequestDto) {
         List<HashMap<String, Object>> listResult = accountService.getListWithResultMap(accountRequestDto);
