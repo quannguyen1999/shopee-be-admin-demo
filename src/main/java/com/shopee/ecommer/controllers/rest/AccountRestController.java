@@ -3,6 +3,7 @@ package com.shopee.ecommer.controllers.rest;
 import com.shopee.ecommer.constants.PathApi;
 import com.shopee.ecommer.models.hateoas.AccountAssembler;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
+import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.services.AccountService;
@@ -29,6 +30,18 @@ public class AccountRestController {
     private final ReportService reportService;
 
     private final AccountAssembler accountAssembler;
+
+    @RequestMapping(value = PathApi.GET_TOKEN, method = RequestMethod.POST)
+    public ResponseEntity<Object> getToken(Oauth2ClientDto oauth2ClientDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.getToken(oauth2ClientDto));
+    }
+
+    @RequestMapping(value = PathApi.GET_REFRESH_TOKEN, method = RequestMethod.POST)
+    public ResponseEntity<Object> getRefreshToken(Oauth2ClientDto oauth2ClientDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.refreshToken(oauth2ClientDto));
+    }
 
     @RequestMapping(value = PathApi.INFO_PATH, method = RequestMethod.GET)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getInfoPath() {

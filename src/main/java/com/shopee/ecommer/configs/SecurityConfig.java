@@ -25,6 +25,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                PathApi.ACCOUNT + PathApi.GET_TOKEN,
+                                PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN
+                        ).permitAll()
                         .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority("ADMIN")
                         .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority("ADMIN", "CLIENT")
                         .requestMatchers(PathApi.CATEGORY + "/**").hasAnyAuthority("ADMIN", "CLIENT")

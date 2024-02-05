@@ -3,9 +3,11 @@ package com.shopee.ecommer.services.impls;
 import com.shopee.ecommer.entities.Account;
 import com.shopee.ecommer.events.publishers.AccountPublisher;
 import com.shopee.ecommer.events.publishers.EmailPublisher;
+import com.shopee.ecommer.feignClient.AccountServerClient;
 import com.shopee.ecommer.mappers.AccountMapper;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.EmailDto;
+import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.mybatis.AccountBatisService;
@@ -15,6 +17,8 @@ import com.shopee.ecommer.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,12 +30,20 @@ import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl extends AdapterImpl implements AccountService {
 
+    @Value("${custom.security.clientId}")
+    private String clientId;
+
+    @Value("${custom.security.clientSecret}")
+    private String clientSecret;
+
     protected final AccountBatisService accountBatisService;
     protected final AccountRepository accountRepository;
     protected final AccountValidator accountValidator;
     protected final EmailPublisher emailPublisher;
 
     protected final AccountPublisher accountPublisher;
+
+    protected final AccountServerClient accountServerClient;
 
     public static List<String> getAllListDefault() {
         return new ArrayList<>(Arrays.asList(id, email, gender, birthday, username, avatar));
@@ -89,6 +101,35 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     @Override
     public List<String> getListField(AccountRequestDto accountRequestDto) {
         return checkList().apply(accountRequestDto.getListFields(), AccountImpl.getAllListDefault());
+    }
+
+    @Override
+    public Object getToken(Oauth2ClientDto oauth2ClientDto) {
+        //Validator
+        accountValidator.validateGetToken(oauth2ClientDto);
+
+        //request get token
+        return accountServerClient.getToken(
+                clientId,
+                clientSecret,
+                oauth2ClientDto.getCode(),
+                AuthorizationGrantType.AUTHORIZATION_CODE.getValue(),
+                oauth2ClientDto.getRedirectUrl()
+        );
+    }
+
+    @Override
+    public Object refreshToken(Oauth2ClientDto oauth2ClientDto) {
+        //Validator
+        accountValidator.validateRefreshToken(oauth2ClientDto);
+
+        //request get token
+        return accountServerClient.getRefreshToken(
+                clientId,
+                clientSecret,
+                oauth2ClientDto.getRefreshToken(),
+                AuthorizationGrantType.REFRESH_TOKEN.getValue()
+        );
     }
 
 

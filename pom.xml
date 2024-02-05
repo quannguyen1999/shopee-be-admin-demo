@@ -184,6 +184,12 @@
         <!--            <version>3.0.5</version>-->
         <!--        </dependency>-->
 
+        <!--    Oauth2    -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

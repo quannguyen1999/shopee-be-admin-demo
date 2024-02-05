@@ -1,6 +1,7 @@
 package com.shopee.ecommer.services;
 
 import com.shopee.ecommer.models.requests.AccountRequestDto;
+import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 
@@ -16,5 +17,9 @@ public interface AccountService {
     List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto);
 
     List<String> getListField(AccountRequestDto accountRequestDto);
+
+    Object getToken(Oauth2ClientDto oauth2ClientDto);
+
+    Object refreshToken(Oauth2ClientDto oauth2ClientDto);
 
 }

@@ -1,5 +1,9 @@
+custom:
+  security:
+    clientId: admin
+    clientSecret: password
 spring:
-#  # Vault
+  # Vault
   #  cloud:
   #    vault:
   #      scheme: http
@@ -23,3 +27,10 @@ spring:
     password: ${spring.datasource.password}
     user: ${spring.datasource.username}
     enabled: true
+    validate-migration-naming: true
+  # Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8070

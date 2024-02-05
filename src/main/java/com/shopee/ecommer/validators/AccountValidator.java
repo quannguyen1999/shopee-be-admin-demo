@@ -1,6 +1,7 @@
 package com.shopee.ecommer.validators;
 
 import com.shopee.ecommer.models.requests.AccountRequestDto;
+import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,15 @@ public class AccountValidator extends CommonValidator {
 
     public void validateCreateAccount(AccountRequestDto accountRequestDto) {
         validateCheckUserName(accountRequestDto.getUsername());
+    }
+
+    public void validateGetToken(Oauth2ClientDto oauth2ClientDto) {
+        checkEmpty().accept(oauth2ClientDto.getCode(), ACCOUNT_CODE_INVALID);
+        checkEmpty().accept(oauth2ClientDto.getRedirectUrl(), ACCOUNT_REDIRECT_INVALID);
+    }
+
+    public void validateRefreshToken(Oauth2ClientDto oauth2ClientDto) {
+        checkEmpty().accept(oauth2ClientDto.getRefreshToken(), ACCOUNT_REFRESH_TOKEN_INVALID);
     }
 
     public void validateListFieldRequest(AccountRequestDto accountRequestDto) {

@@ -2,6 +2,7 @@ package com.shopee.ecommer.exceptions;
 
 import com.shopee.ecommer.models.responses.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,7 +25,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
         ex.printStackTrace();
-        return commonHandlerException(ex.getLocalizedMessage(), "Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        log.debug(ex.getLocalizedMessage());
+        return commonHandlerException(Strings.EMPTY, "Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(BadRequestException.class)
