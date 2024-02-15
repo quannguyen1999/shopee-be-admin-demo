@@ -20,6 +20,6 @@ public interface AccountServerClient {
                            @RequestParam("client_secret") String clientSecret,
                            @RequestParam("refresh_token") String refreshToken,
                            @RequestParam("grant_type") String grantType
-    );
+    ) throws Exception;
 
 }

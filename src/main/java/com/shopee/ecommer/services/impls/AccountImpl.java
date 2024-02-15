@@ -1,8 +1,10 @@
 package com.shopee.ecommer.services.impls;
 
+import com.shopee.ecommer.constants.MessageErrors;
 import com.shopee.ecommer.entities.Account;
 import com.shopee.ecommer.events.publishers.AccountPublisher;
 import com.shopee.ecommer.events.publishers.EmailPublisher;
+import com.shopee.ecommer.exceptions.UnauthorizedRequestException;
 import com.shopee.ecommer.feignClient.AccountServerClient;
 import com.shopee.ecommer.mappers.AccountMapper;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
@@ -30,20 +32,16 @@ import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl extends AdapterImpl implements AccountService {
 
-    @Value("${custom.security.clientId}")
-    private String clientId;
-
-    @Value("${custom.security.clientSecret}")
-    private String clientSecret;
-
     protected final AccountBatisService accountBatisService;
     protected final AccountRepository accountRepository;
     protected final AccountValidator accountValidator;
     protected final EmailPublisher emailPublisher;
-
     protected final AccountPublisher accountPublisher;
-
     protected final AccountServerClient accountServerClient;
+    @Value("${custom.security.clientId}")
+    private String clientId;
+    @Value("${custom.security.clientSecret}")
+    private String clientSecret;
 
     public static List<String> getAllListDefault() {
         return new ArrayList<>(Arrays.asList(id, email, gender, birthday, username, avatar));
@@ -124,12 +122,19 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         accountValidator.validateRefreshToken(oauth2ClientDto);
 
         //request get token
-        return accountServerClient.getRefreshToken(
-                clientId,
-                clientSecret,
-                oauth2ClientDto.getRefreshToken(),
-                AuthorizationGrantType.REFRESH_TOKEN.getValue()
-        );
+        Object result;
+        try {
+            result = accountServerClient.getRefreshToken(
+                    clientId,
+                    clientSecret,
+                    oauth2ClientDto.getRefreshToken(),
+                    AuthorizationGrantType.REFRESH_TOKEN.getValue()
+            );
+        } catch (Exception e) {
+            throw new UnauthorizedRequestException(MessageErrors.ACCOUNT_REFRESH_TOKEN_INVALID_OR_EXPIRED);
+        }
+
+        return result;
     }
 
 

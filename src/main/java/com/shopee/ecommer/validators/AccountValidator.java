@@ -19,12 +19,12 @@ public class AccountValidator extends CommonValidator {
     }
 
     public void validateGetToken(Oauth2ClientDto oauth2ClientDto) {
-        checkEmpty().accept(oauth2ClientDto.getCode(), ACCOUNT_CODE_INVALID);
-        checkEmpty().accept(oauth2ClientDto.getRedirectUrl(), ACCOUNT_REDIRECT_INVALID);
+//        checkEmpty().accept(oauth2ClientDto.getCode(), ACCOUNT_CODE_INVALID);
+//        checkEmpty().accept(oauth2ClientDto.getRedirectUrl(), ACCOUNT_REDIRECT_INVALID);
     }
 
     public void validateRefreshToken(Oauth2ClientDto oauth2ClientDto) {
-        checkEmpty().accept(oauth2ClientDto.getRefreshToken(), ACCOUNT_REFRESH_TOKEN_INVALID);
+        checkEmpty().accept(oauth2ClientDto.getRefreshToken(), ACCOUNT_REFRESH_TOKEN_INVALID_OR_EXPIRED);
     }
 
     public void validateListFieldRequest(AccountRequestDto accountRequestDto) {
