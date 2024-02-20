@@ -29,6 +29,15 @@ public class CommonValidator {
         };
     }
 
+    static BiConsumer<Object, MessageErrors> checkIsNotExists() {
+        return (input, messageError) -> {
+            if (ObjectUtils.isEmpty(input)
+            ) {
+                badRequest().accept(messageError);
+            }
+        };
+    }
+
     static BiConsumer<Double, MessageErrors> checkDouble() {
         return (input, messageError) -> {
             checkEmpty().accept(input, messageError);

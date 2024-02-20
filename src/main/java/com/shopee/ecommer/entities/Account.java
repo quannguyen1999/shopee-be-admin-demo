@@ -34,6 +34,24 @@ public class Account extends CommonBaseEntities {
 
     private Boolean isActive;
 
+    //    private Boolean isAccountNonExpired;
+//
+//    private Boolean isCredentialsNonExpired;
+
+    private String securityQuestion;
+
+    private String securityAnswer;
+
+    private String mfaSecret;
+
+    private String mfaKeyId;
+
+    private Boolean mfaEnabled;
+
+    private Boolean mfaRegistered;
+
+    private Boolean securityQuestionEnabled;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

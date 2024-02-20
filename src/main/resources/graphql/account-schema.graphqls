@@ -16,6 +16,8 @@ input AccountRequestDto {
     createFromDate: String
     createToDate: String
     isActive: Boolean
+    mfaEnabled: Boolean
+    mfaRegistered: Boolean
 }
 
 type AccountResponseDto {
@@ -28,6 +30,8 @@ type AccountResponseDto {
     isActive: String
     created: Date
     updated: Date
+    mfaEnabled: Boolean
+    mfaRegistered: Boolean
 }
 
 type CommonPageInfoAccount {

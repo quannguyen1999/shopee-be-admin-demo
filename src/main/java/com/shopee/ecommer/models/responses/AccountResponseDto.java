@@ -26,4 +26,8 @@ public class AccountResponseDto extends CommonBaseModel {
 
     public Boolean isActive;
 
+    public Boolean mfaEnabled;
+
+    public Boolean mfaRegistered;
+
 }

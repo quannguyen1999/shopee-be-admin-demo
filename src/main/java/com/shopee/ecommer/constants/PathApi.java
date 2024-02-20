@@ -10,6 +10,8 @@ public interface PathApi {
     String PRODUCT = "/products";
     String CREATE = "/create";
 
+    String PUT = "/put";
+
     String EXPORT = "/export";
 
     String GET_TOKEN = "/token";

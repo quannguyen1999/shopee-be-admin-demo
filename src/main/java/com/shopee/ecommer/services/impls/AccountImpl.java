@@ -59,6 +59,19 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         return AccountMapper.MAPPER.accountToAccountResponseDto(accountSave);
     }
 
+    @Override
+    public AccountResponseDto updateAccount(AccountRequestDto accountRequestDto) {
+        //Validator
+        accountValidator.validateUpdateAccount(accountRequestDto);
+
+        //Update
+        Account account = accountRepository.findById(UUID.fromString(accountRequestDto.getId())).get();
+        account.setMfaEnabled(accountRequestDto.getMfaEnabled());
+        account.setMfaRegistered(accountRequestDto.getMfaRegistered());
+
+        return AccountMapper.MAPPER.accountToAccountResponseDto(accountRepository.save(account));
+    }
+
     private Account buildAccount(AccountRequestDto accountRequestDto) {
         return Account.builder()
                 .username(accountRequestDto.getUsername())

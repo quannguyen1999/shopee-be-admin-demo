@@ -6,6 +6,8 @@ import com.shopee.ecommer.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 import static com.shopee.ecommer.constants.MessageErrors.*;
 
 @AllArgsConstructor
@@ -16,6 +18,14 @@ public class AccountValidator extends CommonValidator {
 
     public void validateCreateAccount(AccountRequestDto accountRequestDto) {
         validateCheckUserName(accountRequestDto.getUsername());
+    }
+
+    public void validateUpdateAccount(AccountRequestDto accountRequestDto) {
+        checkEmpty().accept(accountRequestDto.getId(), ACCOUNT_ID_INVALID);
+        checkIsNotExists().accept(accountRepository.findById(UUID.fromString(accountRequestDto.getId()))
+                .orElse(null), ACCOUNT_ID_NOT_EXISTS);
+        checkIsNotExists().accept(accountRequestDto.getMfaEnabled(), ACCOUNT_MFA_ENABLED_INVALID);
+        checkIsNotExists().accept(accountRequestDto.getMfaRegistered(), ACCOUNT_MFA_REGISTERED_INVALID);
     }
 
     public void validateGetToken(Oauth2ClientDto oauth2ClientDto) {

@@ -17,6 +17,12 @@
                     <when test="field == 'isActive'">
                         a.is_active as "isActive"
                     </when>
+                    <when test="field == 'mfaEnabled'">
+                        a.mfa_enabled as "mfaEnabled"
+                    </when>
+                    <when test="field == 'mfaRegistered'">
+                        a.mfa_registered as "mfaRegistered"
+                    </when>
                     <otherwise>
                         a.${field} as ${field}
                     </otherwise>

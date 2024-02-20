@@ -37,5 +37,9 @@ public class AccountRequestDto extends CommonBaseModel {
     public String createFromDate;
 
     public String createToDate;
+    
+    public Boolean mfaEnabled;
+
+    private Boolean mfaRegistered;
 
 }

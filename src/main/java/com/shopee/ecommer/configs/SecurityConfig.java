@@ -14,6 +14,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static com.shopee.ecommer.constants.AuthorityConstant.ADMIN;
+import static com.shopee.ecommer.constants.AuthorityConstant.CLIENT;
+
 @Configuration
 public class SecurityConfig {
     private static final String JWT_ROLE_NAME = "authorities";
@@ -29,9 +32,9 @@ public class SecurityConfig {
                                 PathApi.ACCOUNT + PathApi.GET_TOKEN,
                                 PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN
                         ).permitAll()
-                        .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority("ADMIN")
-                        .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority("ADMIN", "CLIENT")
-                        .requestMatchers(PathApi.CATEGORY + "/**").hasAnyAuthority("ADMIN", "CLIENT")
+                        .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority(ADMIN)
+                        .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority(ADMIN, CLIENT)
+                        .requestMatchers(PathApi.CATEGORY + "/**").hasAnyAuthority(ADMIN, CLIENT)
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(

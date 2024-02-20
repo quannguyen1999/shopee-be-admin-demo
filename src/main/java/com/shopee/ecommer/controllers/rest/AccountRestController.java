@@ -63,6 +63,12 @@ public class AccountRestController {
                 .body(accountService.createAccount(accountRequestDto));
     }
 
+    @RequestMapping(value = PathApi.PUT, method = RequestMethod.PUT)
+    public ResponseEntity<?> updateAccount(@RequestBody AccountRequestDto accountRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.updateAccount(accountRequestDto));
+    }
+
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)
     public ResponseEntity<byte[]> exportAccount(@RequestBody AccountRequestDto accountRequestDto) {
         List<HashMap<String, Object>> listResult = accountService.getListWithResultMap(accountRequestDto);
