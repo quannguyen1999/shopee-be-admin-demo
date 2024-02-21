@@ -19,7 +19,10 @@ import com.shopee.ecommer.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +34,16 @@ import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl extends AdapterImpl implements AccountService {
-
+    private final Log logger = LogFactory.getLog(this.getClass());
+    private final static Random rand = new Random();
     protected final AccountBatisService accountBatisService;
     protected final AccountRepository accountRepository;
     protected final AccountValidator accountValidator;
     protected final EmailPublisher emailPublisher;
     protected final AccountPublisher accountPublisher;
     protected final AccountServerClient accountServerClient;
+    protected final PasswordEncoder passwordEncoder;
+
     @Value("${custom.security.clientId}")
     private String clientId;
     @Value("${custom.security.clientSecret}")
@@ -51,8 +57,21 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     public AccountResponseDto createAccount(AccountRequestDto accountRequestDto) {
         //Validator
         accountValidator.validateCreateAccount(accountRequestDto);
+
         //Save
-        Account accountSave = accountRepository.save(buildAccount(accountRequestDto));
+        String password = String.valueOf(rand.nextInt(100000 + rand.nextInt(900000)));
+//        if (logger.isTraceEnabled()) {
+        log.info(String.valueOf(logger.isTraceEnabled()));
+        log.info("Password:" + password);
+//        }
+
+        Account accountConvert = AccountMapper.MAPPER.mapToAccount(accountRequestDto);
+        accountConvert.setPassword(passwordEncoder.encode(password));
+        accountConvert.setMfaEnabled(true);
+        accountConvert.setMfaRegistered(false);
+
+        Account accountSave = accountRepository.save(accountConvert);
+
         //Sent Mail
         emailPublisher.publishEvent(EmailDto.builder().build());
         //Convert To Response
@@ -70,13 +89,6 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         account.setMfaRegistered(accountRequestDto.getMfaRegistered());
 
         return AccountMapper.MAPPER.accountToAccountResponseDto(accountRepository.save(account));
-    }
-
-    private Account buildAccount(AccountRequestDto accountRequestDto) {
-        return Account.builder()
-                .username(accountRequestDto.getUsername())
-                .password(AccountRequestDto.Fields.avatar)
-                .build();
     }
 
     @Override

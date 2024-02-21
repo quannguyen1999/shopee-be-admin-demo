@@ -20,6 +20,14 @@ public class CommonValidator {
         };
     }
 
+    static BiConsumer<Boolean, MessageErrors> checkCondition() {
+        return (input, messageError) -> {
+            if (input) {
+                badRequest().accept(messageError);
+            }
+        };
+    }
+
     static BiConsumer<Object, MessageErrors> checkIsExists() {
         return (input, messageError) -> {
             if (!ObjectUtils.isEmpty(input)
