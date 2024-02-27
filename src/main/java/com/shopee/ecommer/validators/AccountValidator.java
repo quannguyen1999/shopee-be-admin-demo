@@ -1,5 +1,6 @@
 package com.shopee.ecommer.validators;
 
+import com.shopee.ecommer.entities.Account;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.repositories.AccountRepository;
@@ -16,10 +17,8 @@ import static com.shopee.ecommer.constants.MessageErrors.*;
 @Component
 public class AccountValidator extends CommonValidator {
 
-    private static Date BIRTHDAY_LIMIT = new Date(2023 - 1900, Calendar.JANUARY, 1);
-
     private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-
+    private static final Date BIRTHDAY_LIMIT = new Date(2023 - 1900, Calendar.JANUARY, 1);
     private final AccountRepository accountRepository;
 
     public void validateCreateAccount(AccountRequestDto accountRequestDto) {
@@ -29,12 +28,22 @@ public class AccountValidator extends CommonValidator {
     }
 
     public void validateUpdateAccount(AccountRequestDto accountRequestDto) {
-        checkEmpty().accept(accountRequestDto.getId(), ACCOUNT_ID_INVALID);
-        checkIsNotExists().accept(accountRepository.findById(UUID.fromString(accountRequestDto.getId())).orElse(null), ACCOUNT_ID_NOT_EXISTS);
+        validateId(accountRequestDto.getId());
         checkIsNotExists().accept(accountRequestDto.getMfaEnabled(), ACCOUNT_MFA_ENABLED_INVALID);
         checkIsNotExists().accept(accountRequestDto.getMfaRegistered(), ACCOUNT_MFA_REGISTERED_INVALID);
         validateBirthday(accountRequestDto.getBirthday());
         validateEmail(accountRequestDto.getEmail());
+    }
+
+    void validateId(String id) {
+        checkEmpty().accept(id, ACCOUNT_ID_INVALID);
+
+        Account account = accountRepository.findById(UUID.fromString(id)).orElse(null);
+        checkIsNotExists().accept(account, ACCOUNT_ID_NOT_EXISTS);
+        assert account != null;
+        if (account.getUsername().equalsIgnoreCase("admin")) {
+            badRequest().accept(ACCOUNT_ADMIN_CAN_NOT_EDIT);
+        }
     }
 
     public void validateGetToken(Oauth2ClientDto oauth2ClientDto) {

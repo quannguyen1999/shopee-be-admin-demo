@@ -34,7 +34,6 @@ import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountImpl extends AdapterImpl implements AccountService {
-    private final Log logger = LogFactory.getLog(this.getClass());
     private final static Random rand = new Random();
     protected final AccountBatisService accountBatisService;
     protected final AccountRepository accountRepository;
@@ -43,7 +42,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     protected final AccountPublisher accountPublisher;
     protected final AccountServerClient accountServerClient;
     protected final PasswordEncoder passwordEncoder;
-
+    private final Log logger = LogFactory.getLog(this.getClass());
     @Value("${custom.security.clientId}")
     private String clientId;
     @Value("${custom.security.clientSecret}")
@@ -87,6 +86,11 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         Account account = accountRepository.findById(UUID.fromString(accountRequestDto.getId())).get();
         account.setMfaEnabled(accountRequestDto.getMfaEnabled());
         account.setMfaRegistered(accountRequestDto.getMfaRegistered());
+        account.setIsActive(accountRequestDto.getIsActive());
+        account.setBirthday(accountRequestDto.getBirthday());
+        account.setEmail(accountRequestDto.getEmail());
+        account.setGender(accountRequestDto.getGender());
+        account.setAvatar(accountRequestDto.getAvatar());
 
         return AccountMapper.MAPPER.accountToAccountResponseDto(accountRepository.save(account));
     }

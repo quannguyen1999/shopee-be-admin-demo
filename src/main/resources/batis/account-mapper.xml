@@ -18,10 +18,12 @@
                         a.is_active as "isActive"
                     </when>
                     <when test="field == 'mfaEnabled'">
-                        a.mfa_enabled as "mfaEnabled"
+                        case when a.mfa_enabled is null then
+                        true else a.mfa_enabled end as "mfaEnabled"
                     </when>
                     <when test="field == 'mfaRegistered'">
-                        a.mfa_registered as "mfaRegistered"
+                        case when a.mfa_registered is null then
+                        true else a.mfa_registered end as "mfaRegistered"
                     </when>
                     <otherwise>
                         a.${field} as ${field}
