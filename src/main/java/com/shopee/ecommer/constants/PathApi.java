@@ -7,6 +7,8 @@ public interface PathApi {
     String LIST = "/";
     String ACCOUNT = "/accounts";
     String CATEGORY = "/categories";
+
+    String TEST = "/tests";
     String PRODUCT = "/products";
     String CREATE = "/create";
 

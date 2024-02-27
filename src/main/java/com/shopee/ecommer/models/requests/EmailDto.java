@@ -18,6 +18,6 @@ public class EmailDto {
 
     private String content;
 
-    private String title;
+    private String subject;
 
 }

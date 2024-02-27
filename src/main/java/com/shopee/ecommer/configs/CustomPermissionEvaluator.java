@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+//User For check Permission in Graphql
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
     private static final String FIELD_AUTHORITIES = "authorities";

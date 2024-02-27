@@ -60,15 +60,15 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
         //Save
         String password = String.valueOf(rand.nextInt(100000 + rand.nextInt(900000)));
-//        if (logger.isTraceEnabled()) {
+
         log.info(String.valueOf(logger.isTraceEnabled()));
         log.info("Password:" + password);
-//        }
 
         Account accountConvert = AccountMapper.MAPPER.mapToAccount(accountRequestDto);
         accountConvert.setPassword(passwordEncoder.encode(password));
         accountConvert.setMfaEnabled(true);
         accountConvert.setMfaRegistered(false);
+        accountConvert.setIsActive(true);
 
         Account accountSave = accountRepository.save(accountConvert);
 

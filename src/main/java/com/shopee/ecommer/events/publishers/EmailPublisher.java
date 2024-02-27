@@ -1,6 +1,7 @@
 package com.shopee.ecommer.events.publishers;
 
 import com.shopee.ecommer.events.EmailEvent;
+import com.shopee.ecommer.feignClient.EmailServiceClient;
 import com.shopee.ecommer.models.requests.EmailDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
