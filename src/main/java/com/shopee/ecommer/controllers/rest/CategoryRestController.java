@@ -7,6 +7,7 @@ import com.shopee.ecommer.models.responses.CategoryResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.services.CategoryService;
 import com.shopee.ecommer.services.ReportService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+@Tag(
+        name = "API Rest Category",
+        description = "CRUD, Export API Category details"
+)
 @RestController
 @RequestMapping(value = PathApi.CATEGORY)
 @AllArgsConstructor

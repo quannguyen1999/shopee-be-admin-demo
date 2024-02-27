@@ -7,6 +7,7 @@ import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.ProductResponseDto;
 import com.shopee.ecommer.services.ProductService;
 import com.shopee.ecommer.services.ReportService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+@Tag(
+        name = "API Rest Product",
+        description = "CRUD, Export API Product details"
+)
 @RestController
 @RequestMapping(value = PathApi.PRODUCT)
 @AllArgsConstructor

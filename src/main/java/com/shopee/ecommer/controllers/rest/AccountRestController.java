@@ -8,6 +8,8 @@ import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.services.AccountService;
 import com.shopee.ecommer.services.ReportService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+@Tag(
+        name = "API Rest Account",
+        description = "Get Token, CRUD, Export API Account details"
+)
 @RestController
 @RequestMapping(value = PathApi.ACCOUNT)
 @AllArgsConstructor
@@ -31,24 +37,38 @@ public class AccountRestController {
 
     private final AccountAssembler accountAssembler;
 
+    @Operation(
+            summary = "Get Token",
+            description = "Get Token by 2 param code + redirectUrl"
+    )
     @RequestMapping(value = PathApi.GET_TOKEN, method = RequestMethod.POST)
     public ResponseEntity<Object> getToken(Oauth2ClientDto oauth2ClientDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.getToken(oauth2ClientDto));
     }
 
+    @Operation(
+            summary = "Get Refresh Token",
+            description = "Get Refresh Token by 1 param refreshToken"
+    )
     @RequestMapping(value = PathApi.GET_REFRESH_TOKEN, method = RequestMethod.POST)
     public ResponseEntity<Object> getRefreshToken(Oauth2ClientDto oauth2ClientDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.refreshToken(oauth2ClientDto));
     }
 
+    @Operation(
+            summary = "Get Link reference of API Account"
+    )
     @RequestMapping(value = PathApi.INFO_PATH, method = RequestMethod.GET)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getInfoPath() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountAssembler.toModel(CommonPageInfo.<AccountResponseDto>builder().build()));
     }
 
+    @Operation(
+            summary = "Get List Account"
+    )
     @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
             @RequestBody AccountRequestDto accountRequestDto, Authentication authentication
@@ -57,18 +77,27 @@ public class AccountRestController {
                 .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));
     }
 
+    @Operation(
+            summary = "Create Account"
+    )
     @RequestMapping(value = PathApi.CREATE, method = RequestMethod.POST)
     public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.createAccount(accountRequestDto));
     }
 
+    @Operation(
+            summary = "Update Account"
+    )
     @RequestMapping(value = PathApi.PUT, method = RequestMethod.PUT)
     public ResponseEntity<?> updateAccount(@RequestBody AccountRequestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.updateAccount(accountRequestDto));
     }
 
+    @Operation(
+            summary = "Export Account"
+    )
     @RequestMapping(value = PathApi.EXPORT, method = RequestMethod.POST)
     public ResponseEntity<byte[]> exportAccount(@RequestBody AccountRequestDto accountRequestDto) {
         List<HashMap<String, Object>> listResult = accountService.getListWithResultMap(accountRequestDto);

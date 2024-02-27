@@ -8,6 +8,7 @@ import com.shopee.ecommer.services.AccountService;
 import com.shopee.ecommer.services.ReportService;
 import com.shopee.ecommer.utils.GraphQLUtils;
 import graphql.schema.DataFetchingEnvironment;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -17,6 +18,10 @@ import org.springframework.stereotype.Controller;
 import java.util.HashMap;
 import java.util.List;
 
+@Tag(
+        name = "Graphql Account",
+        description = "List, Export Account details"
+)
 @Controller
 @AllArgsConstructor
 public class AccountGraphController {
