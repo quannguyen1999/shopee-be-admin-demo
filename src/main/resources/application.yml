@@ -1,36 +1,9 @@
 spring:
   profiles:
     active: dev
-  graphql:
-    graphiql:
-      enabled: true
-      path: /graphiql
   application:
-    name: shopee_local
-#  cloud:
-#    vault:
-#      kv:
-#        enabled: true
-#      authentication: TOKEN
-
-springdoc:
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-
-mybatis:
-  mapper-locations: classpath:batis/*.xml
-  type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        security: TRACE
-#    feign: DEBUG
-
+    name: admin
+  config:
+    import: "configserver:http://localhost:8071/"
 
 
