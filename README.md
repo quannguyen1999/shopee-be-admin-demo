@@ -7,7 +7,7 @@ docker run --name active-mq-test --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3
 # Option 1
 # Run docker
 # Step 1 build
-> docker build . -t quannguyen1999/shopee-be-admin-demo:0.0.1
+> docker build . -t quannguyen1999/shopee-be-admin-demo
 > or
 > mvn spring-boot:build-image
 

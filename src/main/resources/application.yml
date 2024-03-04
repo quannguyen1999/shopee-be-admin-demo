@@ -5,5 +5,3 @@ spring:
     name: admin
   config:
     import: "configserver:http://localhost:8071/"
-
-
