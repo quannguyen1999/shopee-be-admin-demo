@@ -6,11 +6,14 @@ docker run --name active-mq-test --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3
 
 # Option 1
 # Run docker
+# Step 0 run file jar 
+mvn install -DskipTests -Dmaven.test.skip=true
+
 # Step 1 build
-> docker build . -t quannguyen1999/shopee-be-admin-demo
+docker build . -t quannguyen1999/shopee-be-admin-demo
 > or
 > mvn spring-boot:build-image
 
 # Step 2 run
-> docker run -d -p 8080:8080 quannguyen1999/shopee-be-admin-demo
+docker run -d -p 8080:8080 quannguyen1999/shopee-be-admin-demo
 
