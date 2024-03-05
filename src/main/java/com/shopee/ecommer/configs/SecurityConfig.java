@@ -31,7 +31,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 PathApi.ACCOUNT + PathApi.GET_TOKEN,
                                 PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
-                                "/swagger-ui/**", "/v3/api-docs/**"
+                                "/swagger-ui/**", "/v3/api-docs/**",
+                                "/actuator/**"
                         ).permitAll()
                         .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority(ADMIN)
                         .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority(ADMIN, CLIENT)
