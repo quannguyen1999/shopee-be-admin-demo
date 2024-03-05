@@ -4,6 +4,9 @@ FROM openjdk:17-jdk-slim
 #Author Maintain
 MAINTAINER quannguyen
 
+# Install CURL
+RUN apt-get update && apt-get install -y curl
+
 #Copy File Jar to Docker
 COPY target/shopee-be-admin-demo-latest.jar shopee-be-admin-demo-latest.jar
 
