@@ -21,6 +21,17 @@
         <org.mybatis.starter.version>3.0.3</org.mybatis.starter.version>
     </properties>
     <dependencies>
+        <!--	Add micrometer	-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!--  Implement commuinicate with another service-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
