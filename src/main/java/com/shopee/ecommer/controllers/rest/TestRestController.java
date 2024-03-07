@@ -3,6 +3,7 @@ package com.shopee.ecommer.controllers.rest;
 import com.shopee.ecommer.constants.PathApi;
 import com.shopee.ecommer.models.requests.EmailDto;
 import com.shopee.ecommer.services.EmailService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class TestRestController {
     public final EmailService emailService;
 
     //TODO Only for testing email (No Expose)
+    @RateLimiter(name = "testMail")
     @GetMapping
     public ResponseEntity<String> testMail() {
         emailService.sendMail(EmailDto.builder()

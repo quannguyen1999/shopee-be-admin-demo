@@ -1,9 +1,11 @@
 package com.shopee.ecommer.feignClient;
 
+import com.shopee.ecommer.feignClient.fallBack.AccountFallback;
+import com.shopee.ecommer.feignClient.fallBack.EmailFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "emailServiceClient", url = "${custom.email.url}")
+@FeignClient(name = "email", url = "${custom.email.url}", fallback = EmailFallback.class)
 public interface EmailServiceClient {
     @GetMapping(value = "/email")
     void sendMail();

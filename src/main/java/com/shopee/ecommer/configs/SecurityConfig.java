@@ -32,7 +32,7 @@ public class SecurityConfig {
                                 PathApi.ACCOUNT + PathApi.GET_TOKEN,
                                 PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
                                 "/swagger-ui/**", "/v3/api-docs/**",
-                                "/actuator/**"
+                                "/actuator/**", PathApi.TEST + "/**"
                         ).permitAll()
                         .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority(ADMIN)
                         .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority(ADMIN, CLIENT)

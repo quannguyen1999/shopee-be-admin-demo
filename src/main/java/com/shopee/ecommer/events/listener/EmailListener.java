@@ -28,14 +28,20 @@ public class EmailListener {
 
     protected final RabbitTemplate rabbitTemplate;
 
+
     @Async
     @EventListener
     public void emailEvent(EmailEvent event) throws InterruptedException, JsonProcessingException {
-        log.info("Spring Event: event");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String queuePayloadString = objectMapper.writeValueAsString(event.getEmailDto());
-        rabbitTemplate.convertAndSend(queueName, queuePayloadString);
-        log.info("finished: " + event.getEmailDto());
+//        Rabbit MQ
+//        log.info("Spring Event: event");
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String queuePayloadString = objectMapper.writeValueAsString(event.getEmailDto());
+//        rabbitTemplate.convertAndSend(queueName, queuePayloadString);
+//        log.info("finished: " + event.getEmailDto());
+
+//        Feign Client
+        emailServiceClient.sendMail();
+
     }
 
 }

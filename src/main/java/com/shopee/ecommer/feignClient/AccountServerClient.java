@@ -1,10 +1,11 @@
 package com.shopee.ecommer.feignClient;
 
+import com.shopee.ecommer.feignClient.fallBack.AccountFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "account")
+@FeignClient(name = "account", url = "${custom.security.oauth2Url}", fallback = AccountFallback.class)
 public interface AccountServerClient {
 
     @PostMapping(value = "/oauth2/token")

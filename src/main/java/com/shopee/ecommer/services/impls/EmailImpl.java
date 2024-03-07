@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class EmailImpl implements EmailService {
-    protected final EmailPublisher emailPublisher;
+//    protected final EmailPublisher emailPublisher;
+
+    protected final EmailServiceClient emailServiceClient;
 
     @Override
     public void sendMail(EmailDto emailDto) {
-        emailPublisher.publishEvent(emailDto);
+        System.out.println("testing");
+//        emailServiceClient.sendMail();
     }
 }

@@ -1,0 +1,50 @@
+custom:
+  rabbit-mq:
+    queue: email-registration
+  email:
+    url: http://email
+  security:
+    clientId: admin
+    clientSecret: password
+    oauth2Url: http://account
+
+spring:
+  # RabbitMQ
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+    virtual-host: /
+  # PostgreSQL
+  datasource:
+    port: 5431
+    schema: qa_shopee
+    hikari:
+      connectionTimeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:${spring.datasource.port}/postgres?currentSchema=${spring.datasource.schema}
+    username: postgres
+    password: postgres
+  # Flyway
+  flyway:
+    url: jdbc:postgresql://localhost:${spring.datasource.port}/postgres
+    schemas: ${spring.datasource.schema}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    enabled: true
+    validate-migration-naming: true
+  # Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${custom.security.oauth2Url}
+# Eureka
+eureka:
+  preferIdAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8072/eureka/
