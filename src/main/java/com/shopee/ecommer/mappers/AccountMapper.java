@@ -35,6 +35,7 @@ public interface AccountMapper extends CommonUtilMapper {
             @Mapping(source = listSorted, target = listSorted, ignore = true),
             @Mapping(source = mfaEnabled, target = mfaEnabled, qualifiedByName = CONVERT_TO_BOOLEAN),
             @Mapping(source = mfaRegistered, target = mfaRegistered, qualifiedByName = CONVERT_TO_BOOLEAN),
+            @Mapping(source = listStringSorted, target = listStringSorted, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = page, target = page, ignore = true),
             @Mapping(source = size, target = size, ignore = true),
     })

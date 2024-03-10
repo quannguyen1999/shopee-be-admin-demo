@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static com.shopee.ecommer.models.responses.ProductResponseDto.Fields.*;
+import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -51,6 +52,7 @@ public class ProductImpl extends AdapterImpl implements ProductService {
 
     @Override
     public CommonPageInfo<ProductResponseDto> getList(Map<String, String> listFieldRequest, ProductRequestDto productRequestDto) {
+        productRequestDto.setListStringSorted(handlerListSort(productRequestDto.getListSorted()));
         productRequestDto.setListFields(convertListFieldRequest(listFieldRequest, getAllListDefault()));
         productRequestDto.setTotalRecord(getCommonTotalPage().apply(productBatisService.getList(productRequestDto, true)));
         return CommonPageInfo.<ProductResponseDto>builder()

@@ -15,6 +15,7 @@ import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.mybatis.AccountBatisService;
 import com.shopee.ecommer.repositories.AccountRepository;
 import com.shopee.ecommer.services.AccountService;
+import com.shopee.ecommer.utils.FunctionUtils;
 import com.shopee.ecommer.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
+import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
 
 @Slf4j
 @Service
@@ -98,7 +103,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     @Override
     public CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFieldRequest,
                                                       AccountRequestDto accountRequestDto) {
-//        accountPublisher.publishEvent("Test");
+        accountRequestDto.setListStringSorted(handlerListSort(accountRequestDto.getListSorted()));
         accountRequestDto.setListFields(convertListFieldRequest(listFieldRequest, getAllListDefault()));
         accountRequestDto.setTotalRecord(getCommonTotalPage().apply(accountBatisService.getList(accountRequestDto, true)));
         return CommonPageInfo.<AccountResponseDto>builder()

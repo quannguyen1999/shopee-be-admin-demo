@@ -11,6 +11,7 @@ input AccountRequestDto {
     #Search
     listFields: [String]
     listSorted: [Map]
+    listStringSorted: String
     fromBirthday: String
     toBirthday: String
     createFromDate: String

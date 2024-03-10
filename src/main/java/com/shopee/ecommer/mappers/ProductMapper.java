@@ -28,6 +28,7 @@ public interface ProductMapper extends CommonUtilMapper {
             @Mapping(source = updated, target = updated, qualifiedByName = CONVERT_TO_STRING, dateFormat = DATE_FORMAT),
             @Mapping(source = userCreated, target = userCreated, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = userUpdated, target = userUpdated, qualifiedByName = CONVERT_TO_STRING),
+            @Mapping(source = listStringSorted, target = listStringSorted, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = totalRecord, target = totalRecord, ignore = true),
             @Mapping(source = listFields, target = listFields, ignore = true),
             @Mapping(source = listSorted, target = listSorted, ignore = true),

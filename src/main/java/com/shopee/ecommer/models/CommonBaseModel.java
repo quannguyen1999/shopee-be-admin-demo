@@ -30,4 +30,6 @@ public class CommonBaseModel {
 
     public List<Map<String, String>> listSorted = new ArrayList<>();
 
+    public String listStringSorted;
+
 }

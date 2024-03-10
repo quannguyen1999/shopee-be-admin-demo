@@ -59,8 +59,8 @@ springdoc:
 mybatis:
   mapper-locations: classpath:batis/*.xml
   type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #Config Eureka
 management:

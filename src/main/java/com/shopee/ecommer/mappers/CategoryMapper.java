@@ -29,6 +29,7 @@ public interface CategoryMapper extends CommonUtilMapper {
             @Mapping(source = totalRecord, target = totalRecord, ignore = true),
             @Mapping(source = listFields, target = listFields, ignore = true),
             @Mapping(source = listSorted, target = listSorted, ignore = true),
+            @Mapping(source = listStringSorted, target = listStringSorted, qualifiedByName = CONVERT_TO_STRING),
             @Mapping(source = page, target = page, ignore = true),
             @Mapping(source = size, target = size, ignore = true),
     })

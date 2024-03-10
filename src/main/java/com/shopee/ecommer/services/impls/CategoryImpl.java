@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static com.shopee.ecommer.models.responses.CategoryResponseDto.Fields.*;
+import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,6 +51,7 @@ public class CategoryImpl extends AdapterImpl implements CategoryService {
 
     @Override
     public CommonPageInfo<CategoryResponseDto> getList(Map<String, String> listFieldRequest, CategoryRequestDto categoryRequestDto) {
+        categoryRequestDto.setListStringSorted(handlerListSort(categoryRequestDto.getListSorted()));
         categoryRequestDto.setListFields(convertListFieldRequest(listFieldRequest, getAllListDefault()));
         categoryRequestDto.setTotalRecord(getCommonTotalPage().apply(categoryBatisService.getList(categoryRequestDto, true)));
         return CommonPageInfo.<CategoryResponseDto>builder()

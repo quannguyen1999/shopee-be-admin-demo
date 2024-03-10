@@ -25,6 +25,9 @@
                         case when a.mfa_registered is null then
                         true else a.mfa_registered end as "mfaRegistered"
                     </when>
+                    <when test="field == 'birthday'">
+                        TO_CHAR(a.birthday, 'YYYY-MM-DD') as "birthday"
+                    </when>
                     <otherwise>
                         a.${field} as ${field}
                     </otherwise>
@@ -73,12 +76,7 @@
             and isCountTotalPage == false
             and request.listSorted != null
             and request.listSorted.size() > 0">
-            ORDER BY
-            <foreach item="field" collection="request.listSorted" separator=", ">
-                --TODO Fix later (isActive) Not Working
-                ${field.field}
-                ${field.value}
-            </foreach>
+            ORDER BY ${request.listStringSorted}
         </if>
 
         <!-- Pagination -->
