@@ -58,6 +58,16 @@ public class AccountRestController {
     }
 
     @Operation(
+            summary = "Get Info Account",
+            description = "Get Info Account by authen"
+    )
+    @RequestMapping(value = PathApi.GET_INFO, method = RequestMethod.GET)
+    public ResponseEntity<AccountResponseDto> getInfo(Authentication authentication) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.getInfo(authentication.getName()));
+    }
+
+    @Operation(
             summary = "Get Link reference of API Account"
     )
     @RequestMapping(value = PathApi.INFO_PATH, method = RequestMethod.GET)

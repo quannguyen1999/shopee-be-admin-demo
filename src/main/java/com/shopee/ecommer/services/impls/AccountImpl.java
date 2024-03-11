@@ -15,7 +15,6 @@ import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.mybatis.AccountBatisService;
 import com.shopee.ecommer.repositories.AccountRepository;
 import com.shopee.ecommer.services.AccountService;
-import com.shopee.ecommer.utils.FunctionUtils;
 import com.shopee.ecommer.validators.AccountValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +25,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.shopee.ecommer.models.responses.AccountResponseDto.Fields.*;
 import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
@@ -112,6 +108,14 @@ public class AccountImpl extends AdapterImpl implements AccountService {
                 .total(accountRequestDto.getTotalRecord())
                 .data(handlerList(accountRequestDto))
                 .build();
+    }
+
+    @Override
+    public AccountResponseDto getInfo(String account) {
+        AccountRequestDto accountRequestDto = new AccountRequestDto();
+        accountRequestDto.setUsername(account);
+        accountRequestDto.setListFields(Arrays.asList(id, username, birthday, mfaEnabled, mfaRegistered, gender, isActive, email));
+        return AccountMapper.MAPPER.mapToAccountResponseDto(accountBatisService.getList(accountRequestDto, false).get(0));
     }
 
     private List<AccountResponseDto> handlerList(AccountRequestDto accountRequestDto) {

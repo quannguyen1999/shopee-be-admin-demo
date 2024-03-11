@@ -16,6 +16,8 @@ public interface AccountService {
 
     CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFields, AccountRequestDto requestDto);
 
+    AccountResponseDto getInfo(String account);
+
     List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto);
 
     List<String> getListField(AccountRequestDto accountRequestDto);

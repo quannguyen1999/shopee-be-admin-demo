@@ -20,5 +20,7 @@ public interface PathApi {
 
     String GET_REFRESH_TOKEN = "/refreshToken";
 
+    String GET_INFO = "/info";
+
 
 }
