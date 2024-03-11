@@ -5,6 +5,8 @@ import com.shopee.ecommer.repositories.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 import static com.shopee.ecommer.constants.MessageErrors.*;
 
 @AllArgsConstructor
@@ -19,8 +21,9 @@ public class ProductValidator extends CommonValidator {
         checkDouble().accept(productRequestDto.getQuantity(), PRODUCT_QUANTITY_INVALID);
         checkDouble().accept(productRequestDto.getPrice(), PRODUCT_PRICE_INVALID);
         checkDouble().accept(productRequestDto.getDiscount(), PRODUCT_DISCOUNT_INVALID);
-        checkEmpty().accept(productRequestDto.getIdCategory(), PRODUCT_CATEGORY_INVALID);
-        checkEmpty().accept(categoryRepository.findById(productRequestDto.getIdCategory()).orElse(null), PRODUCT_CATEGORY_NOT_EXISTS);
+        checkEmpty().accept(productRequestDto.getCategory(), PRODUCT_CATEGORY_INVALID);
+        checkEmpty().accept(productRequestDto.getCategory().getId(), PRODUCT_CATEGORY_INVALID);
+        checkEmpty().accept(categoryRepository.findById(UUID.fromString(productRequestDto.getCategory().getId())).orElse(null), PRODUCT_CATEGORY_NOT_EXISTS);
     }
 
     public void validateListFieldRequest(ProductRequestDto productRequestDto) {

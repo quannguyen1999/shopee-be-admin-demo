@@ -20,7 +20,7 @@ public class ProductRequestDto extends CommonBaseModel {
 
     private Double discount;
 
-    private UUID idCategory;
+    private CategoryRequestDto category;
 
     public String createFromDate;
 
