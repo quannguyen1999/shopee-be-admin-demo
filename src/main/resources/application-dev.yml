@@ -40,6 +40,17 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${custom.security.oauth2Url}
+  cloud:
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
+
 # Eureka
 eureka:
   preferIdAddress: false

@@ -21,6 +21,16 @@
         <org.mybatis.starter.version>3.0.3</org.mybatis.starter.version>
     </properties>
     <dependencies>
+        <!--    Spring Cloud Function    -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
+
         <!--	Add micrometer	-->
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -292,9 +302,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-<!--                    <image>-->
-<!--                        <name>quannguyen1999/${project.artifactId}:${project.version}</name>-->
-<!--                    </image>-->
+                    <!--                    <image>-->
+                    <!--                        <name>quannguyen1999/${project.artifactId}:${project.version}</name>-->
+                    <!--                    </image>-->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
