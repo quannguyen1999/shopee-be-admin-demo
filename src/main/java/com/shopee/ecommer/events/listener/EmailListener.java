@@ -7,7 +7,6 @@ import com.shopee.ecommer.models.requests.EmailDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.event.EventListener;
@@ -23,7 +22,7 @@ public class EmailListener {
 
 
     protected final EmailServiceClient emailServiceClient;
-    protected final RabbitTemplate rabbitTemplate;
+    //    protected final RabbitTemplate rabbitTemplate;
     protected final StreamBridge streamBridge;
     @Value("${custom.rabbit-mq.queue}")
     private String queueName;
