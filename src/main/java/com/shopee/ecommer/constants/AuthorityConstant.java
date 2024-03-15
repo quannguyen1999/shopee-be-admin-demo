@@ -6,4 +6,8 @@ public class AuthorityConstant {
 
     public static final String CLIENT = "CLIENT";
 
+    public static final String ANONYMOUS = "ANONYMOUS";
+
+
+
 }
