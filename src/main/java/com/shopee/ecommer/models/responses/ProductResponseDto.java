@@ -24,4 +24,6 @@ public class ProductResponseDto extends CommonBaseModel {
 
     public Double discount;
 
+    public String description;
+
 }

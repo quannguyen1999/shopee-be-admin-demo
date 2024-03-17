@@ -27,6 +27,8 @@ public class Product extends CommonBaseEntities{
 
     private Double discount;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name="category_id", nullable=false)
     private Category category;

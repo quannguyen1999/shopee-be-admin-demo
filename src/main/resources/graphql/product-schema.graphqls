@@ -7,6 +7,8 @@ input ProductRequestDto {
     discount: Double
     page: Int!
     size: Int!
+    isGetTopProduct: Boolean
+    isSuggestProduct: Boolean
 
     #Search
     listFields: [String]
@@ -21,10 +23,11 @@ input ProductRequestDto {
 type ProductResponseDto {
     id: String
     name: String
-    image: Date
+    image: String
     quantity: Double!
     price: Double!
     discount: Double!
+    description: String
     created: Date
     updated: Date
 }

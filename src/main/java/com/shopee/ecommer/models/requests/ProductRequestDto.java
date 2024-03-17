@@ -26,4 +26,8 @@ public class ProductRequestDto extends CommonBaseModel {
 
     public String createToDate;
 
+    public Boolean isGetTopProduct;
+
+    public Boolean isSuggestProduct;
+
 }

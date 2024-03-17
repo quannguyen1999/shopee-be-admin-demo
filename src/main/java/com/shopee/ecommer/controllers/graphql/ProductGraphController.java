@@ -10,7 +10,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+
+import static com.shopee.ecommer.constants.AuthorityConstant.ANONYMOUS;
 
 @Tag(
         name = "Graphql Product",
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Controller;
 public class ProductGraphController {
     private final ProductService productService;
 
+    @PreAuthorize("hasPermission(#id, '"+ ANONYMOUS +"', '"+ ANONYMOUS +"')")
     @QueryMapping
     public CommonPageInfo<ProductResponseDto> listProduct(@Argument ProductRequestDto productRequestDto,
                                                           DataFetchingEnvironment environment) {
