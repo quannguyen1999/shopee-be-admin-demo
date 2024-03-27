@@ -1,0 +1,28 @@
+input SupplierRequestDto {
+    id: String
+    address: String
+    phone: String
+    companyName: String
+
+    #Search
+    listFields: [String]
+    listSorted: [Map]
+    createFromDate: String
+    createToDate: String
+}
+
+type SupplierResponseDto {
+    id: String
+    address: String
+    phone: String
+    companyName: String
+    created: Date
+    updated: Date
+}
+
+type CommonPageInfoSupplier {
+    total: Int!
+    page: Int!
+    size: Int!
+    data: [SupplierResponseDto]
+}

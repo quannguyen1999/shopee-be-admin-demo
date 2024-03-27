@@ -10,6 +10,7 @@ public interface PathApi {
 
     String TEST = "/tests";
     String PRODUCT = "/products";
+    String SUPPLIER = "/suppliers";
     String CREATE = "/create";
 
     String PUT = "/put";

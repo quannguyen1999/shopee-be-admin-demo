@@ -17,4 +17,7 @@ type Query {
 
     #    Product
     listProduct(productRequestDto: ProductRequestDto!): CommonPageInfoProduct
+
+    #    Supplier
+    listSupplier(supplierRequestDto: SupplierRequestDto!): CommonPageInfoSupplier
 }

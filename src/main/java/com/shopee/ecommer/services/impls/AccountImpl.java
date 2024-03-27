@@ -40,6 +40,7 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     protected final AccountRepository accountRepository;
     protected final AccountValidator accountValidator;
     protected final EmailPublisher emailPublisher;
+
     protected final AccountPublisher accountPublisher;
     protected final AccountServerClient accountServerClient;
     protected final PasswordEncoder passwordEncoder;

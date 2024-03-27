@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class Product extends CommonBaseEntities{
+public class Product extends CommonBaseEntities {
 
     @Id
     private UUID id;
@@ -30,6 +30,10 @@ public class Product extends CommonBaseEntities{
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="category_id", nullable=false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = false)
+    private Supplier supplier;
 }
