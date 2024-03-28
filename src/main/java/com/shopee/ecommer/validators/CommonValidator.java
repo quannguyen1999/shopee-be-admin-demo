@@ -7,6 +7,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -15,6 +16,17 @@ public class CommonValidator {
         return (input, messageError) -> {
             if (ObjectUtils.isEmpty(input) || (input instanceof String && !StringUtils.hasLength(input.toString()))
             ) {
+                badRequest().accept(messageError);
+            }
+        };
+    }
+
+    static BiConsumer<String, MessageErrors> checkUUID() {
+        return (input, messageError) -> {
+            try {
+                // Try to create a UUID object from the given string
+                UUID uuid = UUID.fromString(input);
+            } catch (IllegalArgumentException e) {
                 badRequest().accept(messageError);
             }
         };

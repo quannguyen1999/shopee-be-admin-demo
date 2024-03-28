@@ -13,6 +13,7 @@ import lombok.*;
 @Setter
 @Builder
 public class OrderDetail extends CommonBaseEntities {
+
     @EmbeddedId
     OrdersProducts id;
 
