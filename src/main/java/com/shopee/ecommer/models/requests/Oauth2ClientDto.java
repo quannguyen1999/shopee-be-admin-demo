@@ -12,4 +12,10 @@ public class Oauth2ClientDto {
 
     private String refreshToken;
 
+    private String grantType;
+
+    private String userName;
+
+    private String password;
+
 }

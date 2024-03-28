@@ -9,11 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AccountServerClient {
 
     @PostMapping(value = "/oauth2/token")
-    Object getToken(@RequestParam("client_id") String clientId,
+    Object getTokenByLoginPage(@RequestParam("client_id") String clientId,
                     @RequestParam("client_secret") String clientSecret,
                     @RequestParam("code") String code,
                     @RequestParam("grant_type") String grantType,
                     @RequestParam("redirect_uri") String redirectUrl
+    );
+
+    @PostMapping(value = "/oauth2/token")
+    Object getTokenByApi(@RequestParam("client_id") String clientId,
+                    @RequestParam("client_secret") String clientSecret,
+                    @RequestParam("grant_type") String grantType,
+                    @RequestParam("username") String username,
+                    @RequestParam("password") String password
     );
 
     @PostMapping(value = "/oauth2/token")

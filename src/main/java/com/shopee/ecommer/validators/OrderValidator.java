@@ -38,12 +38,7 @@ public class OrderValidator extends CommonValidator {
 
     private static BiConsumer<Product, MessageErrors> checkQuantity(){
         return (input, messageError) -> {
-            try {
-                if(input.getQuantity() <= 0){
-
-                }
-            } catch (IllegalArgumentException e) {
-                badRequest().accept(messageError);
+            if(input.getQuantity() <= 0){
             }
         };
     }

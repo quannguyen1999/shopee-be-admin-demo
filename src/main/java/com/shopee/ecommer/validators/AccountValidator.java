@@ -6,6 +6,7 @@ import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,8 +48,7 @@ public class AccountValidator extends CommonValidator {
     }
 
     public void validateGetToken(Oauth2ClientDto oauth2ClientDto) {
-//        checkEmpty().accept(oauth2ClientDto.getCode(), ACCOUNT_CODE_INVALID);
-//        checkEmpty().accept(oauth2ClientDto.getRedirectUrl(), ACCOUNT_REDIRECT_INVALID);
+
     }
 
     public void validateRefreshToken(Oauth2ClientDto oauth2ClientDto) {

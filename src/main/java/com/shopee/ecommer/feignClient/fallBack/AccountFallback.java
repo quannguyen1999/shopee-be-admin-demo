@@ -9,7 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountFallback implements AccountServerClient {
     @Override
-    public Object getToken(String clientId, String clientSecret, String code, String grantType, String redirectUrl) {
+    public Object getTokenByLoginPage(String clientId, String clientSecret, String code, String grantType, String redirectUrl) {
+        throw new InternerServerException(MessageErrors.SERVER_ACCOUNT_UNAVAILABLE.toString());
+    }
+
+    @Override
+    public Object getTokenByApi(String clientId, String clientSecret, String grantType, String username, String password) {
         throw new InternerServerException(MessageErrors.SERVER_ACCOUNT_UNAVAILABLE.toString());
     }
 

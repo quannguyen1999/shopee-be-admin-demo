@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -145,8 +146,19 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         //Validator
         accountValidator.validateGetToken(oauth2ClientDto);
 
-        //request get token
-        return accountServerClient.getToken(
+        //Get Token With Api
+        if(StringUtils.hasLength(oauth2ClientDto.getGrantType()) && "custom_password".equalsIgnoreCase(oauth2ClientDto.getGrantType())){
+            return accountServerClient.getTokenByApi(
+                    clientId,
+                    clientSecret,
+                    "custom_password",
+                    oauth2ClientDto.getUserName(),
+                    oauth2ClientDto.getPassword()
+            );
+        }
+
+        //Get token with loginPage
+        return accountServerClient.getTokenByLoginPage(
                 clientId,
                 clientSecret,
                 oauth2ClientDto.getCode(),
