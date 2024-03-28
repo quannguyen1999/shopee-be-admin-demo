@@ -1,0 +1,62 @@
+<!-- CustomMapper.xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopee.ecommer.mybatis.OrderBatisService">
+
+    <!-- Select Query -->
+    <select id="getList" resultType="java.util.HashMap">
+        <if test="isCountTotalPage == true">
+            <!-- Count Query -->
+            SELECT count(*) as total FROM (
+        </if>
+
+        <!-- Main Query -->
+        <trim prefix="SELECT" suffixOverrides=",">
+            <foreach item="field" collection="request.listFields" separator=",">
+                pro.${field} as ${field}
+            </foreach>
+        </trim>
+
+        FROM orderEcommer pro WHERE 1 = 1
+
+        <!-- Conditions -->
+
+
+        <!-- Date Range -->
+        <choose>
+            <when test="request.createFromDate != null
+                        and request.createToDate != null">
+                AND to_char(pro.created,'yyyyMMdd') BETWEEN #{request.createFromDate} AND #{request.createToDate}
+            </when>
+        </choose>
+
+        <!-- Order By Clause -->
+        <if test="
+            request.page != null
+            and request.page != null
+            and isCountTotalPage == false
+            and request.listSorted != null
+            and request.listSorted.size() > 0">
+            ORDER BY
+            <foreach item="field" collection="request.listSorted" separator=", ">
+                <!-- Fix Later -->
+                ${field.field}
+                ${field.value}
+            </foreach>
+        </if>
+
+        <!-- Pagination -->
+        <choose>
+            <when test="request.page != null
+                        and request.size != null
+                        and isCountTotalPage == false">
+                LIMIT #{request.size} OFFSET #{request.page}
+            </when>
+        </choose>
+
+        <!-- Closing Count Query -->
+        <if test="isCountTotalPage == true">
+            )
+        </if>
+    </select>
+</mapper>

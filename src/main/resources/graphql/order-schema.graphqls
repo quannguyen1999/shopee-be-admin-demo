@@ -1,0 +1,30 @@
+input OrderRequestDto {
+    id: String
+    orderDate: String
+    shipCity: String
+    shippedDate: String
+    shipRegion: String
+
+    #Search
+    listFields: [String]
+    listSorted: [Map]
+    createFromDate: String
+    createToDate: String
+}
+
+type OrderResponseDto {
+    id: String
+    orderDate: String
+    shipCity: String
+    shippedDate: String
+    shipRegion: String
+    created: Date
+    updated: Date
+}
+
+type CommonPageInfoOrder {
+    total: Int!
+    page: Int!
+    size: Int!
+    data: [OrderResponseDto]
+}
