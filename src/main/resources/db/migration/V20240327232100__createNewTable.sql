@@ -23,7 +23,8 @@ CREATE TABLE OrderEcommer  (
     updated date default current_date,
     user_created varchar(200) default 'admin',
     user_updated varchar(200) default 'admin',
-    account_id FOREIGN KEY (account_id) REFERENCES Account(ID)
+    account_id UUID,
+    FOREIGN KEY (account_id) REFERENCES Account(ID)
 );
 ALTER TABLE OrderEcommer ALTER COLUMN created TYPE timestamp USING created::timestamp;
 ALTER TABLE OrderEcommer ALTER COLUMN updated TYPE timestamp USING updated::timestamp;
@@ -32,19 +33,21 @@ ALTER TABLE OrderEcommer ALTER COLUMN updated set DEFAULT current_timestamp::tim
 
 --Handler Product
 ALTER TABLE product ADD COLUMN supplier_id UUID;
-ALTER TABLE product ADD CONSTRAINT supplier_id FOREIGN KEY (supplier_id) REFERENCES Supplier(ID);
 
 --Handler OrderDetail
 CREATE TABLE OrderDetail  (
-    order_id UUID PRIMARY KEY,
-    product_id UUID PRIMARY KEY,
-    discount double,
-    quantity double,
-    total_amount double,
+    order_id UUID NOT NULL,
+    product_id UUID NOT NULL,
+    discount numeric,
+    quantity numeric,
+    total_amount numeric,
     created date default current_date,
     updated date default current_date,
     user_created varchar(200) default 'admin',
-    user_updated varchar(200) default 'admin'
+    user_updated varchar(200) default 'admin',
+    CONSTRAINT orderdetail_pkey PRIMARY KEY (order_id, product_id),
+    CONSTRAINT orderdetail_order_id_fkey FOREIGN KEY (order_id) REFERENCES OrderEcommer(id),
+    CONSTRAINT orderdetail_product_id_fkey FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 ALTER TABLE OrderDetail ALTER COLUMN created TYPE timestamp USING created::timestamp;
 ALTER TABLE OrderDetail ALTER COLUMN updated TYPE timestamp USING updated::timestamp;

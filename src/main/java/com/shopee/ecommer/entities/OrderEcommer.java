@@ -26,7 +26,6 @@ public class OrderEcommer extends CommonBaseEntities {
     private String shipRegion;
 
     @ManyToOne
-    @JoinColumn(name = "id")
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 }

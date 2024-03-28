@@ -4,7 +4,6 @@ import com.shopee.ecommer.models.CommonBaseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
 
 import java.util.UUID;
 
@@ -13,7 +12,6 @@ import java.util.UUID;
 )
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldNameConstants
 public class AccountResponseDto extends CommonBaseModel {
 
     @Schema(
@@ -61,4 +59,15 @@ public class AccountResponseDto extends CommonBaseModel {
     )
     public Boolean mfaRegistered;
 
+    public static final class Fields {
+        public static final String id = "id";
+        public static final String username = "username";
+        public static final String birthday = "birthday";
+        public static final String gender = "gender";
+        public static final String email = "email";
+        public static final String avatar = "avatar";
+        public static final String isActive = "isActive";
+        public static final String mfaEnabled = "mfaEnabled";
+        public static final String mfaRegistered = "mfaRegistered";
+    }
 }

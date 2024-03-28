@@ -36,7 +36,6 @@ public class OrderImpl extends AdapterImpl implements OrderService {
 
     protected final OrderBatisService orderBatisService;
 
-
     @Override
     public OrderResponseDto createOrder(OrderRequestDto data) {
         return null;

@@ -13,4 +13,5 @@ public class OrdersProducts implements Serializable {
 
     @Column(name = "productID")
     private UUID productID;
+
 }
