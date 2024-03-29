@@ -37,17 +37,7 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <!--  Implement commuinicate with another service-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
+        <!--  Implement communicate with another service-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
@@ -57,7 +47,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <version>4.1.0</version>
+            <version>4.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -160,11 +156,6 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
-
         <!--        Spring JPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -231,31 +222,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
-
-        <!--TODO Vault Starter implement later -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-vault-config</artifactId>-->
-        <!--            <version>3.0.5</version>-->
-        <!--        </dependency>-->
-
-        <!--    Oauth2    -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <!-- Rabbit MQ -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.amqp</groupId>-->
-        <!--            <artifactId>spring-rabbit-test</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
-        <!--        </dependency>-->
 
     </dependencies>
     <dependencyManagement>
