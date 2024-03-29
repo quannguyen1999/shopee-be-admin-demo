@@ -18,7 +18,7 @@ public class ProductValidator extends CommonValidator {
     public void validateCreateProduct(ProductRequestDto productRequestDto) {
         checkEmpty().accept(productRequestDto.getName(), PRODUCT_NAME_INVALID);
         checkEmpty().accept(productRequestDto.getName(), PRODUCT_NAME_INVALID);
-        checkDouble().accept(productRequestDto.getQuantity(), PRODUCT_QUANTITY_INVALID);
+        checkInteger().accept(productRequestDto.getQuantity(), PRODUCT_QUANTITY_INVALID);
         checkDouble().accept(productRequestDto.getPrice(), PRODUCT_PRICE_INVALID);
         checkDouble().accept(productRequestDto.getDiscount(), PRODUCT_DISCOUNT_INVALID);
         checkEmpty().accept(productRequestDto.getCategory(), PRODUCT_CATEGORY_INVALID);

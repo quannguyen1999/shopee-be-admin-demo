@@ -21,6 +21,6 @@ public class OrderDetail extends CommonBaseEntities {
 
     private int quantity;
 
-    private int totalAmount;
+    private Double totalAmount;
 
 }

@@ -1,13 +1,16 @@
 package com.shopee.ecommer.models.responses;
 
 import com.shopee.ecommer.models.CommonBaseModel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
-@Data
+
 @FieldNameConstants
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class OrderResponseDto extends CommonBaseModel {
 
     private String id;

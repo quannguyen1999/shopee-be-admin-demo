@@ -74,6 +74,15 @@ public class CommonValidator {
         };
     }
 
+    static BiConsumer<Integer, MessageErrors> checkInteger() {
+        return (input, messageError) -> {
+            checkEmpty().accept(input, messageError);
+            if (input < 0) {
+                badRequest().accept(messageError);
+            }
+        };
+    }
+
     static BiConsumer<List<String>, MessageErrors> checkList() {
         return (input, messageError) -> {
             if (CollectionUtils.isEmpty(input) || input.size() == 0) {

@@ -14,7 +14,7 @@ public class ProductRequestDto extends CommonBaseModel {
 
     private String image;
 
-    private Double quantity;
+    private int quantity;
 
     private Double price;
 

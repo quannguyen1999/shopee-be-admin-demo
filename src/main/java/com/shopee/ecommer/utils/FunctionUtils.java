@@ -1,9 +1,16 @@
 package com.shopee.ecommer.utils;
 
+import graphql.language.StringValue;
+import graphql.schema.CoercingParseLiteralException;
 import org.springframework.util.ObjectUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static com.shopee.ecommer.mappers.CommonUtilMapper.DATE_FORMAT;
 
 public class FunctionUtils {
 
@@ -38,6 +45,14 @@ public class FunctionUtils {
             result.append(FunctionUtils.camelCaseToSnakeCase(dataSorts.get("field"))).append(" ").append(dataSorts.get("value"));
         }
         return result.toString();
+    }
+
+    public static Date parseDateObjectToDate(String input) {
+        try {
+            return new SimpleDateFormat(DATE_FORMAT).parse(input);
+        } catch (ParseException e) {
+            throw new CoercingParseLiteralException("Invalid value to parse: " + input);
+        }
     }
 
 }

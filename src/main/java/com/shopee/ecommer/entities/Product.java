@@ -21,7 +21,7 @@ public class Product extends CommonBaseEntities {
 
     private String image;
 
-    private Double quantity;
+    private int quantity;
 
     private Double price;
 

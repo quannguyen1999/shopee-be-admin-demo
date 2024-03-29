@@ -1,8 +1,11 @@
 package com.shopee.ecommer.services.impls;
 
 import com.shopee.ecommer.entities.Product;
+import com.shopee.ecommer.mappers.CategoryMapper;
 import com.shopee.ecommer.mappers.ProductMapper;
+import com.shopee.ecommer.models.requests.CategoryRequestDto;
 import com.shopee.ecommer.models.requests.ProductRequestDto;
+import com.shopee.ecommer.models.responses.CategoryResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.ProductResponseDto;
 import com.shopee.ecommer.mybatis.ProductBatisService;

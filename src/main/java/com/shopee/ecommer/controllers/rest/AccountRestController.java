@@ -42,7 +42,7 @@ public class AccountRestController {
             description = "Get Token by 2 param code + redirectUrl"
     )
     @RequestMapping(value = PathApi.GET_TOKEN, method = RequestMethod.POST)
-    public ResponseEntity<Object> getToken(@RequestBody Oauth2ClientDto oauth2ClientDto) {
+    public ResponseEntity<Object> getToken(Oauth2ClientDto oauth2ClientDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.getToken(oauth2ClientDto));
     }
