@@ -45,15 +45,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         Map<String, Object> claimsParse = credentialParse.getClaims();
         List<String> authoritiesParse = (List<String>) claimsParse.get(FIELD_AUTHORITIES);
 
-        //Filter
-        boolean result = getListPermissions.stream().anyMatch(permissionValue -> authoritiesParse
+        return getListPermissions.stream().anyMatch(permissionValue -> authoritiesParse
                 .parallelStream().anyMatch(authValue -> authValue.equalsIgnoreCase(permissionValue)));
-
-        if (!result) {
-            throw new UnauthorizedRequestException(MessageErrors.USER_UNAUTHORIZED);
-        }
-
-        return true;
     }
 
 }

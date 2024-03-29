@@ -2,20 +2,14 @@ spring:
   application:
     name: admin
   profiles:
-    active: dev
+    active: local
   server:
     port: 8080
-  graphql:
-    graphiql:
-      enabled: true
-      path: /graphiql
+    #Note: false when in localhost, and true for another env
   cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
-    gateway:
-      httpClient:
-        connect-timeout: 10000
-        response-timeout: 20s
+    config:
+      enabled: false
+      import-check:
+        enabled: false
   config:
     import: "optional:configserver:http://localhost:8071/"

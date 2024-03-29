@@ -16,6 +16,7 @@ spring:
     password: guest
     port: 5672
     virtual-host: /
+    enabled: false
   # PostgreSQL
   datasource:
     port: 5432
@@ -32,7 +33,7 @@ spring:
     schemas: ${spring.datasource.schema}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    enabled: true
+    enabled: false
     validate-migration-naming: false
   # Security
   security:
@@ -40,7 +41,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${custom.security.oauth2Url}
+  jpa:
+    open-in-view: false
   cloud:
+    discovery:
+      enabled: false
     function:
       definition: updateCommunication
     stream:
@@ -50,19 +55,7 @@ spring:
           group: ${spring.application.name}
         sendCommunication-out-0:
           destination: send-communication
-    config:
-      enabled: false
-    import-check:
-      enabled: false
-    openfeign:
-      circuitbreaker:
-        enabled: false
-    gateway:
-      httpClient:
-        connect-timeout: 10000
-        response-timeout: 20s
-  jpa:
-    open-in-view: false
+
 # Eureka
 eureka:
   preferIdAddress: false
@@ -71,64 +64,41 @@ eureka:
     registerWithEureka: false
     serviceUrl:
       defaultZone: http://localhost:8072/eureka/
+  instance:
+    preferIpAddress: false
 
 #Spring doc
 springdoc:
   swagger-ui:
-    enabled: true
+    enabled: false
     path: /swagger-ui.html
 
 #MyBatis
 mybatis:
   mapper-locations: classpath:batis/*.xml
   type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #Config Eureka
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
-#  health:
-#    readiness-state:
-#      enabled: false
-#    liveness-state:
-#      enabled: false
-#  endpoint:
-#    health:
-#      probes:
-#        enabled: false
-#  metrics:
-#    tags:
-#      application: ${spring.application.name}
-#info:
-#  app:
-#    name: "admins"
-#    description: "Shopee be admin dev"
-#    version: "1.0.0"
-#
-#resilience4j.circuitbreaker:
-#  configs:
-#    default:
-#      slidingWindowSize: 10
-#      permittedNumberOfCallsInHalfOpenState: 2
-#      failureRateThreshold: 50
-#      waitDurationInOpenState: 10000
-#
-#resilience4j.ratelimiter:
-#  configs:
-#    default:
-#      timeoutDuration: 10000
-#      limitRefreshPeriod: 5000
-#      limitForPeriod: 1
-
-hibernate:
-  transaction:
-    jta:
-      platform: org.hibernate.engine.transaction.jta.platform.spi.JBossStandAloneJtaPlatform
-
-logging:
-  level:
-    warn: ERROR
+management:
+  enabled: false
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'
+  enabled-by-default: false
+  health:
+    readiness-state:
+      enabled: false
+    liveness-state:
+      enabled: false
+  endpoint:
+    health:
+      probes:
+        enabled: false
+    shutdown:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}

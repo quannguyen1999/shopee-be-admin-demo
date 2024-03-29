@@ -15,6 +15,7 @@ public class CategoryValidator extends CommonValidator {
     private final CategoryRepository categoryRepository;
 
     public void validateCreateCategory(CategoryRequestDto categoryRequestDto) {
+
         checkEmpty().accept(categoryRequestDto.getName(), CATEGORY_NAME_INVALID);
     }
 

@@ -41,6 +41,13 @@ spring:
         jwt:
           issuer-uri: ${custom.security.oauth2Url}
   cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: false
+    gateway:
+      httpClient:
+        connect-timeout: 10000
+        response-timeout: 20s
     function:
       definition: updateCommunication
     stream:

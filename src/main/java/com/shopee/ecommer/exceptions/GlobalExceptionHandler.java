@@ -24,7 +24,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
-        ex.printStackTrace();
         log.debug(ex.getLocalizedMessage());
         return commonHandlerException(Strings.EMPTY, "Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -55,21 +54,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(error, httpStatus);
     }
 
-//    //phải khai báo @Vallidated trong các model thì mới hoạt động
-//    //sau đó nếu có lỗi thì sẽ báo cho client biết
-//    @Override
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//        //khởi tạo
-//        List<String> details = new ArrayList<>();
-//
-//        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-//
-//            details.add(error.getDefaultMessage());
-//
-//        }
-//
-//        ErrorResponse error = new ErrorResponse("Validation Failed", details);
-//
-//        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
-//    }
 }

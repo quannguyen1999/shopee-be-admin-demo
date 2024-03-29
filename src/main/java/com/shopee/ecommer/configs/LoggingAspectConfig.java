@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @Slf4j
-@Profile("dev")
+@Profile("local")
 public class LoggingAspectConfig {
 
     //    @Before("logPointcut()")

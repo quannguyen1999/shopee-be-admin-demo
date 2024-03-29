@@ -117,8 +117,6 @@ public class GraphQlScalarConfig {
         return new String((byte[]) input);
     }
 
-
-    // https://docs.spring.io/spring-graphql/docs/1.1.0-RC1/reference/html/#execution-graphqlsource-runtimewiring-configurer
     @Bean
     RuntimeWiringConfigurer runtimeWiringConfigurerDate() {
         GraphQLScalarType scalarType = dateScalar();

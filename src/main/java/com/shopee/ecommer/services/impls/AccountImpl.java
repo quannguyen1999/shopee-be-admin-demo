@@ -1,5 +1,6 @@
 package com.shopee.ecommer.services.impls;
 
+import com.shopee.ecommer.constants.AuthorityConstant;
 import com.shopee.ecommer.constants.MessageErrors;
 import com.shopee.ecommer.entities.Account;
 import com.shopee.ecommer.events.publishers.AccountPublisher;
@@ -147,11 +148,11 @@ public class AccountImpl extends AdapterImpl implements AccountService {
         accountValidator.validateGetToken(oauth2ClientDto);
 
         //Get Token With Api
-        if(StringUtils.hasLength(oauth2ClientDto.getGrantType()) && "custom_password".equalsIgnoreCase(oauth2ClientDto.getGrantType())){
+        if(StringUtils.hasLength(oauth2ClientDto.getGrantType()) && AuthorityConstant.GRANT_TYPE_CUSTOM_PASSWORD.equalsIgnoreCase(oauth2ClientDto.getGrantType())){
             return accountServerClient.getTokenByApi(
                     clientId,
                     clientSecret,
-                    "custom_password",
+                    AuthorityConstant.GRANT_TYPE_CUSTOM_PASSWORD,
                     oauth2ClientDto.getUserName(),
                     oauth2ClientDto.getPassword()
             );

@@ -18,8 +18,6 @@ import static com.shopee.ecommer.constants.MessageErrors.*;
 @Component
 public class AccountValidator extends CommonValidator {
 
-    private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-    private static final Date BIRTHDAY_LIMIT = new Date(2023 - 1900, Calendar.JANUARY, 1);
     private final AccountRepository accountRepository;
 
     public void validateCreateAccount(AccountRequestDto accountRequestDto) {

@@ -4,6 +4,8 @@ import com.shopee.ecommer.constants.PathApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
@@ -14,13 +16,23 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static com.shopee.ecommer.constants.AuthorityConstant.ADMIN;
-import static com.shopee.ecommer.constants.AuthorityConstant.CLIENT;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.shopee.ecommer.constants.AuthorityConstant.*;
+import static com.shopee.ecommer.constants.PathApi.FULL_PATH;
 
 @Configuration
 public class SecurityConfig {
-    private static final String JWT_ROLE_NAME = "authorities";
-    private static final String ROLE_PREFIX = "";
+
+    private static final List<String> ALLOW_REQUEST = Arrays.asList("/css/**",
+            PathApi.ACCOUNT + PathApi.GET_TOKEN,
+            PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
+            "/swagger-ui/**", "/v3/api-docs/**",
+            "/actuator/**", PathApi.TEST + FULL_PATH,
+            "/graphql"
+    );
+
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     String issuerUri;
 
@@ -28,16 +40,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(
-                                PathApi.ACCOUNT + PathApi.GET_TOKEN,
-                                PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
-                                "/swagger-ui/**", "/v3/api-docs/**",
-                                "/actuator/**", PathApi.TEST + "/**",
-                                "/graphql"
-                        ).permitAll()
-                        .requestMatchers(PathApi.ACCOUNT + "/**").hasAuthority(ADMIN)
-                        .requestMatchers(PathApi.PRODUCT + "/**").hasAnyAuthority(ADMIN, CLIENT)
-                        .requestMatchers(PathApi.CATEGORY + "/**").hasAnyAuthority(ADMIN, CLIENT)
+                        .requestMatchers(ALLOW_REQUEST.toArray(new String[0])).permitAll()
+                        .requestMatchers(PathApi.ACCOUNT + FULL_PATH).hasAuthority(ADMIN)
+                        .requestMatchers(PathApi.PRODUCT + FULL_PATH).hasAnyAuthority(ADMIN, CLIENT)
+                        .requestMatchers(PathApi.CATEGORY + FULL_PATH).hasAnyAuthority(ADMIN, CLIENT)
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(
@@ -45,9 +51,7 @@ public class SecurityConfig {
                                 .jwt(jwt -> jwt
                                         .decoder(JwtDecoders.fromIssuerLocation(issuerUri))
                                         .jwtAuthenticationConverter(jwtAuthenticationConverter())
-
                                 )
-
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
@@ -68,5 +72,13 @@ public class SecurityConfig {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    protected MethodSecurityExpressionHandler createExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler expressionHandler =
+                new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setPermissionEvaluator(new CustomPermissionEvaluator());
+        return expressionHandler;
     }
 }

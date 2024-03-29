@@ -4,6 +4,8 @@ public interface PathApi {
 
     String INFO_PATH = "/info-api";
 
+    String FULL_PATH = "/**";
+
     String LIST = "/";
     String ACCOUNT = "/accounts";
     String CATEGORY = "/categories";
