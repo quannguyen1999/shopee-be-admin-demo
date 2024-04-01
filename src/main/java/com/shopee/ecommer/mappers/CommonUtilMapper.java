@@ -16,6 +16,8 @@ public interface CommonUtilMapper {
     //Format Date
     String DATE_FORMAT = "yyyy-MM-dd";
 
+    String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     @Named(CONVERT_TO_STRING)
     default String convertToString(Object fieldValue) {
         return !ObjectUtils.isEmpty(fieldValue) ? fieldValue.toString() : null;

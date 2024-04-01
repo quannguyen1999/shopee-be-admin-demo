@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "OrderEcommer")
+@Table(name = "order_ecommer")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

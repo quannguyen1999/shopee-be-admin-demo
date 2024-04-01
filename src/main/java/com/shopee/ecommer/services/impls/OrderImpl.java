@@ -1,36 +1,29 @@
 package com.shopee.ecommer.services.impls;
 
 import com.shopee.ecommer.entities.*;
-import com.shopee.ecommer.mappers.CategoryMapper;
-import com.shopee.ecommer.mappers.OrderMapper;
-import com.shopee.ecommer.mappers.SupplierMapper;
-import com.shopee.ecommer.models.requests.CategoryRequestDto;
+import com.shopee.ecommer.mappers.OrderDetailMapper;
 import com.shopee.ecommer.models.requests.OrderDetailRequestDto;
 import com.shopee.ecommer.models.requests.OrderRequestDto;
-import com.shopee.ecommer.models.requests.SupplierRequestDto;
-import com.shopee.ecommer.models.responses.CategoryResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.OrderResponseDto;
-import com.shopee.ecommer.models.responses.SupplierResponseDto;
 import com.shopee.ecommer.mybatis.OrderBatisService;
-import com.shopee.ecommer.mybatis.SupplierBatisService;
 import com.shopee.ecommer.repositories.AccountRepository;
+import com.shopee.ecommer.repositories.OrderDetailRepository;
 import com.shopee.ecommer.repositories.OrderRepository;
 import com.shopee.ecommer.repositories.ProductRepository;
-import com.shopee.ecommer.repositories.SupplierRepository;
 import com.shopee.ecommer.services.OrderService;
-import com.shopee.ecommer.services.SupplierService;
 import com.shopee.ecommer.utils.FunctionUtils;
 import com.shopee.ecommer.utils.SecurityUtil;
 import com.shopee.ecommer.validators.OrderValidator;
-import com.shopee.ecommer.validators.SupplierValidator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.shopee.ecommer.entities.OrderEcommer.Fields.*;
 import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
@@ -41,6 +34,8 @@ import static com.shopee.ecommer.utils.FunctionUtils.handlerListSort;
 public class OrderImpl extends AdapterImpl implements OrderService {
 
     protected final OrderRepository orderRepository;
+
+    protected final OrderDetailRepository orderDetailRepository;
 
     protected final OrderValidator orderValidator;
 
@@ -57,6 +52,7 @@ public class OrderImpl extends AdapterImpl implements OrderService {
     @Transactional
     @Override
     public OrderResponseDto createOrder(OrderRequestDto data) {
+        orderValidator.validateCreateOrder(data);
         Account account = accountRepository.findByUsername(SecurityUtil.getCurrentUserName());
         UUID orderId = UUID.randomUUID();
         List<OrderDetail> orderDetailList = new ArrayList<>();
@@ -65,7 +61,7 @@ public class OrderImpl extends AdapterImpl implements OrderService {
                 .id(orderId)
                 .orderDate(new Date())
                 .shipCity(data.getShipCity())
-                .shippedDate(FunctionUtils.parseDateObjectToDate(data.getShippedDate()))
+                .shippedDate(FunctionUtils.parseStringToDate().apply(data.getShippedDate()))
                 .shipRegion(data.getShipRegion())
                 .account(account)
                 .build();
@@ -73,7 +69,9 @@ public class OrderImpl extends AdapterImpl implements OrderService {
             Product product = productRepository.findById(UUID.fromString(orderDetailRequestDto.getProductId())).get();
             product.setQuantity(product.getQuantity() - orderDetailRequestDto.getQuantity());
             OrderDetail orderDetail = OrderDetail.builder()
-                    .id(OrdersProducts.builder().orderID(orderId).productID(product.getId()).build())
+                    .id(UUID.randomUUID())
+                    .orderId(orderId)
+                    .productId(product.getId())
                     .discount(product.getDiscount())
                     .quantity(orderDetailRequestDto.getQuantity())
                     .totalAmount(orderDetailRequestDto.getQuantity() * product.getPrice())
@@ -81,21 +79,22 @@ public class OrderImpl extends AdapterImpl implements OrderService {
             productList.add(product);
             orderDetailList.add(orderDetail);
         }
-        orderEcommer.setOrderDetailList(orderDetailList);
         orderRepository.save(orderEcommer);
         productRepository.saveAll(productList);
-        return OrderResponseDto.builder()
-                .id(orderId.toString())
-                .orderDate(orderEcommer.getOrderDate().toString())
-                .shipCity(orderEcommer.getShipCity())
-                .shippedDate(orderEcommer.getShippedDate().toString())
-                .shipRegion(orderEcommer.getShipRegion())
-                .userName(account.getUsername())
-                .build();
+        orderDetailRepository.saveAll(orderDetailList);
+        orderEcommer.setOrderDetailList(orderDetailList);
+        return orderToOrderResponseDto(orderEcommer);
+    }
+
+    private OrderResponseDto orderToOrderResponseDto(OrderEcommer orderEcommer){
+        OrderResponseDto orderResponseDto = OrderDetailMapper.MAPPER.orderEcommerToOrderResponseDto(orderEcommer);
+        orderResponseDto.username = orderEcommer.getAccount().getUsername();
+        return orderResponseDto;
     }
 
     @Override
     public OrderResponseDto updateOrder(OrderRequestDto data) {
+        //TODO Implement later
         return null;
     }
 
@@ -113,6 +112,11 @@ public class OrderImpl extends AdapterImpl implements OrderService {
     }
 
     @Override
+    public CommonPageInfo<OrderResponseDto> getDetail(Map<String, String> listFields, OrderRequestDto data) {
+        return null;
+    }
+
+    @Override
     public List<HashMap<String, Object>> getListWithResultMap(OrderRequestDto orderRequestDto) {
         orderValidator.validateListFieldRequest(orderRequestDto);
         return orderBatisService.getList(orderRequestDto, false);
@@ -125,12 +129,11 @@ public class OrderImpl extends AdapterImpl implements OrderService {
 
 
     private List<OrderResponseDto> handlerList(OrderRequestDto orderRequestDto) {
-//        return checkPageSize().test(CommonPageInfo.builder()
-//                .page(orderRequestDto.getPage())
-//                .size(orderRequestDto.getSize())
-//                .total(orderRequestDto.getTotalRecord())
-//                .build()) ? orderBatisService.getList(orderRequestDto, false)
-//                .stream().map(OrderMapper.MAPPER::mapToCategoryResponseDto).toList() : new ArrayList<>();
-        return null;
+        return checkPageSize().test(CommonPageInfo.builder()
+                .page(orderRequestDto.getPage())
+                .size(orderRequestDto.getSize())
+                .total(orderRequestDto.getTotalRecord())
+                .build()) ? orderBatisService.getList(orderRequestDto, false)
+                .stream().map(OrderDetailMapper.MAPPER::mapToOrderResponseDto).toList() : new ArrayList<>();
     }
 }

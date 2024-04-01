@@ -33,7 +33,7 @@ spring:
     schemas: ${spring.datasource.schema}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    enabled: false
+    enabled: true
     validate-migration-naming: false
   # Security
   security:
@@ -43,6 +43,9 @@ spring:
           issuer-uri: ${custom.security.oauth2Url}
   jpa:
     open-in-view: false
+    show-sql: true
+#    hibernate:
+#      ddl-auto: create
   cloud:
     discovery:
       enabled: false

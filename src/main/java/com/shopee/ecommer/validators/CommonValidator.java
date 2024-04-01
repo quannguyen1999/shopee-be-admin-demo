@@ -91,7 +91,7 @@ public class CommonValidator {
         };
     }
 
-    static Consumer<MessageErrors> badRequest() {
+    public static Consumer<MessageErrors> badRequest() {
         return messageErrors -> {
             throw new BadRequestException(messageErrors);
         };

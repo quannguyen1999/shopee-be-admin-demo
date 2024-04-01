@@ -1,28 +1,38 @@
 package com.shopee.ecommer.models.responses;
 
 import com.shopee.ecommer.models.CommonBaseModel;
-import lombok.*;
-import lombok.experimental.FieldNameConstants;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
-@FieldNameConstants
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@Builder
 public class OrderResponseDto extends CommonBaseModel {
 
-    private String id;
+    public String id;
 
-    private String orderDate;
+    public String orderDate;
 
-    private String shipCity;
+    public String shipCity;
 
-    private String shippedDate;
+    public String shippedDate;
 
-    private String shipRegion;
+    public String shipRegion;
 
-    private String userName;
+    public String username;
 
+    public List<OrderDetailResponseDto> orderDetailList;
+
+
+    public static final class Fields {
+        public static final String id = "id";
+        public static final String orderDate = "orderDate";
+        public static final String shipCity = "shipCity";
+        public static final String shippedDate = "shippedDate";
+        public static final String shipRegion = "shipRegion";
+        public static final String username = "username";
+        public static final String orderDetailList = "orderDetailList";
+    }
 }

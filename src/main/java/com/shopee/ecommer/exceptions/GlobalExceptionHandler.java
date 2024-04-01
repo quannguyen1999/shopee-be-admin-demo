@@ -25,6 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
         log.debug(ex.getLocalizedMessage());
+        ex.printStackTrace();
         return commonHandlerException(Strings.EMPTY, "Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

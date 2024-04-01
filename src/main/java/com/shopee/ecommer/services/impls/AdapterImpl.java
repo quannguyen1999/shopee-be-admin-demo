@@ -1,6 +1,7 @@
 package com.shopee.ecommer.services.impls;
 
 import com.shopee.ecommer.models.responses.CommonPageInfo;
+import com.shopee.ecommer.utils.FunctionUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static com.shopee.ecommer.models.responses.CommonPageInfo.Fields.total;
 

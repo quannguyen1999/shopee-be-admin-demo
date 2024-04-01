@@ -32,8 +32,19 @@ public class OrderRequestDto extends CommonBaseModel {
 
     private String shipRegion;
 
-    private String userName;
+    private String username;
 
     private List<OrderDetailRequestDto> orderDetailRequestDtoList = new ArrayList<>();
 
+    private String orderFromDate;
+
+    private String orderToDate;
+
+    private String shippedFromDate;
+
+    private String shippedToDate;
+
+    public String createFromDate;
+
+    public String createToDate;
 }

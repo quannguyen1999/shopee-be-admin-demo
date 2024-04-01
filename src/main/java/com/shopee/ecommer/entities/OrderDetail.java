@@ -1,12 +1,14 @@
 package com.shopee.ecommer.entities;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Columns;
+import org.springframework.core.annotation.Order;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "OrderDetail")
+@Table(name = "order_detail")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -14,13 +16,18 @@ import lombok.*;
 @Builder
 public class OrderDetail extends CommonBaseEntities {
 
-    @EmbeddedId
-    OrdersProducts id;
 
-    private Double discount;
+    @Id
+    public UUID id;
 
-    private int quantity;
+    public UUID orderId;
 
-    private Double totalAmount;
+    public UUID productId;
+
+    public Double discount;
+
+    public int quantity;
+
+    public Double totalAmount;
 
 }

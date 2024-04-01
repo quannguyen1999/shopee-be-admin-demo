@@ -107,8 +107,16 @@ input OrderRequestDto {
     shipCity: String
     shippedDate: String
     shipRegion: String
+    username: String
+
+    orderFromDate: String
+    orderToDate: String
+    shippedFromDate: String
+    shippedToDate: String
 
     #Search
+    page: Int!
+    size: Int!
     listFields: [String]
     listSorted: [Map]
     createFromDate: String
@@ -121,6 +129,7 @@ type OrderResponseDto {
     shipCity: String
     shippedDate: String
     shipRegion: String
+    username: String
     created: Date
     updated: Date
 }

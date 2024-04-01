@@ -8,6 +8,7 @@ import com.shopee.ecommer.models.requests.SupplierRequestDto;
 import com.shopee.ecommer.repositories.OrderRepository;
 import com.shopee.ecommer.repositories.ProductRepository;
 import com.shopee.ecommer.repositories.SupplierRepository;
+import com.shopee.ecommer.utils.FunctionUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,10 @@ public class OrderValidator extends CommonValidator {
 
     public void validateCreateOrder(OrderRequestDto orderRequestDto) {
         checkEmpty().accept(orderRequestDto.getOrderDetailRequestDtoList(), ORDER_LIST_FIELD_INVALID);
+        checkEmpty().accept(orderRequestDto.getShippedDate(), ORDER_SHIPPED_DATE_INVALID);
+        FunctionUtils.parseStringToDate().apply(orderRequestDto.getShippedDate());
         for (OrderDetailRequestDto orderDetailRequestDto : orderRequestDto.getOrderDetailRequestDtoList()) {
-            Product product = productRepository.findById(UUID.fromString(orderDetailRequestDto.getProductId())).get();
+            Product product = productRepository.findById(UUID.fromString(orderDetailRequestDto.getProductId())).orElse(null);
             checkEmpty().accept(orderDetailRequestDto.getProductId(), ORDER_PRODUCT_INVALID);
             checkUUID().accept(orderDetailRequestDto.getProductId(), ORDER_PRODUCT_ID_INVALID);
             checkEmpty().accept(product, ORDER_PRODUCT_ID_NOT_FOUND);

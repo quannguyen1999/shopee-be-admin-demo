@@ -13,14 +13,57 @@
         <!-- Main Query -->
         <trim prefix="SELECT" suffixOverrides=",">
             <foreach item="field" collection="request.listFields" separator=",">
-                pro.${field} as ${field}
+                <choose>
+                    <when test="field == 'orderDate'">
+                        pro.order_date as "orderDate"
+                    </when>
+                    <when test="field == 'shipCity'">
+                        pro.ship_city as "shipCity"
+                    </when>
+                    <when test="field == 'shippedDate'">
+                        pro.shipped_date as "shippedDate"
+                    </when>
+                    <when test="field == 'shipRegion'">
+                        pro.ship_region as "shipRegion"
+                    </when>
+                    <when test="field == 'username'">
+                        ac.username as "username"
+                    </when>
+                    <otherwise>
+                        pro.${field} as ${field}
+                    </otherwise>
+                </choose>
             </foreach>
         </trim>
 
-        FROM orderEcommer pro WHERE 1 = 1
+        FROM order_ecommer pro inner join account ac on pro.account_id = ac.id
+        WHERE 1 = 1
 
         <!-- Conditions -->
-
+        <if test="request.id != null">
+            AND pro.id::text LIKE '%' || #{request.id} || '%'
+        </if>
+        <choose>
+            <when test="request.orderFromDate != null
+                        and request.orderToDate != null">
+                AND to_char(pro.created,'yyyyMMdd') BETWEEN #{request.orderFromDate} AND #{request.orderToDate}
+            </when>
+        </choose>
+        <if test="request.shipCity != null">
+            AND pro.shipCity::text LIKE '%' || #{request.shipCity} || '%'
+        </if>
+        <choose>
+            <when test="request.shippedFromDate != null
+                        and request.shippedToDate != null">
+                AND to_char(pro.created,'yyyyMMdd') BETWEEN #{request.shippedFromDate} AND #{request.shippedToDate}
+            </when>
+        </choose>
+        <if test="request.shipRegion != null">
+            AND pro.shipRegion::text LIKE '%' || #{request.shipRegion} || '%'
+        </if>
+        <if test="request.userName != null">
+            AND ac.username::text LIKE '%' || #{ac.username} || '%'
+        </if>
 
         <!-- Date Range -->
         <choose>

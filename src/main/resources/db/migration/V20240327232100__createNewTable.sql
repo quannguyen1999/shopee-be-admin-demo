@@ -35,21 +35,19 @@ ALTER TABLE OrderEcommer ALTER COLUMN updated set DEFAULT current_timestamp::tim
 ALTER TABLE product ADD COLUMN supplier_id UUID;
 
 --Handler OrderDetail
-CREATE TABLE OrderDetail  (
-    order_id UUID NOT NULL,
-    product_id UUID NOT NULL,
-    discount numeric,
-    quantity numeric,
-    total_amount numeric,
-    created date default current_date,
+CREATE TABLE order_detail (
+	discount float8 NULL,
+	quantity int4 NOT NULL,
+	total_amount float8 NULL,
+	order_id uuid NOT NULL,
+	product_id uuid NOT NULL,
+	created date default current_date,
     updated date default current_date,
     user_created varchar(200) default 'admin',
     user_updated varchar(200) default 'admin',
-    CONSTRAINT orderdetail_pkey PRIMARY KEY (order_id, product_id),
-    CONSTRAINT orderdetail_order_id_fkey FOREIGN KEY (order_id) REFERENCES OrderEcommer(id),
-    CONSTRAINT orderdetail_product_id_fkey FOREIGN KEY (product_id) REFERENCES Product(id)
+    id uuid primary key
 );
-ALTER TABLE OrderDetail ALTER COLUMN created TYPE timestamp USING created::timestamp;
-ALTER TABLE OrderDetail ALTER COLUMN updated TYPE timestamp USING updated::timestamp;
-ALTER TABLE OrderDetail ALTER COLUMN created set DEFAULT current_timestamp::timestamp;
-ALTER TABLE OrderDetail ALTER COLUMN updated set DEFAULT current_timestamp::timestamp;
+ALTER TABLE order_detail ALTER COLUMN created TYPE timestamp USING created::timestamp;
+ALTER TABLE order_detail ALTER COLUMN updated TYPE timestamp USING updated::timestamp;
+ALTER TABLE order_detail ALTER COLUMN created set DEFAULT current_timestamp::timestamp;
+ALTER TABLE order_detail ALTER COLUMN updated set DEFAULT current_timestamp::timestamp;
