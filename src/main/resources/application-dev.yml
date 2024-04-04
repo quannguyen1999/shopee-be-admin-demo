@@ -18,7 +18,7 @@ spring:
     virtual-host: /
   # PostgreSQL
   datasource:
-    port: 5432
+    port: 5431
     schema: qa_shopee
     hikari:
       connectionTimeout: 20000
@@ -48,22 +48,21 @@ spring:
       httpClient:
         connect-timeout: 10000
         response-timeout: 20s
-    function:
-      definition: updateCommunication
-    stream:
-      bindings:
-        updateCommunication-in-0:
-          destination: communication-sent
-          group: ${spring.application.name}
-        sendCommunication-out-0:
-          destination: send-communication
-
+#    function:
+#      definition: updateCommunication
+#    stream:
+#      bindings:
+#        updateCommunication-in-0:
+#          destination: communication-sent
+#          group: ${spring.application.name}
+#        sendCommunication-out-0:
+#          destination: send-communication
 # Eureka
 eureka:
-  preferIdAddress: false
+  preferIdAddress: true
   client:
-    fetchRegistry: false
-    registerWithEureka: false
+    fetchRegistry: true
+    registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8072/eureka/
 
@@ -77,8 +76,8 @@ springdoc:
 mybatis:
   mapper-locations: classpath:batis/*.xml
   type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #Config Eureka
 management:
@@ -101,7 +100,7 @@ management:
 info:
   app:
     name: "admins"
-    description: "Shopee be admin dev"
+    description: "Shopee be admin prod"
     version: "1.0.0"
 
 resilience4j.circuitbreaker:
