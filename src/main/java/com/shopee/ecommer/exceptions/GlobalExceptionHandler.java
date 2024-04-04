@@ -1,6 +1,9 @@
 package com.shopee.ecommer.exceptions;
 
+import com.shopee.ecommer.constants.MessageErrors;
 import com.shopee.ecommer.models.responses.ErrorResponse;
+import feign.FeignException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,14 @@ import java.util.List;
 @SuppressWarnings({"unchecked", "rawtypes"})
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(FeignException.class)
+    public String handleFeignStatusException(FeignException e, HttpServletResponse response) {
+        if(e.status() == HttpStatus.BAD_REQUEST.value()){
+            throw new UnauthorizedRequestException(MessageErrors.ACCOUNT_USERNAME_OR_PASS_INVALID);
+        }
+        return "feignError";
+    }
 
     //Throw common Exception
     @ExceptionHandler(Exception.class)
