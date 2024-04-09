@@ -16,6 +16,8 @@ public interface PathApi {
     String ORDER = "/orders";
     String CREATE = "/create";
 
+    String REGISTER = "/register";
+
     String PUT = "/put";
 
     String EXPORT = "/export";

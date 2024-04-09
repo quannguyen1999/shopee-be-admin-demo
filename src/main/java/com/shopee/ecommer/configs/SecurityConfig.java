@@ -21,6 +21,7 @@ import java.util.List;
 
 import static com.shopee.ecommer.constants.AuthorityConstant.*;
 import static com.shopee.ecommer.constants.PathApi.FULL_PATH;
+import static com.shopee.ecommer.constants.PathApi.REGISTER;
 
 @Configuration
 public class SecurityConfig {
@@ -28,6 +29,7 @@ public class SecurityConfig {
     private static final List<String> ALLOW_REQUEST = Arrays.asList("/css/**",
             PathApi.ACCOUNT + PathApi.GET_TOKEN,
             PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
+            PathApi.ACCOUNT + REGISTER,
             "/swagger-ui/**", "/v3/api-docs/**",
             "/actuator/**", PathApi.TEST + FULL_PATH,
             "/graphql"
@@ -42,6 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ALLOW_REQUEST.toArray(new String[0])).permitAll()
                         .requestMatchers(PathApi.ACCOUNT + FULL_PATH).hasAuthority(ADMIN)
+                        .requestMatchers(PathApi.ACCOUNT + PathApi.GET_INFO).hasAnyAuthority(ADMIN, CLIENT)
                         .requestMatchers(PathApi.PRODUCT + FULL_PATH).hasAnyAuthority(ADMIN, CLIENT)
                         .requestMatchers(PathApi.CATEGORY + FULL_PATH).hasAnyAuthority(ADMIN, CLIENT)
                         .anyRequest().authenticated()

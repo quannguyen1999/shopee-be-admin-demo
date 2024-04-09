@@ -97,6 +97,15 @@ public class AccountRestController {
     }
 
     @Operation(
+            summary = "Registered Account"
+    )
+    @RequestMapping(value = PathApi.REGISTER, method = RequestMethod.POST)
+    public ResponseEntity<?> registerAccount(@RequestBody AccountRequestDto accountRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.registeredAccount(accountRequestDto));
+    }
+
+    @Operation(
             summary = "Update Account"
     )
     @RequestMapping(value = PathApi.PUT, method = RequestMethod.PUT)

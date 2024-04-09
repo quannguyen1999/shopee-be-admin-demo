@@ -17,6 +17,8 @@ public class CommonValidator {
 
     public static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
+    public static final String PHONE_REGEX = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
+
     public static final Date BIRTHDAY_LIMIT = new Date(2023 - 1900, Calendar.JANUARY, 1);
 
     static BiConsumer<Object, MessageErrors> checkEmpty() {

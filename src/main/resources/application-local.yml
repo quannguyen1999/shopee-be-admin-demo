@@ -73,7 +73,7 @@ eureka:
 #Spring doc
 springdoc:
   swagger-ui:
-    enabled: false
+    enabled: true
     path: /swagger-ui.html
 
 #MyBatis

@@ -58,9 +58,22 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
     @Override
     public AccountResponseDto createAccount(AccountRequestDto accountRequestDto) {
-        //Validator
         accountValidator.validateCreateAccount(accountRequestDto);
+        return handlerAccount(accountRequestDto, true, false, true);
+    }
 
+    @Override
+    public AccountResponseDto registeredAccount(AccountRequestDto account) {
+        accountValidator.validateRegisterAccount(account);
+        return handlerAccount(account, false, false, false);
+    }
+
+    private AccountResponseDto handlerAccount(
+            AccountRequestDto accountRequestDto,
+            boolean mfaEnabled,
+            boolean mfaRegistered,
+            boolean isActive
+    ){
         //Save
         String password = String.valueOf(rand.nextInt(100000 + rand.nextInt(900000)));
 
@@ -69,9 +82,9 @@ public class AccountImpl extends AdapterImpl implements AccountService {
 
         Account accountConvert = AccountMapper.MAPPER.mapToAccount(accountRequestDto);
         accountConvert.setPassword(passwordEncoder.encode(password));
-        accountConvert.setMfaEnabled(true);
-        accountConvert.setMfaRegistered(false);
-        accountConvert.setIsActive(true);
+        accountConvert.setMfaEnabled(mfaEnabled);
+        accountConvert.setMfaRegistered(mfaRegistered);
+        accountConvert.setIsActive(isActive);
 
         Account accountSave = accountRepository.save(accountConvert);
 

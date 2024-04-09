@@ -26,6 +26,12 @@ public class AccountValidator extends CommonValidator {
         validateEmail(accountRequestDto.getEmail());
     }
 
+    public void validateRegisterAccount(AccountRequestDto accountRequestDto) {
+        validateCheckUserName(accountRequestDto.getUsername());
+        checkCondition().accept(!accountRequestDto.getUsername().matches(PHONE_REGEX), ACCOUNT_PHONE_INVALID);
+    }
+
+
     public void validateUpdateAccount(AccountRequestDto accountRequestDto) {
         validateId(accountRequestDto.getId());
         checkIsNotExists().accept(accountRequestDto.getMfaEnabled(), ACCOUNT_MFA_ENABLED_INVALID);
@@ -60,6 +66,7 @@ public class AccountValidator extends CommonValidator {
     private void validateCheckUserName(String username) {
         checkEmpty().accept(username, ACCOUNT_USERNAME_INVALID);
         checkIsExists().accept(accountRepository.findByUsername(username), ACCOUNT_USERNAME_IS_EXISTS);
+
     }
 
     private void validateBirthday(Date value) {
