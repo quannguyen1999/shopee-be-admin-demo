@@ -1,16 +1,119 @@
+custom:
+  rabbit-mq:
+    queue: email-registration
+  email:
+    url: http://localhost:9000
+  security:
+    clientId: admin
+    clientSecret: password
+    oauth2Url: http://localhost:8070
+
 spring:
+  # RabbitMQ
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    port: 5672
+    virtual-host: /
   # PostgreSQL
   datasource:
+    port: 5431
+    schema: qa_shopee
     hikari:
       connectionTimeout: 20000
       maximum-pool-size: 5
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=qa_shopee
+    url: jdbc:postgresql://localhost:${spring.datasource.port}/postgres?currentSchema=${spring.datasource.schema}
     username: postgres
     password: postgres
   # Flyway
   flyway:
-    url: jdbc:postgresql://localhost:5432/postgres
-    schemas: qa_shopee
-    password: postgres
-    user: postgres
+    url: jdbc:postgresql://localhost:${spring.datasource.port}/postgres
+    schemas: ${spring.datasource.schema}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
     enabled: true
+    validate-migration-naming: true
+  # Security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${custom.security.oauth2Url}
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: false
+    gateway:
+      httpClient:
+        connect-timeout: 10000
+        response-timeout: 20s
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
+# Eureka
+eureka:
+  preferIdAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8072/eureka/
+
+#Spring doc
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+#MyBatis
+mybatis:
+  mapper-locations: classpath:batis/*.xml
+  type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#Config Eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+info:
+  app:
+    name: "admins"
+    description: "Shopee be admin prod"
+    version: "1.0.0"
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      timeoutDuration: 10000
+      limitRefreshPeriod: 5000
+      limitForPeriod: 1

@@ -1,12 +1,15 @@
 spring:
+  application:
+    name: admin
   profiles:
     active: dev
-  graphql:
-    graphiql:
-      enabled: true
-      path: /graphiql
-
-mybatis:
-  mapper-locations: classpath:batis/*.xml
-  type-aliases-package: com.shopee.shopeebeadmindemo.mybatis
-
+  server:
+    port: 8080
+    #Note: false when in localhost, and true for another env
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+  config:
+    import: "optional:configserver:http://localhost:8071/"

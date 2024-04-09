@@ -1,59 +1,96 @@
 <!-- CustomMapper.xml -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shopee.shopeebeadmindemo.mybatis.AccountBatisService">
+<mapper namespace="com.shopee.ecommer.mybatis.AccountBatisService">
+
+    <!-- Select Query -->
     <select id="getList" resultType="java.util.HashMap">
         <if test="isCountTotalPage == true">
-            select count(*) as total from (
+            <!-- Count Query -->
+            SELECT count(*) as total FROM (
         </if>
-        select
-        <foreach item="field" collection="fields" separator=",">
-            <if test="field == 'id'">
-                a.id
-            </if>
-            <if test="field == 'username'">
-                a.username
-            </if>
-            <if test="field == 'birthday'">
-                a.birthday
-            </if>
-            <if test="field == 'gender'">
-                a.gender
-            </if>
-            <if test="field == 'email'">
-                a.email
-            </if>
-            <if test="field == 'avatar'">
-                a.avatar
-            </if>
-        </foreach>
-        from account a
-        where 1 = 1
+
+        <!-- Main Query -->
+        <trim prefix="SELECT" suffixOverrides=",">
+            <foreach item="field" collection="request.listFields" separator=",">
+                <choose>
+                    <when test="field == 'isActive'">
+                        a.is_active as "isActive"
+                    </when>
+                    <when test="field == 'mfaEnabled'">
+                        case when a.mfa_enabled is null then
+                        true else a.mfa_enabled end as "mfaEnabled"
+                    </when>
+                    <when test="field == 'mfaRegistered'">
+                        case when a.mfa_registered is null then
+                        true else a.mfa_registered end as "mfaRegistered"
+                    </when>
+                    <when test="field == 'birthday'">
+                        TO_CHAR(a.birthday, 'YYYY-MM-DD') as "birthday"
+                    </when>
+                    <otherwise>
+                        a.${field} as ${field}
+                    </otherwise>
+                </choose>
+            </foreach>
+        </trim>
+
+        FROM account a WHERE 1 = 1
+
+        <!-- Conditions -->
+        <if test="request.id != null">
+            AND a.id::text LIKE '%' || #{request.id} || '%'
+        </if>
         <if test="request.username != null">
-            and a.username like '%' || #{request.username} || '%'
+            AND a.username LIKE '%' || #{request.username} || '%'
         </if>
         <if test="request.gender != null">
-            and a.gender = #{request.gender}
+            AND a.gender = #{request.gender}
         </if>
-        <if test="request.email != null">
-            and a.email = #{email}
+        <if test="
+            request.email != null
+            and request.email != ''">
+            AND a.email = #{request.email}
         </if>
+
+        <!-- Date Range Condition -->
         <choose>
-            <when test="request.fromBirthday != null and request.toBirthday != null">
-                and a.birthday between #{request.fromBirthday} and #{request.toBirthday}
+            <when test="
+                request.fromBirthday != null
+                and request.toBirthday != null">
+                AND to_char(a.birthday, 'yyyyMMdd') BETWEEN #{request.fromBirthday} AND #{request.toBirthday}
             </when>
-            <otherwise></otherwise>
         </choose>
 
         <choose>
-            <when test="request.page != null and request.size != null and isCountTotalPage == false">
+            <when test="request.createFromDate != null
+                        and request.createToDate != null">
+                AND to_char(a.created,'yyyyMMdd') BETWEEN #{request.createFromDate} AND #{request.createToDate}
+            </when>
+        </choose>
+
+        <!-- Order By Clause -->
+        <if test="
+            request.page != null
+            and request.page != null
+            and isCountTotalPage == false
+            and request.listSorted != null
+            and request.listSorted.size() > 0">
+            ORDER BY ${request.listStringSorted}
+        </if>
+
+        <!-- Pagination -->
+        <choose>
+            <when test="request.page != null
+                        and request.size != null
+                        and isCountTotalPage == false">
                 LIMIT #{request.size} OFFSET #{request.page}
             </when>
-            <otherwise></otherwise>
         </choose>
+
+        <!-- Closing Count Query -->
         <if test="isCountTotalPage == true">
             )
         </if>
     </select>
 </mapper>
-
