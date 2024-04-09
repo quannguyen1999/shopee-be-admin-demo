@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.shopee.ecommer.constants.PathApi.GET_TEST;
+
 @Tag(
         name = "API Rest Account",
         description = "Get Token, CRUD, Export API Account details"
@@ -45,6 +47,16 @@ public class AccountRestController {
     public ResponseEntity<Object> getToken(Oauth2ClientDto oauth2ClientDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.getToken(oauth2ClientDto));
+    }
+
+    @Operation(
+            summary = "Get test",
+            description = "Get Token by 2 param code + redirectUrl"
+    )
+    @RequestMapping(value = GET_TEST, method = RequestMethod.POST)
+    public ResponseEntity<Object> test(AccountRequestDto accountRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.test(accountRequestDto));
     }
 
     @Operation(

@@ -12,6 +12,8 @@ import java.util.Map;
 public interface AccountService {
     AccountResponseDto createAccount(AccountRequestDto account);
 
+    AccountResponseDto test(AccountRequestDto account);
+
     AccountResponseDto registeredAccount(AccountRequestDto account);
 
     AccountResponseDto updateAccount(AccountRequestDto account);

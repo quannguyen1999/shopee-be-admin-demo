@@ -2,7 +2,7 @@ spring:
   application:
     name: admin
   profiles:
-    active: dev
+    active: local
   server:
     port: 8080
     #Note: false when in localhost, and true for another env

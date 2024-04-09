@@ -63,6 +63,13 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
+    public AccountResponseDto test(AccountRequestDto account) {
+        AccountResponseDto accountResponseDto = new AccountResponseDto();
+        accountResponseDto.setUserCreated(account.getUserUpdated());
+        return accountResponseDto;
+    }
+
+    @Override
     public AccountResponseDto registeredAccount(AccountRequestDto account) {
         accountValidator.validateRegisterAccount(account);
         return handlerAccount(account, false, false, false);
