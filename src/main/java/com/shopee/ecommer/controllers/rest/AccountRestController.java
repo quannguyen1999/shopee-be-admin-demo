@@ -6,6 +6,7 @@ import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
+import com.shopee.ecommer.models.responses.TestDto;
 import com.shopee.ecommer.services.AccountService;
 import com.shopee.ecommer.services.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static com.shopee.ecommer.constants.PathApi.GET_TEST;
-
 @Tag(
         name = "API Rest Account",
         description = "Get Token, CRUD, Export API Account details"
@@ -53,8 +51,8 @@ public class AccountRestController {
             summary = "Get test",
             description = "Get Token by 2 param code + redirectUrl"
     )
-    @RequestMapping(value = GET_TEST, method = RequestMethod.POST)
-    public ResponseEntity<Object> test(AccountRequestDto accountRequestDto) {
+    @RequestMapping(value = PathApi.TEST, method = RequestMethod.POST)
+    public ResponseEntity<TestDto> test(@RequestBody TestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.test(accountRequestDto));
     }

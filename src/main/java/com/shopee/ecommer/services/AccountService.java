@@ -4,6 +4,7 @@ import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
+import com.shopee.ecommer.models.responses.TestDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 public interface AccountService {
     AccountResponseDto createAccount(AccountRequestDto account);
 
-    AccountResponseDto test(AccountRequestDto account);
+    TestDto test(TestDto account);
 
     AccountResponseDto registeredAccount(AccountRequestDto account);
 

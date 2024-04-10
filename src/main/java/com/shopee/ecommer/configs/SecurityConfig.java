@@ -30,8 +30,9 @@ public class SecurityConfig {
             PathApi.ACCOUNT + PathApi.GET_TOKEN,
             PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
             PathApi.ACCOUNT + REGISTER,
+            PathApi.ACCOUNT + PathApi.TEST,
             "/swagger-ui/**", "/v3/api-docs/**",
-            "/actuator/**", PathApi.TEST + FULL_PATH,
+            "/actuator/**",
             "/graphql"
     );
 

@@ -1,3 +1,0 @@
-=== Sample Request
-
-include::{snippets}/accounts/curl-request.adoc[]

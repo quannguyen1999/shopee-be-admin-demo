@@ -13,6 +13,7 @@ import com.shopee.ecommer.models.requests.EmailDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
+import com.shopee.ecommer.models.responses.TestDto;
 import com.shopee.ecommer.mybatis.AccountBatisService;
 import com.shopee.ecommer.repositories.AccountRepository;
 import com.shopee.ecommer.services.AccountService;
@@ -63,9 +64,10 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDto test(AccountRequestDto account) {
-        AccountResponseDto accountResponseDto = new AccountResponseDto();
-        accountResponseDto.setUserCreated(account.getUserUpdated());
+    public TestDto test(TestDto account) {
+        TestDto accountResponseDto = new TestDto();
+//        accountResponseDto.setUserCreated("bitch");
+        accountResponseDto.setUsername("admin");
         return accountResponseDto;
     }
 

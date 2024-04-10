@@ -24,8 +24,6 @@ public interface PathApi {
 
     String GET_TOKEN = "/token";
 
-    String GET_TEST = "/test";
-
     String GET_REFRESH_TOKEN = "/refreshToken";
 
     String GET_INFO = "/info";
