@@ -12,32 +12,15 @@
 
 This is the index for the Customer Rest API endpoint.
 
-=== Sample Request
+=== Get Token
 [[index-find-customer]]
 
-include::{snippets}/accounts/curl-request.adoc[]
+include::{snippets}/accounts-get-token/curl-request.adoc[]
 
-include::{snippets}/accounts/http-request.adoc[]
+include::{snippets}/accounts-get-token/http-request.adoc[]
 
-include::{snippets}/accounts/http-response.adoc[]
+include::{snippets}/accounts-get-token/http-response.adoc[]
 
-include::{snippets}/accounts/request-body.adoc[]
+include::{snippets}/accounts-get-token/request-body.adoc[]
 
-include::{snippets}/accounts/request-fields.adoc[]
-
-include::{snippets}/accounts/response-fields.adoc[]
-
-=== Sample Request
-[[index-find-customer]]
-
-include::{snippets}/accounts/curl-request.adoc[]
-
-include::{snippets}/accounts/http-request.adoc[]
-
-include::{snippets}/accounts/http-response.adoc[]
-
-include::{snippets}/accounts/request-body.adoc[]
-
-include::{snippets}/accounts/request-fields.adoc[]
-
-include::{snippets}/accounts/response-fields.adoc[]
+include::{snippets}/accounts-get-token/response-fields.adoc[]

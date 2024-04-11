@@ -3,6 +3,7 @@ package com.shopee.ecommer.utils;
 import com.shopee.ecommer.validators.CommonValidator;
 import graphql.language.StringValue;
 import graphql.schema.CoercingParseLiteralException;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.shopee.ecommer.constants.MessageErrors.DATE_INVALID;
@@ -83,6 +85,15 @@ public class FunctionUtils {
         return df::format;
     }
 
+
+    public static BiFunction<String, String, String> convertFieldToString(){
+        return (nameField, valueField) -> {
+            if(!StringUtils.hasLength(valueField)){
+                return Strings.EMPTY;
+            }
+            return nameField + "=" +valueField + "&";
+        };
+    }
 
 
 }
