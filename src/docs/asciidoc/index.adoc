@@ -15,27 +15,29 @@ This is the index for the Customer Rest API endpoint.
 === Sample Request
 [[index-find-customer]]
 
-include::{snippets}\accounts\curl-request.adoc[]
+include::{snippets}/accounts/curl-request.adoc[]
 
-include::{snippets}\accounts\http-request.adoc[]
+include::{snippets}/accounts/http-request.adoc[]
 
-include::{snippets}\accounts\http-response.adoc[]
+include::{snippets}/accounts/http-response.adoc[]
 
-include::{snippets}\accounts\request-body.adoc[]
+include::{snippets}/accounts/request-body.adoc[]
 
-include::{snippets}\accounts\request-fields.adoc[]
+include::{snippets}/accounts/request-fields.adoc[]
+
+include::{snippets}/accounts/response-fields.adoc[]
 
 === Sample Request
 [[index-find-customer]]
 
-include::{snippets}\accounts\tests\curl-request.adoc[]
+include::{snippets}/accounts/curl-request.adoc[]
 
-include::{snippets}\accounts\tests\http-request.adoc[]
+include::{snippets}/accounts/http-request.adoc[]
 
-include::{snippets}\accounts\tests\http-response.adoc[]
+include::{snippets}/accounts/http-response.adoc[]
 
-include::{snippets}\accounts\tests\request-body.adoc[]
+include::{snippets}/accounts/request-body.adoc[]
 
-include::{snippets}\accounts\tests\request-fields.adoc[]
+include::{snippets}/accounts/request-fields.adoc[]
 
-include::{snippets}\accounts\tests\response-fields.adoc[]
+include::{snippets}/accounts/response-fields.adoc[]

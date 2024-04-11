@@ -93,13 +93,21 @@ public class AccountControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(ob.writeValueAsString(accountRequestDto))
         )
-                .andDo(document("/accounts/tests",
-                        requestFields(
-                              customerResponseFields
-                        ),
+                .andDo(document("accounts",
+//                        requestFields(
+//                              customerResponseFields
+//                        ),
                         responseFields(
-                                fieldWithPath("username").description("Date and time when the account was created").type(JsonFieldType.STRING)
-                                                       )
+                                fieldWithPath("id").description("Account ID").type(JsonFieldType.NULL),
+                                fieldWithPath("username").description("Username of the account").type(JsonFieldType.NULL),
+                                fieldWithPath("birthday").description("Birthday of the account").type(JsonFieldType.NULL),
+                                fieldWithPath("gender").description("Gender of the account").type(JsonFieldType.NULL),
+                                fieldWithPath("email").description("Email of the account").type(JsonFieldType.NULL),
+                                fieldWithPath("avatar").description("Avatar URL of the account").type(JsonFieldType.NULL),
+                                fieldWithPath("isActive").description("Indicates if the account is active").type(JsonFieldType.NULL),
+                                fieldWithPath("fromBirthday").description("From Birthday").type(JsonFieldType.NULL),
+                                fieldWithPath("toBirthday").description("To Birthday").type(JsonFieldType.NULL)
+                        )
                         ));
     }
 

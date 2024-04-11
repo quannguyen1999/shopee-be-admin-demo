@@ -66,8 +66,16 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     @Override
     public TestDto test(TestDto account) {
         TestDto accountResponseDto = new TestDto();
-//        accountResponseDto.setUserCreated("bitch");
-        accountResponseDto.setUsername("admin");
+        accountResponseDto.setId(account.getId());
+        accountResponseDto.setBirthday(account.getBirthday());
+        accountResponseDto.setUsername(account.getUsername());
+        accountResponseDto.setBirthday(account.getBirthday());
+        accountResponseDto.setGender(account.getGender());
+        accountResponseDto.setEmail(account.getEmail());
+        accountResponseDto.setAvatar(account.getAvatar());
+        accountResponseDto.setIsActive(account.getIsActive());
+        accountResponseDto.setFromBirthday(account.fromBirthday);
+        accountResponseDto.setToBirthday(account.getToBirthday());
         return accountResponseDto;
     }
 

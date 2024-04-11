@@ -30,11 +30,17 @@ public class AccountRequestDto extends CommonBaseModel {
     public Boolean isActive;
     //Search
     public String fromBirthday;
+
     public String toBirthday;
+
     public String createFromDate;
+
     public String createToDate;
+
     public Boolean mfaEnabled;
+
     private Set<RoleAccount> roleAccountList = new HashSet<>();
+
     private Boolean mfaRegistered;
 
 }

@@ -211,7 +211,7 @@
                 <executions>
                     <execution>
                         <id>generate-docs</id>
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
