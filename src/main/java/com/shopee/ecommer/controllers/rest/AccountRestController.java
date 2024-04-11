@@ -4,6 +4,7 @@ import com.shopee.ecommer.constants.PathApi;
 import com.shopee.ecommer.models.hateoas.AccountAssembler;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
+import com.shopee.ecommer.models.requests.OtpRequestDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.TestDto;
@@ -106,13 +107,18 @@ public class AccountRestController {
                 .body(accountService.createAccount(accountRequestDto));
     }
 
-    @Operation(
-            summary = "Registered Account"
-    )
+    @Operation(summary = "Registered Account")
     @RequestMapping(value = PathApi.REGISTER, method = RequestMethod.POST)
     public ResponseEntity<?> registerAccount(@RequestBody AccountRequestDto accountRequestDto) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountService.registeredAccount(accountRequestDto));
+    }
+
+    @Operation(summary = "Verify Account")
+    @RequestMapping(value = PathApi.OTP, method = RequestMethod.POST)
+    public ResponseEntity<?> verifyAccount(@RequestBody OtpRequestDto otpRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.verifyOtp(otpRequestDto));
     }
 
     @Operation(

@@ -2,6 +2,7 @@ package com.shopee.ecommer.services;
 
 import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
+import com.shopee.ecommer.models.requests.OtpRequestDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.TestDto;
@@ -17,6 +18,8 @@ public interface AccountService {
     TestDto test(TestDto account);
 
     AccountResponseDto registeredAccount(AccountRequestDto account);
+
+    AccountResponseDto verifyOtp(OtpRequestDto otpRequestDto);
 
     AccountResponseDto updateAccount(AccountRequestDto account);
 

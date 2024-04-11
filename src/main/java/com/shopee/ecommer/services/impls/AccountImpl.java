@@ -11,6 +11,7 @@ import com.shopee.ecommer.mappers.AccountMapper;
 import com.shopee.ecommer.models.requests.AccountRequestDto;
 import com.shopee.ecommer.models.requests.EmailDto;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
+import com.shopee.ecommer.models.requests.OtpRequestDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.TestDto;
@@ -28,6 +29,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -83,7 +85,29 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     @Override
     public AccountResponseDto registeredAccount(AccountRequestDto account) {
         accountValidator.validateRegisterAccount(account);
+        Account accountFromDB = accountRepository.findByUsername(account.getUsername());
+        if(!ObjectUtils.isEmpty(accountFromDB)){
+            //Sent Mail
+//            emailPublisher.publishEvent(EmailDto.builder().build());
+            //Convert To Response
+            return AccountMapper.MAPPER.accountToAccountResponseDto(accountFromDB);
+        }
         return handlerAccount(account, false, false, false);
+    }
+
+    @Override
+    public AccountResponseDto verifyOtp(OtpRequestDto otpRequestDto) {
+        accountValidator.validateVerifyAccount(otpRequestDto);
+
+        Account account = accountRepository.findByUsername(otpRequestDto.getUsername());
+        account.setIsActive(true);
+        account.setPassword(handlerPassword());
+
+        accountRepository.save(account);
+        //Sent Mail
+//        emailPublisher.publishEvent(EmailDto.builder().build());
+
+        return AccountMapper.MAPPER.accountToAccountResponseDto(account);
     }
 
     private AccountResponseDto handlerAccount(
@@ -93,23 +117,23 @@ public class AccountImpl extends AdapterImpl implements AccountService {
             boolean isActive
     ){
         //Save
-        String password = String.valueOf(rand.nextInt(100000 + rand.nextInt(900000)));
-
-        log.info(String.valueOf(logger.isTraceEnabled()));
-        log.info("Password:" + password);
-
         Account accountConvert = AccountMapper.MAPPER.mapToAccount(accountRequestDto);
-        accountConvert.setPassword(passwordEncoder.encode(password));
+        accountConvert.setPassword(handlerPassword());
         accountConvert.setMfaEnabled(mfaEnabled);
         accountConvert.setMfaRegistered(mfaRegistered);
         accountConvert.setIsActive(isActive);
 
         Account accountSave = accountRepository.save(accountConvert);
-
-        //Sent Mail
-        emailPublisher.publishEvent(EmailDto.builder().build());
         //Convert To Response
         return AccountMapper.MAPPER.accountToAccountResponseDto(accountSave);
+    }
+
+    private String handlerPassword(){
+        String password = String.valueOf(rand.nextInt(100000 + rand.nextInt(900000)));
+
+        log.info(String.valueOf(logger.isTraceEnabled()));
+        log.info("Password:" + password);
+        return passwordEncoder.encode("Ecommer123@");
     }
 
     @Override

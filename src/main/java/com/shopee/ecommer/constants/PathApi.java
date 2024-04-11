@@ -18,6 +18,8 @@ public interface PathApi {
 
     String REGISTER = "/register";
 
+    String OTP = "/otp";
+
     String PUT = "/put";
 
     String EXPORT = "/export";

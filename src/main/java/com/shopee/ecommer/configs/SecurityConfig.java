@@ -20,8 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.shopee.ecommer.constants.AuthorityConstant.*;
-import static com.shopee.ecommer.constants.PathApi.FULL_PATH;
-import static com.shopee.ecommer.constants.PathApi.REGISTER;
+import static com.shopee.ecommer.constants.PathApi.*;
 
 @Configuration
 public class SecurityConfig {
@@ -31,6 +30,7 @@ public class SecurityConfig {
             PathApi.ACCOUNT + PathApi.GET_REFRESH_TOKEN,
             PathApi.ACCOUNT + REGISTER,
             PathApi.ACCOUNT + PathApi.TEST,
+            PathApi.ACCOUNT + OTP,
             "/swagger-ui/**", "/v3/api-docs/**",
             "/actuator/**",
             "/graphql"
