@@ -74,7 +74,7 @@ public class AccountRestController {
     @RequestMapping(value = PathApi.GET_INFO, method = RequestMethod.GET)
     public ResponseEntity<AccountResponseDto> getInfo(Authentication authentication) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(accountService.getInfo(authentication.getName()));
+                .body(accountService.getInfo(authentication));
     }
 
     @Operation(
@@ -91,7 +91,7 @@ public class AccountRestController {
     )
     @RequestMapping(value = PathApi.LIST, method = RequestMethod.POST)
     public ResponseEntity<EntityModel<CommonPageInfo<AccountResponseDto>>> getListAccounts(
-            @RequestBody AccountRequestDto accountRequestDto, Authentication authentication
+            @RequestBody AccountRequestDto accountRequestDto
     ) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountAssembler.toModel(accountService.getList(null, accountRequestDto)));

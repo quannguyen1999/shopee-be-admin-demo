@@ -5,6 +5,7 @@ import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.models.responses.AccountResponseDto;
 import com.shopee.ecommer.models.responses.CommonPageInfo;
 import com.shopee.ecommer.models.responses.TestDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface AccountService {
 
     CommonPageInfo<AccountResponseDto> getList(Map<String, String> listFields, AccountRequestDto requestDto);
 
-    AccountResponseDto getInfo(String account);
+    AccountResponseDto getInfo(Authentication authentication);
 
     List<HashMap<String, Object>> getListWithResultMap(AccountRequestDto accountRequestDto);
 

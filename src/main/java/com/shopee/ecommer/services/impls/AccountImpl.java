@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Service;
@@ -144,9 +145,9 @@ public class AccountImpl extends AdapterImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDto getInfo(String account) {
+    public AccountResponseDto getInfo(Authentication authentication) {
         AccountRequestDto accountRequestDto = new AccountRequestDto();
-        accountRequestDto.setUsername(account);
+        accountRequestDto.setUsername(authentication.getName());
         accountRequestDto.setListFields(Arrays.asList(id, username, birthday, mfaEnabled, mfaRegistered, gender, isActive, email));
         return AccountMapper.MAPPER.mapToAccountResponseDto(accountBatisService.getList(accountRequestDto, false).get(0));
     }

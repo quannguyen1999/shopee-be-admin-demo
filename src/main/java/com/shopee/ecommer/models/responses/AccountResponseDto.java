@@ -2,8 +2,7 @@ package com.shopee.ecommer.models.responses;
 
 import com.shopee.ecommer.models.CommonBaseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -12,6 +11,7 @@ import java.util.UUID;
 )
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class AccountResponseDto extends CommonBaseModel {
 
     @Schema(

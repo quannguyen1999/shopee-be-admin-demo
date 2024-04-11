@@ -1,5 +1,6 @@
 package com.shopee.ecommer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
@@ -26,10 +27,13 @@ public class CommonBaseModel {
 
     public Integer totalRecord;
 
+    @JsonIgnore
     public List<String> listFields = new ArrayList<>();
 
+    @JsonIgnore
     public List<Map<String, String>> listSorted = new ArrayList<>();
 
+    @JsonIgnore
     public String listStringSorted;
 
 }

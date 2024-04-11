@@ -22,3 +22,13 @@ include::{snippets}/accounts-get-token/query-parameters.adoc[]
 #### Response
 include::{snippets}/accounts-get-token/http-response.adoc[]
 include::{snippets}/accounts-get-token/response-fields.adoc[]
+
+=== Get Info
+[[index-account-get-info]]
+
+#### Request
+include::{snippets}/accounts-get-info/curl-request.adoc[]
+
+#### Response
+include::{snippets}/accounts-get-info/http-response.adoc[]
+include::{snippets}/accounts-get-info/response-fields.adoc[]

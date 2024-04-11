@@ -1,6 +1,7 @@
 package com.shopee.ecommer.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shopee.ecommer.feignClient.AccountServerClient;
 import com.shopee.ecommer.models.hateoas.AccountAssembler;
 import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.services.AccountService;
@@ -14,6 +15,9 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -29,9 +33,20 @@ public class AdapterCommonTest {
     @MockBean
     protected AccountAssembler accountAssembler;
 
+    @MockBean
+    protected AccountServerClient accountServerClient;
+
     MockMvc mockMvc;
 
     protected static final ObjectMapper ob = new ObjectMapper();
+
+    protected static final Date currentDate = new Date();
+
+    protected static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    protected  static final String VALUE_USERNAME = "admin";
+
+    protected  static final String VALUE_PASSWORD = "password";
 
     String handlerOauth2ClientDtoToParam(Oauth2ClientDto oauth2ClientDto){
         StringBuilder result = new StringBuilder();
