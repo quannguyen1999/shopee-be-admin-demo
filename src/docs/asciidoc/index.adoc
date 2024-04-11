@@ -1,4 +1,4 @@
-= RESTful Customer API Specification
+= RESTful API Specification
 ;
 :doctype: book
 :icons: font
@@ -8,19 +8,17 @@
 :sectlinks:
 
 [[Index]]
-= Index
+= Account
 
-This is the index for the Customer Rest API endpoint.
+Account Rest API endpoint.
 
 === Get Token
-[[index-find-customer]]
+[[index-account-get-token]]
 
+#### Request
 include::{snippets}/accounts-get-token/curl-request.adoc[]
+include::{snippets}/accounts-get-token/query-parameters.adoc[]
 
-include::{snippets}/accounts-get-token/http-request.adoc[]
-
+#### Response
 include::{snippets}/accounts-get-token/http-response.adoc[]
-
-include::{snippets}/accounts-get-token/request-body.adoc[]
-
 include::{snippets}/accounts-get-token/response-fields.adoc[]
