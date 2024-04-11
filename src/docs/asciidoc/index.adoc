@@ -32,3 +32,38 @@ include::{snippets}/accounts-get-info/curl-request.adoc[]
 #### Response
 include::{snippets}/accounts-get-info/http-response.adoc[]
 include::{snippets}/accounts-get-info/response-fields.adoc[]
+
+=== Get List
+
+#### Request
+[source,json]
+----
+{
+  "query": "accountDetail",
+  "listAccount": {
+    "accountRequestDto": {
+      "page": 0,
+      "size": 40,
+      "listSorted": [
+        {
+          "field": "id",
+          "value": "desc"
+        }
+      ],
+      "username": null,
+      "gender": null
+    },
+    "page": null,
+    "size": null,
+    "total": null,
+    "data": [
+      {
+        "isActive": null,
+        "id": null
+      }
+    ]
+  }
+}
+----
+
+#### Response
