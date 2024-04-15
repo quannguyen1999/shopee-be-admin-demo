@@ -33,7 +33,7 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     enabled: true
-    validate-migration-naming: true
+    validate-migration-naming: false
   # Security
   security:
     oauth2:

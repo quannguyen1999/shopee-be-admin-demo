@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+
 @Tag(
         name = "API Rest Account",
         description = "Get Token, CRUD, Export API Account details"
@@ -70,7 +71,7 @@ public class AccountRestController {
 
     @Operation(
             summary = "Get Info Account",
-            description = "Get Info Account by authen"
+            description = "Get Info Account by authed"
     )
     @RequestMapping(value = PathApi.GET_INFO, method = RequestMethod.GET)
     public ResponseEntity<AccountResponseDto> getInfo(Authentication authentication) {
