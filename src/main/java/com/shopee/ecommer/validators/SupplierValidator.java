@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 import static com.shopee.ecommer.constants.MessageErrors.*;
+import static com.shopee.ecommer.validators.CommonValidator.*;
 
 @AllArgsConstructor
 @Component
-public class SupplierValidator extends CommonValidator {
+public class SupplierValidator {
 
     private final SupplierRepository supplierRepository;
 

@@ -1,4 +1,4 @@
-package com.shopee.ecommer.functions;
+package com.shopee.ecommer.configs;
 
 import com.shopee.ecommer.services.AccountService;
 import lombok.extern.slf4j.Slf4j;

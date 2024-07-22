@@ -6,17 +6,16 @@ import com.shopee.ecommer.models.requests.Oauth2ClientDto;
 import com.shopee.ecommer.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
 import static com.shopee.ecommer.constants.MessageErrors.*;
+import static com.shopee.ecommer.validators.CommonValidator.*;
 
 @AllArgsConstructor
 @Component
-public class AccountValidator extends CommonValidator {
+public class AccountValidator {
 
     private final AccountRepository accountRepository;
 
@@ -30,7 +29,6 @@ public class AccountValidator extends CommonValidator {
         validateCheckUserName(accountRequestDto.getUsername());
         checkCondition().accept(!accountRequestDto.getUsername().matches(PHONE_REGEX), ACCOUNT_PHONE_INVALID);
     }
-
 
     public void validateUpdateAccount(AccountRequestDto accountRequestDto) {
         validateId(accountRequestDto.getId());
@@ -46,7 +44,7 @@ public class AccountValidator extends CommonValidator {
         Account account = accountRepository.findById(UUID.fromString(id)).orElse(null);
         checkIsNotExists().accept(account, ACCOUNT_ID_NOT_EXISTS);
         assert account != null;
-        if (account.getUsername().equalsIgnoreCase("admin")) {
+        if ("admin".equalsIgnoreCase(account.getUsername())) {
             badRequest().accept(ACCOUNT_ADMIN_CAN_NOT_EDIT);
         }
     }

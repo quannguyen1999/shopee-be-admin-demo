@@ -1,10 +1,8 @@
 package com.shopee.ecommer.utils;
 
 import com.shopee.ecommer.validators.CommonValidator;
-import graphql.language.StringValue;
-import graphql.schema.CoercingParseLiteralException;
+import lombok.experimental.UtilityClass;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,16 +12,16 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static com.shopee.ecommer.constants.MessageErrors.DATE_INVALID;
-import static com.shopee.ecommer.mappers.CommonUtilMapper.DATE_FORMAT;
 
+@UtilityClass
 public class FunctionUtils {
 
-    private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    private static final SimpleDateFormat dfTime = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat dfTime = new SimpleDateFormat("yyyy-MM-dd");
 
     //IsActive -> is_active
-    public static Function<String, String> camelCaseToSnakeCase(){
+    public Function<String, String> camelCaseToSnakeCase() {
         return (input) -> {
             if (input == null || input.isEmpty()) {
                 return input;
@@ -46,8 +44,8 @@ public class FunctionUtils {
     }
 
     //Convert List to FIELD SORT
-    public static String handlerListSort(List<Map<String, String>> listSorted){
-        if(ObjectUtils.isEmpty(listSorted)){
+    public String handlerListSort(List<Map<String, String>> listSorted) {
+        if (ObjectUtils.isEmpty(listSorted)) {
             return null;
         }
         StringBuilder result = new StringBuilder();
@@ -57,7 +55,7 @@ public class FunctionUtils {
         return result.toString();
     }
 
-    public static Function<String, Date> parseStringToDate()  {
+    public Function<String, Date> parseStringToDate() {
         return (input) -> {
             try {
                 return df.parse(input);
@@ -68,7 +66,7 @@ public class FunctionUtils {
         };
     }
 
-    public static Function<String, Date> parseStringToDateTime()  {
+    public Function<String, Date> parseStringToDateTime() {
         return (input) -> {
             try {
                 return dfTime.parse(input);
@@ -79,10 +77,8 @@ public class FunctionUtils {
         };
     }
 
-    public static Function<Date, String> parseDateToString()  {
+    public Function<Date, String> parseDateToString() {
         return df::format;
     }
-
-
 
 }
