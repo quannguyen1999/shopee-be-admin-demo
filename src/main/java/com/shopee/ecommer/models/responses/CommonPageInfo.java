@@ -2,13 +2,11 @@ package com.shopee.ecommer.models.responses;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
 
 @Builder
 @Data
-@FieldNameConstants
 public class CommonPageInfo<T> {
 
     public Integer page;
@@ -21,4 +19,11 @@ public class CommonPageInfo<T> {
 
     public String __typename;
 
+    public static final class Fields {
+        public static final String page = "page";
+        public static final String size = "size";
+        public static final String total = "total";
+        public static final String data = "data";
+        public static final String __typename = "__typename";
+    }
 }

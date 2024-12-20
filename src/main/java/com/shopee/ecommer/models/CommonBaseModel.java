@@ -1,7 +1,6 @@
 package com.shopee.ecommer.models;
 
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@FieldNameConstants
 public class CommonBaseModel {
 
     public Date created;
@@ -32,4 +30,16 @@ public class CommonBaseModel {
 
     public String listStringSorted;
 
+    public static final class Fields {
+        public static final String created = "created";
+        public static final String updated = "updated";
+        public static final String userCreated = "userCreated";
+        public static final String userUpdated = "userUpdated";
+        public static final String page = "page";
+        public static final String size = "size";
+        public static final String totalRecord = "totalRecord";
+        public static final String listFields = "listFields";
+        public static final String listSorted = "listSorted";
+        public static final String listStringSorted = "listStringSorted";
+    }
 }

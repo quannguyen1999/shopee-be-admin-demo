@@ -3,10 +3,8 @@ package com.shopee.ecommer.models.responses;
 import com.shopee.ecommer.models.CommonBaseModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
 
 @Data
-@FieldNameConstants
 @NoArgsConstructor
 public class SupplierResponseDto extends CommonBaseModel {
 
@@ -18,4 +16,10 @@ public class SupplierResponseDto extends CommonBaseModel {
 
     public String companyName;
 
+    public static final class Fields {
+        public static final String id = "id";
+        public static final String phone = "phone";
+        public static final String address = "address";
+        public static final String companyName = "companyName";
+    }
 }
