@@ -11,6 +11,8 @@ import com.shopee.ecommer.services.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,23 @@ import java.util.List;
 @RequestMapping(value = PathApi.ACCOUNT)
 @AllArgsConstructor
 public class AccountRestController {
+
+    static Logger logger = LoggerFactory.getLogger(AccountRestController.class);
+
     private final AccountService accountService;
 
     private final ReportService reportService;
 
     private final AccountAssembler accountAssembler;
+
+    @Operation(
+            summary = "Test"
+    )
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ResponseEntity<Object> test() {
+        logger.info("test kafka from shopee-be-admin-demo");
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    }
 
     @Operation(
             summary = "Get Token",

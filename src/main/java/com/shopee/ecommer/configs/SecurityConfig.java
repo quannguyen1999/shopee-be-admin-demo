@@ -32,7 +32,8 @@ public class SecurityConfig {
             PathApi.ACCOUNT + REGISTER,
             "/swagger-ui/**", "/v3/api-docs/**",
             "/actuator/**", PathApi.TEST + FULL_PATH,
-            "/graphql"
+            "/graphql",
+            PathApi.ACCOUNT + "/test"
     );
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
