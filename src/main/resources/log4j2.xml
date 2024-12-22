@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="debug" name="spring-boot-kafka-log">
     <Appenders>
+        <!-- Kafka Appender with JSON Layout -->
         <Kafka name="Kafka" topic="shopee-topic">
-            <PatternLayout pattern="[shopee-be-admin-demo] %d{yyyy-MM-dd HH:mm:ss} %p %c{1.} [%t] %m%n"/>
+            <JsonLayout compact="true" eventEol="true" />
             <Property name="bootstrap.servers">localhost:9092</Property>
         </Kafka>
 
+        <!-- Console Appender with Pattern Layout -->
         <Console name="stdout" target="SYSTEM_OUT">
-            <PatternLayout pattern="[shopee-be-admin-demo] ]%d{HH:mm:ss.SSS} %-5p [%-7t] %F:%L - %m%n"/>
+            <PatternLayout pattern="[shopee-be-admin-demo] %d{HH:mm:ss.SSS} %-5p [%-7t] %F:%L - %m%n"/>
         </Console>
     </Appenders>
 
