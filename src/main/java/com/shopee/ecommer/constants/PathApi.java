@@ -12,6 +12,10 @@ public interface PathApi {
 
     String TEST = "/tests";
     String PRODUCT = "/products";
+
+    String S3 = "/s3";
+
+    String UPLOAD = "/upload";
     String SUPPLIER = "/suppliers";
     String ORDER = "/orders";
     String CREATE = "/create";
